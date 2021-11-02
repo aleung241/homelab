@@ -2,6 +2,20 @@
 
 Personal setup on the General VM, migrating back to docker-compose from k8s as it was far too overkill for a home setup.
 
+Local-only `.env` file pulled in by `docker-compose.yml` automatically in the same root, used for sensitive information, as an alternative to docker secrets. This file must never be pushed to the repo and is in `.gitignore`.
+
+Usage:
+```
+> cat .env
+SECRET_KEY=secret_value
+
+> cat docker-compose.yml
+...
+environment:
+  SOME_SECRET: ${SECRET_KEY}
+...
+```
+
 ---
 
 Move `docker-compose/` to server for direct use:
