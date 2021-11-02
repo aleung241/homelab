@@ -1,0 +1,89 @@
+version: "3.9"
+services:
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    environment:
+      - TZ=Pacific/Auckland
+      - PLEX_CLAIM=
+    volumes:
+      - /Plex/Plex Media Server 2:/config
+      - /transcode/plex2:/transcode
+      - /Plex/gdrive-mount:/data
+    ports:
+      - 33400:32400/tcp
+      - 4005:3005/tcp
+      - 9324:8324/tcp
+      - 33469:32469/tcp
+      - 2000:1900/udp
+      - 33410:32410/udp
+      - 33412:32412/udp
+      - 33413:32413/udp
+      - 33414:32414/udp
+    restart: unless-stopped
+
+  imdbupdatetool:
+    image: mynttt/updatetool
+    container_name: imdbupdatetool
+    environment:
+      - RUN_EVERY_N_HOURS=168
+      - TVDB_API_KEY=${TVDB_API_KEY}
+      - TMDB_API_KEY=${TMDB_API_KEY}
+    volumes:
+      - "/Plex/Plex Media Server:/plexdata"
+      - "/opt/docker-compose/imdbupdatetool:/config"
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    ports:
+      - 8096:8096
+    volumes:
+      - /opt/docker-compose/jellyfin/config:/config
+      - /transcode/jellyfin:/cache
+      - /gmedia:/media
+
+  monitorss-redis:
+    container_name: monitorss-redis
+    restart: on-failure:5
+    image: redis:alpine
+
+  monitorss-mongodb:
+    container_name: monitorss-mongodb
+    restart: on-failure:5
+    command: mongod --port 27017
+    image: mongo:latest
+    volumes:
+      - "/opt/docker-compose/monitorss/db-data:/data/db"
+
+  monitorss-bot:
+    container_name: monitorss-bot
+    restart: on-failure:3
+    image: synzen/monitorss
+    build: .
+    depends_on:
+      - monitorss-mongodb
+    environment:
+      - DRSS_START=bot
+      - DRSS_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - DRSS_DATABASE_URI=mongodb://monitorss-mongodb:27017/rss
+      - DRSS_FEEDS_REFRESHRATEMINUTES=2
+
+  monitorss-web:
+    container_name: monitorss-web
+    image: synzen/monitorss
+    build: .
+    restart: on-failure:3
+    depends_on:
+      - monitorss-redis
+      - monitorss-mongodb
+    ports:
+      - 8081:8081
+    environment:
+      - DRSS_START=web
+      - DRSSWEB_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - DRSSWEB_DATABASE_REDIS=redis://monitorss-redis:6379
+      - DRSSWEB_DATABASE_URI=mongodb://monitorss-mongodb:27017/rss
+      - DRSSWEB_BOT_REDIRECTURI=http://192.168.1.15:8081/authorize
+      - DRSSWEB_BOT_CLIENTID=${DISCORD_BOT_CLIENTID}
+      - DRSSWEB_BOT_CLIENTSECRET=${DISCORD_BOT_CLIENTSECRET}
