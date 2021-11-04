@@ -1,0 +1,105 @@
+version: '3.9'
+services:
+  radarr:
+    image: hotio/radarr
+    container_name: radarr
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker-compose/media/radarr:/config
+      - /gmedia:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  sonarr:
+    image: hotio/sonarr
+    container_name: sonarr
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker-compose/media/sonarr:/config
+      - /gmedia:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  jackett:
+    image: hotio/jackett
+    container_name: jackett
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker-compose/media/jackett:/config
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+  nzbhydra2:
+    image: hotio/nzbhydra2
+    container_name: nzbhydra2
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker-compose/media/nzbhydra2:/config
+    ports:
+      - 5076:5076
+    restart: unless-stopped
+
+  nzbhydra2-alt:
+    image: hotio/nzbhydra2
+    container_name: nzbhydra2-alt
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker-compose/media/nzbhydra2-alt:/config
+    ports:
+      - 5077:5076
+    restart: unless-stopped
+
+  sabnzbd:
+    image: hotio/sabnzbd
+    container_name: sabnzbd
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker-compose/media/sabnzbd:/config
+      - /nvme/sabnzbd:/downloads
+      - /server-storage:/data
+    ports:
+      - 8090:8080
+    restart: unless-stopped
+
+  bazarr:
+    container_name: bazarr
+    image: hotio/bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - /opt/docker-compose/media/bazarr:/config
+      - /server-storage:/server-storage
+      - /gdrive-mount:/gdrive-mount
+    ports:
+      - "6767:6767"
+    restart: unless-stopped

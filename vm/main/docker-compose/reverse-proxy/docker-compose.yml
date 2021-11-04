@@ -1,0 +1,78 @@
+version: '3.9'
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - /opt/docker-compose/reverse-proxy/nginx-docker/etc/nginx:/etc/nginx
+      - /opt/docker-compose/reverse-proxy/nginx-docker/etc/ssl:/etc/ssl
+      - /opt/docker-compose/reverse-proxy/nginx-docker/etc/nginx-index:/opt/index
+      - /opt/docker-compose/reverse-proxy/nginx-docker/etc//nginx-access:/etc/apache2
+      - /opt/docker-compose/reverse-proxy/nginx-docker/etc/letsencrypt:/etc/letsencrypt
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 87:80
+      - 447:443
+    restart: unless-stopped
+
+  overseerr:
+    image: sctx/overseerr
+    container_name: overseerr
+    environment:
+      - TZ=Pacific/Auckland
+      - LOG_LEVEL=info
+    volumes:
+      - /opt/docker-compose/reverse-proxy/overseerr:/app/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+
+  rclone-serve-webdav:
+    image: rclone/rclone
+    container_name: rclone-serve-webdav
+    volumes:
+      - /root/.config/rclone/:/root/.config/rclone/:ro
+      - /opt/docker-compose/reverse-proxy/rclone-serve-webdav:/opt
+    command:
+      - "serve"
+      - "webdav"
+      - "remote-aleung:/server-storage"
+      - "--config"
+      - "/root/.config/rclone/rclone.conf"
+      - "--verbose"
+      - "--fast-list"
+      - "--drive-skip-gdocs"
+      - "--buffer-size"
+      - "64M"
+      - "--no-modtime"
+      - "--vfs-read-chunk-size"
+      - "64M"
+      - "--vfs-read-chunk-size-limit"
+      - "1024M"
+      - "--poll-interval"
+      - "10s"
+      - "--dir-cache-time"
+      - "900h"
+      - "--umask"
+      - "002"
+      - "--addr"
+      - "0.0.0.0:8087"
+      - "--read-only"
+      - "--include-from"
+      - "/opt/include-from.txt"
+      - "--template"
+      - "/opt/index.html"
+    restart: unless-stopped
+
+  librespeed:
+    image: adolfintel/speedtest
+    container_name: librespeed
+    environment:
+      - IPINFO_APIKEY=${IPINFO_APIKEY}
+      - MODE=standalone
+      - TITLE=${LIBRESPEED_TITLE}
+      - WEBPORT=86
+    ports:
+      - 86:86
+    restart: unless-stopped

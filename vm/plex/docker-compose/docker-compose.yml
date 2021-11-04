@@ -4,8 +4,8 @@ services:
     image: plexinc/pms-docker
     container_name: plex
     environment:
-      - TZ=Pacific/Auckland
-      - PLEX_CLAIM=
+      TZ: ${TIMEZONE}
+      PLEX_CLAIM: 
     volumes:
       - /Plex/Plex Media Server 2:/config
       - /transcode/plex2:/transcode
@@ -26,22 +26,36 @@ services:
     image: mynttt/updatetool
     container_name: imdbupdatetool
     environment:
-      - RUN_EVERY_N_HOURS=168
-      - TVDB_API_KEY=${TVDB_API_KEY}
-      - TMDB_API_KEY=${TMDB_API_KEY}
+      RUN_EVERY_N_HOURS: 168
+      TVDB_API_KEY: ${TVDB_API_KEY}
+      TMDB_API_KEY: ${TMDB_API_KEY}
     volumes:
-      - "/Plex/Plex Media Server:/plexdata"
-      - "/opt/docker-compose/imdbupdatetool:/config"
+      - /Plex/Plex Media Server:/plexdata
+      - /opt/docker-compose/imdbupdatetool:/config
 
   jellyfin:
     image: jellyfin/jellyfin
     container_name: jellyfin
-    ports:
-      - 8096:8096
     volumes:
       - /opt/docker-compose/jellyfin/config:/config
       - /transcode/jellyfin:/cache
       - /gmedia:/media
+    ports:
+      - 8096:8096
+
+  tautulli:
+    image: tautulli/tautulli
+    container_name: tautulli
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - /opt/docker-compose/tautulli:/config
+      - /Plex/Plex Media Server:/plex
+    ports:
+      - 8182:8181
+    restart: unless-stopped
 
   monitorss-redis:
     container_name: monitorss-redis
@@ -54,25 +68,23 @@ services:
     command: mongod --port 27017
     image: mongo:latest
     volumes:
-      - "/opt/docker-compose/monitorss/db-data:/data/db"
+      - /opt/docker-compose/monitorss/db-data:/data/db
 
   monitorss-bot:
     container_name: monitorss-bot
     restart: on-failure:3
     image: synzen/monitorss
-    build: .
     depends_on:
       - monitorss-mongodb
     environment:
-      - DRSS_START=bot
-      - DRSS_BOT_TOKEN=${DISCORD_BOT_TOKEN}
-      - DRSS_DATABASE_URI=mongodb://monitorss-mongodb:27017/rss
-      - DRSS_FEEDS_REFRESHRATEMINUTES=2
+      DRSS_START: bot
+      DRSS_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      DRSS_DATABASE_URI: mongodb://monitorss-mongodb:27017/rss
+      DRSS_FEEDS_REFRESHRATEMINUTES: 2
 
   monitorss-web:
     container_name: monitorss-web
     image: synzen/monitorss
-    build: .
     restart: on-failure:3
     depends_on:
       - monitorss-redis
@@ -80,10 +92,10 @@ services:
     ports:
       - 8081:8081
     environment:
-      - DRSS_START=web
-      - DRSSWEB_BOT_TOKEN=${DISCORD_BOT_TOKEN}
-      - DRSSWEB_DATABASE_REDIS=redis://monitorss-redis:6379
-      - DRSSWEB_DATABASE_URI=mongodb://monitorss-mongodb:27017/rss
-      - DRSSWEB_BOT_REDIRECTURI=http://192.168.1.15:8081/authorize
-      - DRSSWEB_BOT_CLIENTID=${DISCORD_BOT_CLIENTID}
-      - DRSSWEB_BOT_CLIENTSECRET=${DISCORD_BOT_CLIENTSECRET}
+      DRSS_START: web
+      DRSSWEB_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      DRSSWEB_DATABASE_REDIS: redis://monitorss-redis:6379
+      DRSSWEB_DATABASE_URI: mongodb://monitorss-mongodb:27017/rss
+      DRSSWEB_BOT_REDIRECTURI: http://192.168.1.15:8081/authorize
+      DRSSWEB_BOT_CLIENTID: ${DISCORD_BOT_CLIENTID}
+      DRSSWEB_BOT_CLIENTSECRET: ${DISCORD_BOT_CLIENTSECRET}

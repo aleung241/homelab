@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 services:
   pihole:
     image: pihole/pihole:latest
@@ -22,8 +22,8 @@ services:
     image: linuxserver/unifi-controller
     container_name: unifi
     environment:
-      - PUID=1000
-      - PGID=1000
+      PUID: 1000
+      PGID: 1000
     volumes:
       - /opt/docker-compose/unifi:/config
     ports:
@@ -37,15 +37,15 @@ services:
   qbittorrent-dlc:
     image: hotio/qbittorrent
     container_name: qbittorrent-dlc
-    ports:
-      - 46882:46882/tcp
-      - 46882:46882/udp
-      - 8081:8081
     environment:
       TZ: Pacific/Auckland
       PGID: 1000
       PUID: 1000
       WEBUI_PORTS: 8081
+    ports:
+      - 47882:47882/tcp
+      - 47882:47882/udp
+      - 8081:8081
     volumes:
       - /opt/docker-compose/qbittorrent-dlc:/config
       - /server-storage:/data

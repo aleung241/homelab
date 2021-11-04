@@ -18,6 +18,8 @@ environment:
 
 ---
 
+My personal choice of directory for chucking external applications and runnables in is the `/opt` directory.
+
 Move `docker-compose/` to server for direct use:
 ```
 scp -r vm/general/docker-compose/ <user>@<server>:/opt/
@@ -50,4 +52,5 @@ docker ps -a
 Cleanup
 ```
 docker system prune
+docker image prune
 ```
