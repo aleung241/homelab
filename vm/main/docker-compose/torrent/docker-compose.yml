@@ -13,6 +13,8 @@ services:
       LOG_JSON: ${GEOIP_LOG_JSON}
     volumes:
       - "/opt/docker-compose/torrent/geoip:/data"
+    env_file:
+      - .env
     restart: always
 
   qbittorrent:
@@ -27,6 +29,8 @@ services:
       - 46882:46882/tcp
       - 46882:46882/udp
       - 8081:8081
+    env_file:
+      - .env
     volumes:
       - /opt/docker-compose/torrent/qbittorrent:/config
       - /server-storage:/data
@@ -47,6 +51,8 @@ services:
     volumes:
       - /opt/docker-compose/torrent/qbittorrent-m:/config
       - /server-storage:/data
+    env_file:
+      - .env
     restart: unless-stopped
     
   qbittorrent-lts:
@@ -64,4 +70,6 @@ services:
     volumes:
       - /opt/docker-compose/torrent/qbittorrent-lts:/config
       - /server-storage:/data
+    env_file:
+      - .env
     restart: unless-stopped

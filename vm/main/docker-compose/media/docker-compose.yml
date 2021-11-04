@@ -13,6 +13,8 @@ services:
       - /gmedia:/data
     ports:
       - 7878:7878
+    env_file:
+      - .env
     restart: unless-stopped
 
   sonarr:
@@ -28,6 +30,8 @@ services:
       - /gmedia:/data
     ports:
       - 8989:8989
+    env_file:
+      - .env
     restart: unless-stopped
 
   jackett:
@@ -42,6 +46,8 @@ services:
       - /opt/docker-compose/media/jackett:/config
     ports:
       - 9117:9117
+    env_file:
+      - .env
     restart: unless-stopped
 
   nzbhydra2:
@@ -56,6 +62,8 @@ services:
       - /opt/docker-compose/media/nzbhydra2:/config
     ports:
       - 5076:5076
+    env_file:
+      - .env
     restart: unless-stopped
 
   nzbhydra2-alt:
@@ -70,6 +78,8 @@ services:
       - /opt/docker-compose/media/nzbhydra2-alt:/config
     ports:
       - 5077:5076
+    env_file:
+      - .env
     restart: unless-stopped
 
   sabnzbd:
@@ -86,20 +96,24 @@ services:
       - /server-storage:/data
     ports:
       - 8090:8080
+    env_file:
+      - .env
     restart: unless-stopped
 
   bazarr:
     container_name: bazarr
     image: hotio/bazarr
     environment:
-      - PUID=1000
-      - PGID=1000
-      - UMASK=002
-      - TZ=Etc/UTC
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/bazarr:/config
       - /server-storage:/server-storage
       - /gdrive-mount:/gdrive-mount
     ports:
       - "6767:6767"
+    env_file:
+      - .env
     restart: unless-stopped

@@ -75,4 +75,6 @@ services:
       - WEBPORT=86
     ports:
       - 86:86
+    env_file:
+      - .env
     restart: unless-stopped
