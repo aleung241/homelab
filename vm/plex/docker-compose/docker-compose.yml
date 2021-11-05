@@ -99,3 +99,12 @@ services:
       DRSSWEB_BOT_REDIRECTURI: http://192.168.1.15:8081/authorize
       DRSSWEB_BOT_CLIENTID: ${DISCORD_BOT_CLIENTID}
       DRSSWEB_BOT_CLIENTSECRET: ${DISCORD_BOT_CLIENTSECRET}
+
+  portainer_agent:
+    image: portainer/agent:latest
+    container_name: portainer_agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9001:9001
+    restart: unless-stopped

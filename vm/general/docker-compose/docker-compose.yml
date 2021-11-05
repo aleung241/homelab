@@ -8,7 +8,7 @@ services:
       - 53:53/udp
       - 8001:80
     environment:
-      TZ: 'Pacific/Auckland'
+      TZ: ${TIMEZONE}
       WEBPASSWORD: '${PIHOLE_PASSWORD}'
     volumes:
       - /opt/docker-compose/pihole/etc:/etc/pihole
@@ -32,6 +32,15 @@ services:
       - 8080:8080
       - 8443:8443
       - 6789:6789
+    restart: unless-stopped
+
+  portainer_agent:
+    image: portainer/agent:latest
+    container_name: portainer_agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9001:9001
     restart: unless-stopped
 
   qbittorrent-dlc:

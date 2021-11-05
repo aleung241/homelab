@@ -6,7 +6,6 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      UMASK: 002
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/radarr:/config
@@ -23,7 +22,6 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      UMASK: 002
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/sonarr:/config

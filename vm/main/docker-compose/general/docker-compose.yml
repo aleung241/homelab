@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    environment:
+      TZ: ${TIMEZONE}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker-compose/general/portainer:/data
+    ports:
+      - 8000:8000
+      - 9000:9000
+      - 9443:9443
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns
+    container_name: cloudflare-ddns
+    environment:
+      TZ: ${TIMEZONE}
+      PROXIED: 'true'
+      API_KEY: ${CLOUDFLARE_APIKEY}
+      ZONE: ${CLOUDFLARE_DOMAIN}
+      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
