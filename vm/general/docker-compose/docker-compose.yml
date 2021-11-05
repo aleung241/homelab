@@ -47,7 +47,7 @@ services:
     image: hotio/qbittorrent
     container_name: qbittorrent-dlc
     environment:
-      TZ: Pacific/Auckland
+      TZ: ${TIMEZONE}
       PGID: 1000
       PUID: 1000
       WEBUI_PORTS: 8081

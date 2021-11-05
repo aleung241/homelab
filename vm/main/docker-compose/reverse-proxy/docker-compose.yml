@@ -20,8 +20,8 @@ services:
     image: sctx/overseerr
     container_name: overseerr
     environment:
-      - TZ=Pacific/Auckland
-      - LOG_LEVEL=info
+      TZ: ${TIMEZONE}
+      LOG_LEVEL: info
     volumes:
       - /opt/docker-compose/reverse-proxy/overseerr:/app/config
     ports:
@@ -69,10 +69,10 @@ services:
     image: adolfintel/speedtest
     container_name: librespeed
     environment:
-      - IPINFO_APIKEY=${IPINFO_APIKEY}
-      - MODE=standalone
-      - TITLE=${LIBRESPEED_TITLE}
-      - WEBPORT=86
+      IPINFO_APIKEY: ${IPINFO_APIKEY}
+      MODE: standalone
+      TITLE=${LIBRESPEED_TITLE}
+      WEBPORT: 86
     ports:
       - 86:86
     env_file:
