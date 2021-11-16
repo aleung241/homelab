@@ -80,7 +80,9 @@ services:
       DRSS_START: bot
       DRSS_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       DRSS_DATABASE_URI: mongodb://monitorss-mongodb:27017/rss
-      DRSS_FEEDS_REFRESHRATEMINUTES: 2
+      DRSS_FEEDS_REFRESHRATEMINUTES: 3
+      DRSS_FEEDS_TIMEZONE: ${TIMEZONE}
+      DRSS_LOG_LEVEL: info
 
   monitorss-web:
     container_name: monitorss-web

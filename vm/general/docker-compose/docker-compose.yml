@@ -44,7 +44,7 @@ services:
     restart: unless-stopped
 
   qbittorrent-dlc:
-    image: hotio/qbittorrent
+    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
     container_name: qbittorrent-dlc
     environment:
       TZ: ${TIMEZONE}

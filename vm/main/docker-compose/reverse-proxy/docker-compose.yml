@@ -16,6 +16,17 @@ services:
       - 447:443
     restart: unless-stopped
 
+  # authelia:
+  #   image: authelia/authelia:4.32.2
+  #   container_name: authelia
+  #   environment:
+  #     TZ: ${TIMEZONE}
+  #   volumes:
+  #     - /opt/docker-compose/reverse-proxy/authelia:/config
+  #   ports:
+  #     - 9091:9091
+  #   restart: unless-stopped
+
   overseerr:
     image: sctx/overseerr
     container_name: overseerr
@@ -71,7 +82,7 @@ services:
     environment:
       IPINFO_APIKEY: ${IPINFO_APIKEY}
       MODE: standalone
-      TITLE=${LIBRESPEED_TITLE}
+      TITLE: ${LIBRESPEED_TITLE}
       WEBPORT: 86
     ports:
       - 86:86
