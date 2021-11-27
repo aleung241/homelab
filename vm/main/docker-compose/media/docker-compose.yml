@@ -109,7 +109,7 @@ services:
     volumes:
       - /opt/docker-compose/media/bazarr:/config
       - /server-storage:/server-storage
-      - /gdrive-mount:/gdrive-mount
+      - /gmedia:/data
     ports:
       - "6767:6767"
     env_file:
