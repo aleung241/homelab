@@ -61,3 +61,4 @@ services:
     volumes:
       - /opt/docker-compose/general/bookstack-db:/config
     restart: unless-stopped
+    
