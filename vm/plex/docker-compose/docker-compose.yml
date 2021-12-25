@@ -10,6 +10,7 @@ services:
       - /Plex/Plex Media Server 2:/config
       - /transcode/plex2:/transcode
       - /Plex/gdrive-mount:/data
+      - /gmedia:/gmedia
     ports:
       - 33400:32400/tcp
       - 4005:3005/tcp
