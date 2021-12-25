@@ -54,6 +54,7 @@ services:
       - "--verbose"
       - "--fast-list"
       - "--drive-skip-gdocs"
+      - "--drive-acknowledge-abuse"
       - "--buffer-size"
       - "64M"
       - "--no-modtime"
