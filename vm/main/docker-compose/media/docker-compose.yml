@@ -11,6 +11,7 @@ services:
     volumes:
       - /opt/docker-compose/media/radarr:/config
       - /gmedia:/data
+      - /gmediac:/datac
     ports:
       - 7878:7878
     env_file:
@@ -28,6 +29,7 @@ services:
     volumes:
       - /opt/docker-compose/media/sonarr:/config
       - /gmedia:/data
+      - /gmediac:/datac
     ports:
       - 8989:8989
     env_file:
@@ -110,6 +112,7 @@ services:
       - /opt/docker-compose/media/bazarr:/config
       - /server-storage:/server-storage
       - /gmedia:/data
+      - /gmediac:/datac
     ports:
       - "6767:6767"
     env_file:
