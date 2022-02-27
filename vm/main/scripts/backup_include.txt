@@ -1,0 +1,20 @@
++ /etc/
++ /etc/fstab
++ /etc/systemd/
++ /etc/systemd/system/
++ /etc/systemd/system/rclone*
++ /etc/systemd/system/gmedia*
++ /etc/systemd/system/plex_autoscan.service
+
++ /root/
++ /root/.bashrc
++ /root/.config/
++ /root/.config/btop
++ /root/.config/rclone
++ /root/scripts/
++ /root/scripts/**
+
++ /opt/
++ /opt/**
+
+- *
