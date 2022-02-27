@@ -11,6 +11,7 @@ services:
       - /transcode/plex2:/transcode
       - /Plex/gdrive-mount:/data
       - /gmedia:/gmedia
+      - /server-storage:/server-storage
     ports:
       - 33400:32400/tcp
       - 4005:3005/tcp
@@ -35,11 +36,14 @@ services:
       - /opt/docker-compose/imdbupdatetool:/config
 
   jellyfin:
-    image: jellyfin/jellyfin
+    image: cr.hotio.dev/hotio/jellyfin
     container_name: jellyfin
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: 1000
+      PGID: 1000
     volumes:
       - /opt/docker-compose/jellyfin/config:/config
-      - /transcode/jellyfin:/cache
       - /gmedia:/media
     ports:
       - 8096:8096
