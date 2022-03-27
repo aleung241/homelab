@@ -1,3 +1,4 @@
 .env
-**/main/docker-compose/special
+secrets.sh
+docker-compose-special.yml
 **/authelia

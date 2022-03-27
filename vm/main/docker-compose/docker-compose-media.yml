@@ -4,9 +4,9 @@ services:
     image: hotio/radarr
     container_name: radarr
     environment:
-      PUID: 1000
-      PGID: 1000
-      UMASK: 000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/radarr:/config
@@ -22,9 +22,9 @@ services:
     image: hotio/sonarr
     container_name: sonarr
     environment:
-      PUID: 1000
-      PGID: 1000
-      UMASK: 000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/sonarr:/config
@@ -40,9 +40,9 @@ services:
     image: hotio/jackett
     container_name: jackett
     environment:
-      PUID: 1000
-      PGID: 1000
-      UMASK: 000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/jackett:/config
@@ -56,8 +56,8 @@ services:
     image: hotio/nzbhydra2
     container_name: nzbhydra2
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/nzbhydra2:/config
@@ -71,8 +71,8 @@ services:
     image: hotio/nzbhydra2
     container_name: nzbhydra2-alt
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/nzbhydra2-alt:/config
@@ -86,9 +86,9 @@ services:
     image: hotio/sabnzbd
     container_name: sabnzbd
     environment:
-      PUID: 1000
-      PGID: 1000
-      UMASK: 000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/sabnzbd:/config
@@ -104,9 +104,9 @@ services:
     container_name: bazarr
     image: hotio/bazarr
     environment:
-      PUID: 1000
-      PGID: 1000
-      UMASK: 000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/bazarr:/config
@@ -117,4 +117,16 @@ services:
       - "6767:6767"
     env_file:
       - .env
+    restart: unless-stopped
+
+  overseerr:
+    image: sctx/overseerr
+    container_name: overseerr
+    environment:
+      TZ: ${TIMEZONE}
+      LOG_LEVEL: info
+    volumes:
+      - /opt/docker-compose/reverse-proxy/overseerr:/app/config
+    ports:
+      - 5055:5055
     restart: unless-stopped

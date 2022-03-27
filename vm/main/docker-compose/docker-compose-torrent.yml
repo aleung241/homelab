@@ -22,8 +22,8 @@ services:
     container_name: qbittorrent
     environment:
       TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8081
     ports:
       - 46882:46882/tcp
@@ -41,8 +41,8 @@ services:
     container_name: qbittorrent-m
     environment:
       TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8083
     ports:
       - 46884:46884/tcp
@@ -60,8 +60,8 @@ services:
     container_name: qbittorrent-lts
     environment:
       TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8085
     ports:
       - 46886:46886/tcp

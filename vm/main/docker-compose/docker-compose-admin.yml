@@ -7,7 +7,7 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/docker-compose/general/portainer:/data
+      - /opt/docker-compose/admin/portainer:/data
     ports:
       - 8000:8000
       - 9000:9000
@@ -15,16 +15,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-
-  cloudflare-ddns:
-    image: oznu/cloudflare-ddns
-    container_name: cloudflare-ddns
-    environment:
-      TZ: ${TIMEZONE}
-      PROXIED: 'true'
-      API_KEY: ${CLOUDFLARE_APIKEY}
-      ZONE: ${CLOUDFLARE_DOMAIN}
-      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
 
   bookstack:
     image: lscr.io/linuxserver/bookstack
@@ -40,7 +30,7 @@ services:
       DB_PASS: ${BOOKSTACK_DB_PASS}
       DB_DATABASE: ${BOOKSTACK_DB_DATABASE}
     volumes:
-      - /opt/docker-compose/general/bookstack:/config
+      - /opt/docker-compose/admin/bookstack:/config
     ports:
       - 7000:80
     restart: unless-stopped
@@ -59,6 +49,17 @@ services:
       MYSQL_USER: ${BOOKSTACK_DB_USER}
       MYSQL_PASSWORD: ${BOOKSTACK_DB_PASS}
     volumes:
-      - /opt/docker-compose/general/bookstack-db:/config
+      - /opt/docker-compose/admin/bookstack-db:/config
     restart: unless-stopped
     
+  homer:
+    image: b4bz/homer:latest
+    container_name: homer
+    environment:
+      UID: 1000
+      GID: 1000
+    volumes:
+      - /opt/docker-compose/admin/homer/assets:/www/assets
+    ports:
+      - 7100:8080
+    restart: unless-stopped

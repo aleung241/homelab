@@ -7,14 +7,24 @@ services:
       - /opt/docker-compose/reverse-proxy/nginx-docker/etc/nginx:/etc/nginx
       - /opt/docker-compose/reverse-proxy/nginx-docker/etc/ssl:/etc/ssl
       - /opt/docker-compose/reverse-proxy/nginx-docker/etc/nginx-index:/opt/index
-      - /opt/docker-compose/reverse-proxy/nginx-docker/etc//nginx-access:/etc/apache2
-      - /opt/docker-compose/reverse-proxy/nginx-docker/etc/letsencrypt:/etc/letsencrypt
+      - /opt/docker-compose/reverse-proxy/nginx-docker/etc/nginx-access:/etc/apache2
+      - /opt/letsencrypt/etc/letsencrypt:/letsencrypt
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
       - 87:80
       - 447:443
     restart: unless-stopped
+
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns
+    container_name: cloudflare-ddns
+    environment:
+      TZ: ${TIMEZONE}
+      PROXIED: 'true'
+      API_KEY: ${CLOUDFLARE_APIKEY}
+      ZONE: ${CLOUDFLARE_DOMAIN}
+      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
 
   # authelia:
   #   image: authelia/authelia:4.32.2
@@ -27,18 +37,6 @@ services:
   #     - 9091:9091
   #   restart: unless-stopped
 
-  overseerr:
-    image: sctx/overseerr
-    container_name: overseerr
-    environment:
-      TZ: ${TIMEZONE}
-      LOG_LEVEL: info
-    volumes:
-      - /opt/docker-compose/reverse-proxy/overseerr:/app/config
-    ports:
-      - 5055:5055
-    restart: unless-stopped
-
   rclone-serve-webdav:
     image: rclone/rclone
     container_name: rclone-serve-webdav
@@ -48,7 +46,7 @@ services:
     command:
       - "serve"
       - "webdav"
-      - "remote-aleung:/server-storage"
+      - "remote-aleung:server-storage"
       - "--config"
       - "/root/.config/rclone/rclone.conf"
       - "--verbose"
