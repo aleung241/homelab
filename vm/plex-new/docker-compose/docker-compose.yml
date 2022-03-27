@@ -1,0 +1,72 @@
+version: "3.9"
+services:
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    environment:
+      TZ: ${TIMEZONE}
+      PLEX_CLAIM: 
+    volumes:
+      - /Plex/pms2:/config
+      - /Plex/transcode/plex2:/transcode
+      - /gmedia:/gmedia
+      - /gmediac:/gmediac
+      - /server-storage:/server-storage
+    ports:
+      - 33400:32400/tcp
+      - 4005:3005/tcp
+      - 9324:8324/tcp
+      - 33469:32469/tcp
+      - 2000:1900/udp
+      - 33410:32410/udp
+      - 33412:32412/udp
+      - 33413:32413/udp
+      - 33414:32414/udp
+    restart: unless-stopped
+
+  imdbupdatetool:
+    image: mynttt/updatetool
+    container_name: imdbupdatetool
+    environment:
+      RUN_EVERY_N_HOURS: 168
+      TVDB_API_KEY: ${TVDB_API_KEY}
+      TMDB_API_KEY: ${TMDB_API_KEY}
+    volumes:
+      - /Plex/pms:/plexdata
+      - /opt/docker-compose/imdbupdatetool:/config
+
+  jellyfin:
+    image: cr.hotio.dev/hotio/jellyfin
+    container_name: jellyfin
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+    volumes:
+      - /opt/docker-compose/jellyfin/config:/config
+      - /gmedia:/media
+    ports:
+      - 8096:8096
+
+  tautulli:
+    image: tautulli/tautulli
+    container_name: tautulli
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+    volumes:
+      - /opt/docker-compose/tautulli:/config
+      - /Plex/pms:/plex
+    ports:
+      - 8182:8181
+    restart: unless-stopped
+
+  portainer_agent:
+    image: portainer/agent:latest
+    container_name: portainer_agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9001:9001
+    restart: unless-stopped
