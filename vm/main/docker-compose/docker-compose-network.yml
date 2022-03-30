@@ -25,6 +25,7 @@ services:
       API_KEY: ${CLOUDFLARE_APIKEY}
       ZONE: ${CLOUDFLARE_DOMAIN}
       SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
+    restart: unless-stopped
 
   # authelia:
   #   image: authelia/authelia:4.32.2
