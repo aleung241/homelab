@@ -2,15 +2,5 @@
 
 BASE_DIRECTORY="/opt/docker-compose"
 
-docker-compose -f $BASE_DIRECTORY/media/docker-compose.yml pull
-docker-compose -f $BASE_DIRECTORY/general/docker-compose.yml pull
-docker-compose -f $BASE_DIRECTORY/reverse-proxy/docker-compose.yml pull
-docker-compose -f $BASE_DIRECTORY/special/docker-compose.yml pull
-docker-compose -f $BASE_DIRECTORY/torrent/docker-compose.yml pull
-
-
-docker-compose -f $BASE_DIRECTORY/media/docker-compose.yml up -d
-docker-compose -f $BASE_DIRECTORY/general/docker-compose.yml up -d
-docker-compose -f $BASE_DIRECTORY/reverse-proxy/docker-compose.yml up -d
-docker-compose -f $BASE_DIRECTORY/special/docker-compose.yml up -d
-docker-compose -f $BASE_DIRECTORY/torrent/docker-compose.yml up -d
+docker-compose $(find $BASE_DIRECTORY -maxdepth 1 -type f -name '*.yml' -printf "-f $BASE_DIRECTORY/%f ") pull
+docker-compose $(find $BASE_DIRECTORY -maxdepth 1 -type f -name '*.yml' -printf "-f $BASE_DIRECTORY/%f ") up -d

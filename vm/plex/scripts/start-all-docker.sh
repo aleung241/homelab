@@ -1,4 +1,6 @@
 #!/bin/bash
 
-docker-compose -f /opt/docker-compose/docker-compose.yml pull
-docker-compose -f /opt/docker-compose/docker-compose.yml up -d
+BASE_DIRECTORY="/opt/docker-compose"
+
+docker-compose $(find $BASE_DIRECTORY -maxdepth 1 -type f -name '*.yml' -printf "-f $BASE_DIRECTORY/%f ") pull
+docker-compose $(find $BASE_DIRECTORY -maxdepth 1 -type f -name '*.yml' -printf "-f $BASE_DIRECTORY/%f ") up -d
