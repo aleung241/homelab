@@ -34,6 +34,7 @@ services:
     volumes:
       - /Plex/pms:/plexdata
       - /opt/docker-compose/imdbupdatetool:/config
+    restart: unless-stopped
 
   jellyfin:
     image: cr.hotio.dev/hotio/jellyfin
@@ -47,6 +48,7 @@ services:
       - /gmedia:/media
     ports:
       - 8096:8096
+    restart: unless-stopped
 
   tautulli:
     image: tautulli/tautulli
