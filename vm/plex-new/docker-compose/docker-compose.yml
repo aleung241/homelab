@@ -8,7 +8,7 @@ services:
       PLEX_CLAIM: 
     volumes:
       - /Plex/pms2:/config
-      - /Plex/transcode/plex2:/transcode
+      - /transcode/plex2:/transcode
       - /gmedia:/gmedia
       - /gmediac:/gmediac
       - /server-storage:/server-storage
