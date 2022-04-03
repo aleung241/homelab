@@ -22,8 +22,8 @@ services:
     env_file:
       - .env
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       APP_URL: ${BOOKSTACK_URL}
       DB_HOST: bookstack_db
       DB_USER: ${BOOKSTACK_DB_USER}
@@ -41,8 +41,8 @@ services:
     image: lscr.io/linuxserver/mariadb
     container_name: bookstack_db
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       MYSQL_ROOT_PASSWORD: ${BOOKSTACK_DB_PASS}
       TZ: ${TIMEZONE}
       MYSQL_DATABASE: ${BOOKSTACK_DB_DATABASE}
@@ -56,8 +56,8 @@ services:
     image: b4bz/homer:latest
     container_name: homer
     environment:
-      UID: 1000
-      GID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
     volumes:
       - /opt/docker-compose/admin/homer/assets:/www/assets
     ports:
