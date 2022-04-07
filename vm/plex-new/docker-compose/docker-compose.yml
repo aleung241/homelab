@@ -31,6 +31,8 @@ services:
       RUN_EVERY_N_HOURS: 168
       TVDB_API_KEY: ${TVDB_API_KEY}
       TMDB_API_KEY: ${TMDB_API_KEY}
+      USE_PLEX_SQLITE_BINARY_FOR_WRITE_ACCESS: "true"
+      UNLOCK_FOR_NEW_TV_AGENT: 2;17
     volumes:
       - /Plex/pms:/plexdata
       - /opt/docker-compose/imdbupdatetool:/config
