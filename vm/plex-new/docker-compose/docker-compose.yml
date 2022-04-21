@@ -9,9 +9,9 @@ services:
     volumes:
       - /Plex/pms2:/config
       - /transcode/plex2:/transcode
-      - /gmedia:/gmedia
-      - /gmediac:/gmediac
-      - /server-storage:/server-storage
+      - /gmedia:/gmedia:ro
+      - /gmediac:/gmediac:ro
+      - /server-storage:/server-storage:ro
     ports:
       - 33400:32400/tcp
       - 4005:3005/tcp
@@ -47,7 +47,7 @@ services:
       PGID: ${DEFAULT_GROUP}
     volumes:
       - /opt/docker-compose/jellyfin/config:/config
-      - /gmedia:/media
+      - /gmediac:/media:ro
     ports:
       - 8096:8096
     restart: unless-stopped
