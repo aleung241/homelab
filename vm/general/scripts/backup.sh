@@ -83,15 +83,15 @@ upload_to_gdrive() {
 }
 
 INFO() {
-    echo "[$(date '+%d/%m/%Y %T')] [INFO] $*" >> /var/log/plex-backup.log
+    echo "[$(date '+%d/%m/%Y %T')] [INFO] $*" >> /var/log/backup.log
 }
 
 DEBUG() {
-    echo "[$(date '+%d/%m/%Y %T')] [DEBUG] $*" >> /var/log/plex-backup.log
+    echo "[$(date '+%d/%m/%Y %T')] [DEBUG] $*" >> /var/log/backup.log
 }
 
 WARN() {
-    echo "[$(date '+%d/%m/%Y %T')] [WARN] $*" >> /var/log/plex-backup.log
+    echo "[$(date '+%d/%m/%Y %T')] [WARN] $*" >> /var/log/backup.log
 }
 
 start_backup
