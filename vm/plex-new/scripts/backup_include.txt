@@ -18,5 +18,5 @@
 + /opt/**
 
 + /Plex/
-+ /Plex/Plex**
++ /Plex/**
 - *
