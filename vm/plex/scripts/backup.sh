@@ -2,8 +2,7 @@
 
 vm_tarball="plex-vm.tar.bz2"
 opt_tarball="plex-opt.tar.bz2"
-plex_tarball="plex-pms.tar.bz2"
-backup_destination="/transcode/backup"
+backup_destination="/Plex/backup"
 nas_backup_destination="server-storage/Others/Saves and Backups/server-vm/plex"
 
 start_backup() {    
@@ -23,27 +22,13 @@ create_backups() {
     cd "/$nas_backup_destination"
     backup $vm_tarball
     backup $opt_tarball
-    backup $plex_tarball
 }
 
 copy_to_backup_folder() {
     cd ~/scripts
-
-    INFO "[01] Shutting down Plex Media Server for backup"
-    systemctl stop plexmediaserver
-    INFO "[02] Shutting down Secondary Plex Media Server for backup"
-    docker-compose -f /opt/docker-compose/docker-compose.yml stop plex
-
     INFO "[03] Copying files to backup folder"
     rsync -a --delete --include-from=backup_include.txt / $backup_destination
     DEBUG "Copy finished"
-
-    INFO "[04] Starting Plex Media Server..."
-    systemctl start plexmediaserver
-    DEBUG "Plex Media Server started"
-    INFO "[05] Starting Secondary Plex Media Server..."
-    docker-compose -f /opt/docker-compose/docker-compose.yml start plex
-    DEBUG "Secondary Plex Media Server started"
 }
 
 backup() {
@@ -58,7 +43,6 @@ backup() {
 create_new_tarballs() {
     tar_vm
     tar_opt
-    tar_plex
 }
 
 tar_vm() {
@@ -73,18 +57,11 @@ tar_opt() {
     DEBUG "$opt_tarball created"
 }
 
-tar_plex() {
-    INFO "[09] Creating $plex_tarball"
-    tar -cjf $plex_tarball "$backup_destination/Plex/Plex Media Server"
-    DEBUG "$plex_tarball created"
-}
-
 teardown() {
     INFO "[10] Teardown starting"
 
     remove_backup backup_$vm_tarball
     remove_backup backup_$opt_tarball
-    remove_backup backup_$plex_tarball
 
     DEBUG "Teardown finished"
 }
@@ -105,15 +82,15 @@ upload_to_gdrive() {
 }
 
 INFO() {
-    echo "[$(date '+%d/%m/%Y %T')] [INFO] $*" >> /var/log/plex-backup.log
+    echo "[$(date '+%d/%m/%Y %T')] [INFO] $*" >> /var/log/backup.log
 }
 
 DEBUG() {
-    echo "[$(date '+%d/%m/%Y %T')] [DEBUG] $*" >> /var/log/plex-backup.log
+    echo "[$(date '+%d/%m/%Y %T')] [DEBUG] $*" >> /var/log/backup.log
 }
 
 WARN() {
-    echo "[$(date '+%d/%m/%Y %T')] [WARN] $*" >> /var/log/plex-backup.log
+    echo "[$(date '+%d/%m/%Y %T')] [WARN] $*" >> /var/log/backup.log
 }
 
 start_backup
