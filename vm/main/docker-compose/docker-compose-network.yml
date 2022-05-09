@@ -44,16 +44,14 @@ services:
     volumes:
       - /root/.config/rclone/:/root/.config/rclone/:ro
       - /opt/docker-compose/reverse-proxy/rclone-serve-webdav:/opt
+      - /gmediac:/gmediac:ro
     command:
       - "serve"
       - "webdav"
-      - "remote-aleung:server-storage"
+      - "/gmediac"
       - "--config"
       - "/root/.config/rclone/rclone.conf"
       - "--verbose"
-      - "--fast-list"
-      - "--drive-skip-gdocs"
-      - "--drive-acknowledge-abuse"
       - "--buffer-size"
       - "64M"
       - "--no-modtime"
@@ -61,8 +59,6 @@ services:
       - "64M"
       - "--vfs-read-chunk-size-limit"
       - "1024M"
-      - "--poll-interval"
-      - "10s"
       - "--dir-cache-time"
       - "900h"
       - "--umask"
