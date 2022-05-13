@@ -4,7 +4,7 @@ vm_tarball="plex-vm.tar.bz2"
 opt_tarball="plex-opt.tar.bz2"
 plex_tarball="plex-pms.tar.bz2"
 backup_destination="/transcode/backup"
-nas_backup_destination="server-storage/Others/Saves and Backups/server-vm/plex-new"
+nas_backup_destination="server-storage/others/backups/server-vm/plex-new"
 
 start_backup() {    
     INFO "==================================="
