@@ -24,6 +24,21 @@ services:
       - 33414:32414/udp
     restart: unless-stopped
 
+  autoscan:
+    container_name: autoscan
+    image: cr.hotio.dev/hotio/autoscan
+    ports:
+      - "3030:3030"
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
+    volumes:
+      - /opt/docker-compose/autoscan:/config
+      - /gmediac:/datac:ro
+    restart: unless-stopped
+
   imdbupdatetool:
     image: mynttt/updatetool
     container_name: imdbupdatetool
