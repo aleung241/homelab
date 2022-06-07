@@ -10,7 +10,6 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/radarr:/config
-      - /gmedia:/data
       - /gmediac:/datac
       - /server-storage:/server-storage
     ports:
@@ -29,7 +28,6 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker-compose/media/sonarr:/config
-      - /gmedia:/data
       - /gmediac:/datac
       - /server-storage:/server-storage
     ports:
