@@ -72,13 +72,29 @@ services:
       - "/opt/index.html"
     restart: unless-stopped
 
-  librespeed:
+  librespeed-backend:
     image: adolfintel/speedtest
-    container_name: librespeed
+    container_name: librespeed-backend
     environment:
+      MODE: backend
       IPINFO_APIKEY: ${IPINFO_APIKEY}
-      MODE: standalone
+      WEBPORT: 85
+    ports:
+      - 85:85
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  librespeed-frontend:
+    image: adolfintel/speedtest
+    container_name: librespeed-frontend
+    volumes:
+      - /opt/docker-compose/reverse-proxy/librespeed/servers.json:/servers.json
+    environment:
+      MODE: frontend
       TITLE: ${LIBRESPEED_TITLE}
+      IPINFO_APIKEY: ${IPINFO_APIKEY}
+      DISTANCE: km
       WEBPORT: 86
     ports:
       - 86:86
