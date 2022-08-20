@@ -4,3 +4,4 @@ docker-compose-special.yml
 **/authelia
 **/admin/homer
 **/autoscan
+**/monitorss

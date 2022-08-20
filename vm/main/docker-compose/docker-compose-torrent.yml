@@ -15,6 +15,10 @@ services:
       - "/opt/docker-compose/torrent/geoip:/data"
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: always
 
   qbittorrent:
@@ -34,6 +38,10 @@ services:
     volumes:
       - /opt/docker-compose/torrent/qbittorrent:/config
       - /server-storage:/data
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   qbittorrent-m:
@@ -53,6 +61,10 @@ services:
       - /server-storage:/data
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
     
   qbittorrent-lts:
@@ -72,4 +84,8 @@ services:
       - /server-storage:/data
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped

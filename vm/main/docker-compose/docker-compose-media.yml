@@ -16,6 +16,10 @@ services:
       - 7878:7878
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   sonarr:
@@ -34,6 +38,10 @@ services:
       - 8989:8989
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   jackett:
@@ -50,6 +58,10 @@ services:
       - 9117:9117
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   nzbhydra2:
@@ -65,6 +77,10 @@ services:
       - 5076:5076
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   nzbhydra2-alt:
@@ -80,6 +96,10 @@ services:
       - 5077:5076
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   sabnzbd:
@@ -98,6 +118,10 @@ services:
       - 8090:8080
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   bazarr:
@@ -117,6 +141,10 @@ services:
       - "6767:6767"
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   overseerr:
@@ -129,4 +157,8 @@ services:
       - /opt/docker-compose/reverse-proxy/overseerr:/app/config
     ports:
       - 5055:5055
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped

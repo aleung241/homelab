@@ -22,6 +22,10 @@ services:
       - 33412:32412/udp
       - 33413:32413/udp
       - 33414:32414/udp
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   autoscan:
@@ -37,6 +41,10 @@ services:
     volumes:
       - /opt/docker-compose/autoscan:/config
       - /gmediac:/datac:ro
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   imdbupdatetool:
@@ -51,6 +59,10 @@ services:
     volumes:
       - /Plex/pms:/plexdata
       - /opt/docker-compose/imdbupdatetool:/config
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   jellyfin:
@@ -65,6 +77,10 @@ services:
       - /gmediac:/media:ro
     ports:
       - 8096:8096
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   tautulli:
@@ -79,6 +95,10 @@ services:
       - /Plex/pms:/plex
     ports:
       - 8182:8181
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   portainer_agent:
@@ -88,4 +108,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 9001:9001
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped

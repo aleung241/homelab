@@ -14,6 +14,10 @@ services:
       - 9443:9443
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   bookstack:
@@ -33,6 +37,10 @@ services:
       - /opt/docker-compose/admin/bookstack:/config
     ports:
       - 7000:80
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
     depends_on:
       - bookstack_db
@@ -50,6 +58,10 @@ services:
       MYSQL_PASSWORD: ${BOOKSTACK_DB_PASS}
     volumes:
       - /opt/docker-compose/admin/bookstack-db:/config
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
     
   homer:
@@ -62,4 +74,8 @@ services:
       - /opt/docker-compose/admin/homer/assets:/www/assets
     ports:
       - 7100:8080
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped

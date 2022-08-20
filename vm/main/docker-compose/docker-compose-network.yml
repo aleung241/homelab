@@ -14,6 +14,10 @@ services:
     ports:
       - 87:80
       - 447:443
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   cloudflare-ddns:
@@ -25,6 +29,10 @@ services:
       API_KEY: ${CLOUDFLARE_APIKEY}
       ZONE: ${CLOUDFLARE_DOMAIN}
       SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   # authelia:
@@ -61,6 +69,8 @@ services:
       - "1024M"
       - "--dir-cache-time"
       - "900h"
+      - "--poll-interval"
+      - "10s"
       - "--umask"
       - "002"
       - "--addr"
@@ -70,6 +80,10 @@ services:
       - "/opt/include-from.txt"
       - "--template"
       - "/opt/index.html"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   librespeed-backend:
@@ -83,6 +97,10 @@ services:
       - 85:85
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
   librespeed-frontend:
@@ -100,4 +118,8 @@ services:
       - 86:86
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
