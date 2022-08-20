@@ -23,8 +23,8 @@ services:
     image: linuxserver/unifi-controller
     container_name: unifi
     environment:
-      PUID: 1000
-      PGID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
     volumes:
       - /opt/docker-compose/unifi:/config
     ports:
@@ -57,8 +57,8 @@ services:
     container_name: qbittorrent-dlc
     environment:
       TZ: ${TIMEZONE}
-      PGID: 1000
-      PUID: 1000
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8081
     ports:
       - 47882:47882/tcp
