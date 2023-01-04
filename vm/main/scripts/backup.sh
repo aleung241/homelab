@@ -3,7 +3,7 @@
 vm_tarball="main-vm.tar.bz2"
 opt_tarball="main-opt.tar.bz2"
 backup_destination="/backup"
-nas_backup_destination="server-storage/others/backups/server-vm/main"
+nas_backup_destination="server-storage/backups/server-vm/main"
 
 start_backup() {    
     INFO "==================================="

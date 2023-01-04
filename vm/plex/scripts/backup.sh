@@ -3,7 +3,7 @@
 vm_tarball="plex-vm.tar.bz2"
 opt_tarball="plex-opt.tar.bz2"
 backup_destination="/Plex/backup"
-nas_backup_destination="server-storage/others/backups/server-vm/plex"
+nas_backup_destination="server-storage/backups/server-vm/plex"
 
 start_backup() {    
     INFO "==================================="
