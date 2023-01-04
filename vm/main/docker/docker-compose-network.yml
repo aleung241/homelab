@@ -1,0 +1,124 @@
+version: '3.9'
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - /opt/docker/nginx/etc/nginx:/etc/nginx
+      - /opt/docker/nginx/etc/nginx-index:/opt/index
+      - /opt/docker/nginx/etc/nginx-access:/etc/apache2
+      - /opt/docker/letsencrypt/etc/letsencrypt:/letsencrypt
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 87:80
+      - 447:443
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
+
+  unifi:
+    image: linuxserver/unifi-controller
+    container_name: unifi
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+    volumes:
+      - /opt/docker/unifi:/config
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8443:8443
+      - 6789:6789
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
+
+  adguard-home:
+    image: adguard/adguardhome
+    container_name: adguard-home
+    ports:
+      - 53:53/tcp     # dns
+      - 53:53/udp     # dns
+      - 8000:80       # http
+      - 8001:443/tcp  # dns-over-https
+      - 8001:443/udp  # dns-over-https
+      - 8002:3000     # web
+    volumes:
+      - /opt/docker/adguardhome/work:/opt/adguardhome/work
+      - /opt/docker/adguardhome/conf:/opt/adguardhome/conf
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
+
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns
+    container_name: cloudflare-ddns
+    environment:
+      TZ: ${TIMEZONE}
+      PROXIED: 'true'
+      API_KEY: ${CLOUDFLARE_APIKEY}
+      ZONE: ${CLOUDFLARE_DOMAIN}
+      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      LOG_LEVEL: info
+      LOG_HTML: false
+      CAPTCHA_SOLVER: none
+      TZ: ${TIMEZONE}
+    ports:
+      - "8191:8191"
+    restart: unless-stopped
+
+  rclone-serve-webdav:
+    image: rclone/rclone
+    container_name: rclone-serve-webdav
+    volumes:
+      - /root/.config/rclone/:/root/.config/rclone/:ro
+      - /opt/docker/rclone-serve-webdav:/opt
+      - /gmediac:/gmediac:ro
+    command:
+      - "serve"
+      - "webdav"
+      - "/gmediac"
+      - "--config"
+      - "/root/.config/rclone/rclone.conf"
+      - "--verbose"
+      - "--buffer-size"
+      - "64M"
+      - "--no-modtime"
+      - "--vfs-read-chunk-size"
+      - "64M"
+      - "--vfs-read-chunk-size-limit"
+      - "1024M"
+      - "--dir-cache-time"
+      - "5m"
+      - "--umask"
+      - "002"
+      - "--addr"
+      - "0.0.0.0:8087"
+      - "--read-only"
+      - "--include-from"
+      - "/opt/include-from.txt"
+      - "--template"
+      - "/opt/index.html"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped

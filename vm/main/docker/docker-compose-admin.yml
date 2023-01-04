@@ -7,13 +7,11 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/docker-compose/admin/portainer:/data
+      - /opt/docker/portainer:/data
     ports:
-      - 8000:8000
+      - 8100:8000
       - 9000:9000
       - 9443:9443
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -34,7 +32,7 @@ services:
       DB_PASS: ${BOOKSTACK_DB_PASS}
       DB_DATABASE: ${BOOKSTACK_DB_DATABASE}
     volumes:
-      - /opt/docker-compose/admin/bookstack:/config
+      - /opt/docker/bookstack:/config
     ports:
       - 7000:80
     labels:
@@ -57,13 +55,13 @@ services:
       MYSQL_USER: ${BOOKSTACK_DB_USER}
       MYSQL_PASSWORD: ${BOOKSTACK_DB_PASS}
     volumes:
-      - /opt/docker-compose/admin/bookstack-db:/config
+      - /opt/docker/bookstack-db:/config
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
-    
+
   homer:
     image: b4bz/homer:latest
     container_name: homer
@@ -71,7 +69,7 @@ services:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
     volumes:
-      - /opt/docker-compose/admin/homer/assets:/www/assets
+      - /opt/docker/homer/assets:/www/assets
     ports:
       - 7100:8080
     labels:

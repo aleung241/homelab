@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 services:
   monitorss-redis:
     container_name: monitorss-redis
@@ -13,9 +13,9 @@ services:
     container_name: monitorss-mongodb
     restart: on-failure:5
     command: mongod --port 27017
-    image: mongo:latest
+    image: mongo:5.0.11
     volumes:
-      - /opt/docker-compose/monitorss/db-data:/data/db
+      - /opt/docker/monitorss/db-data:/data/db
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -35,7 +35,7 @@ services:
       DRSS_FEEDS_TIMEZONE: ${TIMEZONE}
       DRSS_LOG_LEVEL: info
     volumes:
-      - /opt/docker-compose/monitorss/settings/schedules.json:/app/settings/schedules.json
+      - /opt/docker/monitorss/settings/schedules.json:/app/settings/schedules.json
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -49,29 +49,16 @@ services:
       - monitorss-redis
       - monitorss-mongodb
     ports:
-      - 8081:8081
+      - 8281:8081
     environment:
       DRSS_START: web
       DRSSWEB_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       DRSSWEB_DATABASE_REDIS: redis://monitorss-redis:6379
       DRSSWEB_DATABASE_URI: mongodb://monitorss-mongodb:27017/rss
-      DRSSWEB_BOT_REDIRECTURI: http://192.168.1.15:8081/authorize
+      DRSSWEB_BOT_REDIRECTURI: ${DISCORD_WEB_REDIRECT_URI}
       DRSSWEB_BOT_CLIENTID: ${DISCORD_BOT_CLIENTID}
       DRSSWEB_BOT_CLIENTSECRET: ${DISCORD_BOT_CLIENTSECRET}
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-
-  portainer_agent:
-    image: portainer/agent:latest
-    container_name: portainer_agent
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 9001:9001
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-    restart: unless-stopped

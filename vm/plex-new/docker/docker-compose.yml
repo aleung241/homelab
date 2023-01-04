@@ -39,7 +39,7 @@ services:
       PGID: ${DEFAULT_GROUP}
       UMASK: ${DEFAULT_UMASK}
     volumes:
-      - /opt/docker-compose/autoscan:/config
+      - /opt/docker/autoscan:/config
       - /gmediac:/datac:ro
     labels:
       - "org.hotio.pullio.notify=true"
@@ -58,7 +58,7 @@ services:
       UNLOCK_FOR_NEW_TV_AGENT: 2;17
     volumes:
       - /Plex/pms:/plexdata
-      - /opt/docker-compose/imdbupdatetool:/config
+      - /opt/docker/imdbupdatetool:/config
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -73,7 +73,7 @@ services:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
     volumes:
-      - /opt/docker-compose/jellyfin/config:/config
+      - /opt/docker/jellyfin/config:/config
       - /gmediac:/media:ro
     ports:
       - 8096:8096
@@ -91,7 +91,7 @@ services:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
     volumes:
-      - /opt/docker-compose/tautulli:/config
+      - /opt/docker/tautulli:/config
       - /Plex/pms:/plex
     ports:
       - 8182:8181
@@ -113,3 +113,12 @@ services:
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
+
+  manga-image-translator:
+    image: zyddnys/manga-image-translator:main
+    container_name: manga-image-translator
+    command: --verbose --log-web --mode web --translator=sugoi --target-lang=ENG --manga2eng --host=0.0.0.0 --port=5003
+    volumes:
+      - /server-storage/manga-image-translator/result:/app/result
+    ports:
+      - 5003:5003

@@ -1,26 +1,5 @@
 version: '3.9'
 services:
-  geoip-updater:
-    image: crazymax/geoip-updater:latest
-    container_name: geoip-updater
-    environment:
-      TZ: ${TIMEZONE}
-      EDITION_IDS: ${GEOIP_EDITION_IDS}
-      LICENSE_KEY: ${GEOIP_LICENSE_KEY}
-      DOWNLOAD_PATH: ${GEOIP_DOWNLOAD_PATH}
-      SCHEDULE: ${GEOIP_SCHEDULE}
-      LOG_LEVEL: ${GEOIP_LOG_LEVEL}
-      LOG_JSON: ${GEOIP_LOG_JSON}
-    volumes:
-      - "/opt/docker-compose/torrent/geoip:/data"
-    env_file:
-      - .env
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-    restart: always
-
   qbittorrent:
     image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
     container_name: qbittorrent
@@ -36,7 +15,28 @@ services:
     env_file:
       - .env
     volumes:
-      - /opt/docker-compose/torrent/qbittorrent:/config
+      - /opt/docker/qbittorrent:/config
+      - /server-storage:/data
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
+
+  qbittorrent-dlc:
+    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    container_name: qbittorrent-dlc
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      WEBUI_PORTS: 8083
+    ports:
+      - 47882:47882/tcp
+      - 47882:47882/udp
+      - 8083:8083
+    volumes:
+      - /opt/docker/qbittorrent-dlc:/config
       - /server-storage:/data
     labels:
       - "org.hotio.pullio.notify=true"
@@ -51,13 +51,13 @@ services:
       TZ: ${TIMEZONE}
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
-      WEBUI_PORTS: 8083
+      WEBUI_PORTS: 8084
     ports:
       - 46884:46884/tcp
       - 46884:46884/udp
-      - 8083:8083
+      - 8084:8084
     volumes:
-      - /opt/docker-compose/torrent/qbittorrent-m:/config
+      - /opt/docker/qbittorrent-m:/config
       - /server-storage:/data
     env_file:
       - .env
@@ -66,7 +66,7 @@ services:
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
-    
+
   qbittorrent-lts:
     image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
     container_name: qbittorrent-lts
@@ -76,11 +76,11 @@ services:
       PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8085
     ports:
-      - 46886:46886/tcp
-      - 46886:46886/udp
+      - 46885:46885/tcp
+      - 46885:46885/udp
       - 8085:8085
     volumes:
-      - /opt/docker-compose/torrent/qbittorrent-lts:/config
+      - /opt/docker/qbittorrent-lts:/config
       - /server-storage:/data
     env_file:
       - .env
