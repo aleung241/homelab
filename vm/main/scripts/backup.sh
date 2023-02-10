@@ -25,7 +25,7 @@ create_backups() {
 }
 
 copy_to_backup_folder() {
-    cd ~/scripts
+    cd /opt/scripts
 
     INFO "[01] Copying files to backup folder"
     rsync -a --delete --include-from=backup_include.txt / $backup_destination

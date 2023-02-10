@@ -27,14 +27,12 @@ create_backups() {
 }
 
 copy_to_backup_folder() {
-    cd ~/scripts
+    cd /opt/scripts
 
     INFO "[01] Shutting down Plex Media Server for backup"
     systemctl stop plexmediaserver
     INFO "[02] Shutting down Secondary Plex Media Server for backup"
-    cd /opt/docker-compose
-    /usr/local/bin/docker-compose stop plex
-    cd ~/scripts
+    /usr/bin/docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') stop plex
 
     INFO "[03] Copying files to backup folder"
     rsync -a --delete --include-from=backup_include.txt / $backup_destination
@@ -44,8 +42,7 @@ copy_to_backup_folder() {
     systemctl start plexmediaserver
     DEBUG "Plex Media Server started"
     INFO "[05] Starting Secondary Plex Media Server..."
-    cd /opt/docker-compose
-    /usr/local/bin/docker-compose start plex
+    /usr/bin/docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') start plex
     DEBUG "Secondary Plex Media Server started"
 }
 
