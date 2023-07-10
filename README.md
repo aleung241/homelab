@@ -33,9 +33,9 @@ My personal choice of directory for chucking external applications and runnables
 
 Assuming this repo is on a separate machine, move `docker-compose/` to server for direct use:
 ```
-scp -r vm/general/docker-compose/ <user>@<server>:/opt/
-scp -r vm/plex/docker-compose/ <user>@<server>:/opt/
-scp -r vm/main/docker-compose/ <user>@<server>:/opt/
+scp -r vm/general/docker/ <user>@<server>:/opt/
+scp -r vm/plex/docker/ <user>@<server>:/opt/
+scp -r vm/main/docker/ <user>@<server>:/opt/
 ```
 
 Start all containers in detached mode (running in background)
