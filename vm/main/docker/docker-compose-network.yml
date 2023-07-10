@@ -11,8 +11,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - 87:80
-      - 447:443
+      - "87:80"
+      - "447:443"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -28,11 +28,11 @@ services:
     volumes:
       - /opt/docker/unifi:/config
     ports:
-      - 3478:3478/udp
-      - 10001:10001/udp
-      - 8080:8080
-      - 8443:8443
-      - 6789:6789
+      - "3478:3478/udp"
+      - "10001:10001/udp"
+      - "8080:8080"
+      - "8443:8443"
+      - "6789:6789"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -43,12 +43,12 @@ services:
     image: adguard/adguardhome
     container_name: adguard-home
     ports:
-      - 53:53/tcp     # dns
-      - 53:53/udp     # dns
-      - 8000:80       # http
-      - 8001:443/tcp  # dns-over-https
-      - 8001:443/udp  # dns-over-https
-      - 8002:3000     # web
+      - "53:53/tcp"     # dns
+      - "53:53/udp"     # dns
+      - "8000:80"       # http
+      - "8001:443/tcp"  # dns-over-https
+      - "8001:443/udp"  # dns-over-https
+      - "8002:3000"     # web
     volumes:
       - /opt/docker/adguardhome/work:/opt/adguardhome/work
       - /opt/docker/adguardhome/conf:/opt/adguardhome/conf
