@@ -58,20 +58,43 @@ services:
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
-  cloudflare-ddns:
-    image: oznu/cloudflare-ddns
-    container_name: cloudflare-ddns
+  wireguard-client:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard-client
+    cap_add:
+      - NET_ADMIN
+#      - SYS_MODULE #optional
     environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
       TZ: ${TIMEZONE}
-      PROXIED: 'true'
-      API_KEY: ${CLOUDFLARE_APIKEY}
-      ZONE: ${CLOUDFLARE_DOMAIN}
-      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      LOG_CONFS: true #optional
+    volumes:
+      - /opt/docker/wireguard/config:/config
+      - /lib/modules:/lib/modules #optional
+    ports:
+      - "51820:51820"
+      - "46886:46886/tcp"
+      - "46886:46886/udp"
+      - "8086:8086"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
+
+#  cloudflare-ddns:
+#    image: oznu/cloudflare-ddns
+#    container_name: cloudflare-ddns
+#    environment:
+#      TZ: ${TIMEZONE}
+#      PROXIED: 'true'
+#      API_KEY: ${CLOUDFLARE_APIKEY}
+#      ZONE: ${CLOUDFLARE_DOMAIN}
+#      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
+#    labels:
+#      - "org.hotio.pullio.notify=true"
+#      - "org.hotio.pullio.update=true"
+#      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+#    restart: unless-stopped
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest

@@ -89,3 +89,25 @@ services:
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
+
+  qbittorrent-anime:
+    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    container_name: qbittorrent-anime
+    depends_on:
+      - wireguard-client
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      WEBUI_PORTS: 8086
+    network_mode: service:wireguard-client
+    volumes:
+      - /opt/docker/qbittorrent-anime:/config
+      - /server-storage:/data
+    env_file:
+      - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
