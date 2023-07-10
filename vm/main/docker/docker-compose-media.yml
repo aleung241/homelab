@@ -144,46 +144,46 @@ services:
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
 
-  invidious:
-    image: quay.io/invidious/invidious:latest
-    container_name: indivious
-    restart: unless-stopped
-    ports:
-      - "3100:3000"
-    environment:
-      # Please read the following file for a comprehensive list of all available
-      # configuration options and their associated syntax:
-      # https://github.com/iv-org/invidious/blob/master/config/config.example.yml
-      INVIDIOUS_CONFIG: |
-        db:
-          dbname: invidious
-          user: kemal
-          password: kemal
-          host: invidious-db
-          port: 5432
-        check_tables: true
-        # external_port:
-        # domain:
-        # https_only: false
-        # statistics_enabled: false
-    logging:
-      options:
-        max-size: "1G"
-        max-file: "4"
-    depends_on:
-      - invidious-db
-
-  invidious-db:
-    image: docker.io/library/postgres:14
-    container_name: indivious-db
-    restart: unless-stopped
-    volumes:
-      - /opt/docker/invidious/postgresdata:/var/lib/postgresql/data
-      - /opt/docker/invidious/config/sql:/config/sql
-      - /opt/docker/invidious/docker/init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh
-    environment:
-      POSTGRES_DB: invidious
-      POSTGRES_USER: kemal
-      POSTGRES_PASSWORD: kemal
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+#  invidious:
+#    image: quay.io/invidious/invidious:latest
+#    container_name: indivious
+#    restart: unless-stopped
+#    ports:
+#      - "3100:3000"
+#    environment:
+#      # Please read the following file for a comprehensive list of all available
+#      # configuration options and their associated syntax:
+#      # https://github.com/iv-org/invidious/blob/master/config/config.example.yml
+#      INVIDIOUS_CONFIG: |
+#        db:
+#          dbname: invidious
+#          user: kemal
+#          password: kemal
+#          host: invidious-db
+#          port: 5432
+#        check_tables: true
+#        # external_port:
+#        # domain:
+#        # https_only: false
+#        # statistics_enabled: false
+#    logging:
+#      options:
+#        max-size: "1G"
+#        max-file: "4"
+#    depends_on:
+#      - invidious-db
+#
+#  invidious-db:
+#    image: docker.io/library/postgres:14
+#    container_name: indivious-db
+#    restart: unless-stopped
+#    volumes:
+#      - /opt/docker/invidious/postgresdata:/var/lib/postgresql/data
+#      - /opt/docker/invidious/config/sql:/config/sql
+#      - /opt/docker/invidious/docker/init-invidious-db.sh:/docker-entrypoint-initdb.d/init-invidious-db.sh
+#    environment:
+#      POSTGRES_DB: invidious
+#      POSTGRES_USER: kemal
+#      POSTGRES_PASSWORD: kemal
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
