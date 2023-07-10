@@ -136,6 +136,7 @@ services:
       - "--addr"
       - "0.0.0.0:8087"
       - "--read-only"
+      - "--copy-links"
       - "--include-from"
       - "/opt/include-from.txt"
       - "--template"
