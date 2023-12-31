@@ -13,7 +13,7 @@ services:
     container_name: monitorss-mongodb
     restart: on-failure:5
     command: mongod --port 27017
-    image: mongo
+    image: mongo:6.0
     volumes:
       - /opt/docker/monitorss/db-data:/data/db
     labels:
