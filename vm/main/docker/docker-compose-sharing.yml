@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  pairdrop:
+    image: lscr.io/linuxserver/pairdrop:latest
+    container_name: pairdrop
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      TZ: ${TIMEZONE}
+      RATE_LIMIT: false #optional
+      WS_FALLBACK: false #optional
+      RTC_CONFIG: #optional
+      DEBUG_MODE: false #optional
+    ports:
+      - 3100:3000
+    restart: unless-stopped
