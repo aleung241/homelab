@@ -13,7 +13,7 @@ services:
       - /gmediac:/datac
       - /server-storage:/server-storage
     ports:
-      - 7878:7878
+      - "7878:7878"
     env_file:
       - .env
     labels:
@@ -23,7 +23,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: hotio/sonarr
+    image: hotio/sonarr:v4
     container_name: sonarr
     environment:
       PUID: ${DEFAULT_USER}
@@ -35,7 +35,7 @@ services:
       - /gmediac:/datac
       - /server-storage:/server-storage
     ports:
-      - 8989:8989
+      - "8989:8989"
     env_file:
       - .env
     labels:
@@ -43,6 +43,38 @@ services:
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
+
+  sonarr-anime:
+    image: hotio/sonarr:v4
+    container_name: sonarr-anime
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker/sonarr-anime:/config
+      - /gmediac:/datac
+      - /server-storage:/server-storage
+    ports:
+      - "8990:8989"
+    env_file:
+      - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    restart: unless-stopped
+
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
+    environment:
+      TZ: ${TIMEZONE}
+      CRON_SCHEDULE: 59 23 28 10 1
+    volumes:
+      - /opt/docker/recyclarr:/config
 
   jackett:
     image: hotio/jackett
@@ -55,7 +87,7 @@ services:
     volumes:
       - /opt/docker/jackett:/config
     ports:
-      - 9117:9117
+      - "9117:9117"
     env_file:
       - .env
     labels:
@@ -74,7 +106,7 @@ services:
     volumes:
       - /opt/docker/nzbhydra2:/config
     ports:
-      - 5076:5076
+      - "5076:5076"
     env_file:
       - .env
     labels:
@@ -96,7 +128,7 @@ services:
       - /nvme/sabnzbd:/downloads
       - /server-storage:/data
     ports:
-      - 8090:8080
+      - "8090:8080"
     env_file:
       - .env
     labels:
@@ -137,7 +169,7 @@ services:
     volumes:
       - /opt/docker/overseerr:/app/config
     ports:
-      - 5055:5055
+      - "5055:5055"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
