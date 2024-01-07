@@ -30,7 +30,7 @@ services:
 
   autoscan:
     container_name: autoscan
-    image: cr.hotio.dev/hotio/autoscan
+    image: ghcr.io/hotio/autoscan
     ports:
       - "3030:3030"
     environment:
@@ -66,7 +66,7 @@ services:
     restart: unless-stopped
 
   jellyfin:
-    image: cr.hotio.dev/hotio/jellyfin
+    image: ghcr.io/hotio/jellyfin
     container_name: jellyfin
     environment:
       TZ: ${TIMEZONE}
