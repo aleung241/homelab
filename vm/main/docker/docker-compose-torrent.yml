@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   qbittorrent:
-    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    image: hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent
     environment:
       TZ: ${TIMEZONE}
