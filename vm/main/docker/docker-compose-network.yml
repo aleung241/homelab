@@ -83,7 +83,7 @@ services:
     container_name: wireguard-client
     cap_add:
       - NET_ADMIN
-#      - SYS_MODULE #optional
+      - SYS_MODULE #optional
     environment:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
