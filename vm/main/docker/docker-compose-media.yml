@@ -10,8 +10,8 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker/radarr:/config
-      - /gmediac:/datac
       - /server-storage:/server-storage
+      - /ocean/media:/media
     ports:
       - "7878:7878"
     env_file:
@@ -40,8 +40,8 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker/sonarr:/config
-      - /gmediac:/datac
       - /server-storage:/server-storage
+      - /ocean/media:/media
     ports:
       - "8989:8989"
     env_file:
@@ -70,8 +70,8 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /opt/docker/sonarr-anime:/config
-      - /gmediac:/datac
       - /server-storage:/server-storage
+      - /ocean/media:/media
     ports:
       - "8990:8989"
     env_file:
@@ -190,8 +190,7 @@ services:
     volumes:
       - /opt/docker/bazarr:/config
       - /server-storage:/server-storage
-      - /gmedia:/data
-      - /gmediac:/datac
+      - /ocean/media:/media
     ports:
       - "6767:6767"
     env_file:
