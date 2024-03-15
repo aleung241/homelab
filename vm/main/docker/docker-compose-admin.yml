@@ -9,9 +9,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/docker/portainer:/data
     ports:
-      - 8100:8000
-      - 9000:9000
-      - 9443:9443
+      - "8100:8000"
+      - "9000:9000"
+      - "9443:9443"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -42,7 +42,7 @@ services:
     volumes:
       - /opt/docker/bookstack:/config
     ports:
-      - 7000:80
+      - "7000:80"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
