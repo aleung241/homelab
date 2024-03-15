@@ -20,6 +20,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=media"
+      - "homepage.name=radarr"
+      - "homepage.description=Movie collection manager"
+      - "homepage.icon=radarr.svg"
+      - "homepage.weight=0"
+      - "homepage.widget.type=radarr"
+      - "homepage.widget.url=http://${BASE_URL}:7878"
+      - "homepage.widget.key=${RADARR_API_KEY}"
     restart: unless-stopped
 
   sonarr:
@@ -42,6 +50,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=media"
+      - "homepage.name=sonarr"
+      - "homepage.description=TV Series collection manager"
+      - "homepage.icon=sonarr.svg"
+      - "homepage.weight=1"
+      - "homepage.widget.type=sonarr"
+      - "homepage.widget.url=http://${BASE_URL}:8989"
+      - "homepage.widget.key=${SONARR_API_KEY}"
     restart: unless-stopped
 
   sonarr-anime:
@@ -64,6 +80,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=media"
+      - "homepage.name=sonarr-anime"
+      - "homepage.description=TV Series collection manager (Anime)"
+      - "homepage.icon=sonarr.svg"
+      - "homepage.weight=2"
+      - "homepage.widget.type=sonarr"
+      - "homepage.widget.url=http://${BASE_URL}:8990"
+      - "homepage.widget.key=${SONARR_ANIME_API_KEY}"
     restart: unless-stopped
 
   recyclarr:
@@ -94,6 +118,11 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.icon=jackett.svg"
+      - "homepage.weight=6"
+      - "homepage.group=media"
+      - "homepage.name=jackett"
+      - "homepage.description=Torrent index aggregator"
     restart: unless-stopped
 
   nzbhydra2:
@@ -113,6 +142,11 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.icon=nzbhydra2.svg"
+      - "homepage.weight=7"
+      - "homepage.group=media"
+      - "homepage.name=nzbhydra2"
+      - "homepage.description=NZB index aggregator"
     restart: unless-stopped
 
   sabnzbd:
@@ -135,6 +169,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=media"
+      - "homepage.name=sabnzbd"
+      - "homepage.description=NZB Downloader"
+      - "homepage.icon=sabnzbd-alt.svg"
+      - "homepage.weight=4"
+      - "homepage.widget.type=sabnzbd"
+      - "homepage.widget.url=http://${BASE_URL}:8090"
+      - "homepage.widget.key=${SABNZBD_API_KEY}"
     restart: unless-stopped
 
   bazarr:
@@ -158,6 +200,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=media"
+      - "homepage.name=bazarr"
+      - "homepage.description=Subtitle Downloader"
+      - "homepage.icon=bazarr.svg"
+      - "homepage.weight=5"
+      - "homepage.widget.type=bazarr"
+      - "homepage.widget.url=http://${BASE_URL}:6767"
+      - "homepage.widget.key=${BAZARR_API_KEY}"
     restart: unless-stopped
 
   overseerr:
@@ -174,6 +224,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=media"
+      - "homepage.name=overseerr"
+      - "homepage.description=Plex requests"
+      - "homepage.icon=overseerr.svg"
+      - "homepage.weight=3"
+      - "homepage.widget.type=overseerr"
+      - "homepage.widget.url=http://${BASE_URL}:5055"
+      - "homepage.widget.key=${OVERSEERR_API_KEY}"
     restart: unless-stopped
 
 #  invidious:

@@ -13,4 +13,11 @@ services:
       DEBUG_MODE: false #optional
     ports:
       - 3100:3000
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=sharing"
+      - "homepage.name=pairdrop"
+      - "homepage.description=Cross platform web based file sharing"
     restart: unless-stopped

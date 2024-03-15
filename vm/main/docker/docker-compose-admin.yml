@@ -16,6 +16,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=admin"
+      - "homepage.name=portainer"
+      - "homepage.description=Docker monitoring"
+      - "homepage.icon=portainer.svg"
+      - "homepage.widget.type=portainer"
+      - "homepage.widget.url=https://${BASE_URL}:9443"
+      - "homepage.widget.env=2"
+      - "homepage.widget.key=${PORTAINER_API_KEY}"
     restart: unless-stopped
 
   bookstack:
@@ -39,6 +47,10 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=admin"
+      - "homepage.name=bookstack"
+      - "homepage.description=Documentation"
+      - "homepage.icon=bookstack.svg"
     restart: unless-stopped
     depends_on:
       - bookstack_db
@@ -60,18 +72,20 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=admin"
+      - "homepage.name=bookstack-db"
+      - "homepage.description=Bookstack Database"
+      - "homepage.icon=mariadb.svg"
     restart: unless-stopped
 
-  homer:
-    image: b4bz/homer:latest
-    container_name: homer
-    environment:
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
-    volumes:
-      - /opt/docker/homer/assets:/www/assets
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
     ports:
-      - 7100:8080
+      - "3200:3000"
+    volumes:
+      - /opt/docker/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"

@@ -8,6 +8,10 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=rss"
+      - "homepage.name=monitorss-redis"
+      - "homepage.description=MonitoRSS - Redis instance"
+      - "homepage.icon=redis.svg"
 
   monitorss-mongodb:
     container_name: monitorss-mongodb
@@ -20,6 +24,10 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=rss"
+      - "homepage.name=monitorss-mongodb"
+      - "homepage.description=MonitoRSS - MongoDB instance"
+      - "homepage.icon=mongodb.svg"
 
   monitorss-bot:
     container_name: monitorss-bot
@@ -40,6 +48,9 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=rss"
+      - "homepage.name=monitorss-redis"
+      - "homepage.description=MonitoRSS - Backend"
 
   monitorss-web:
     container_name: monitorss-web
@@ -62,3 +73,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=rss"
+      - "homepage.name=monitorss-redis"
+      - "homepage.description=MonitoRSS - Frontend"

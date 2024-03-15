@@ -17,6 +17,10 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=network"
+      - "homepage.name=nginx"
+      - "homepage.description=Web server and reverse proxy"
+      - "homepage.icon=nginx.svg"
     restart: unless-stopped
 
   unifi:
@@ -37,6 +41,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=network"
+      - "homepage.name=unifi"
+      - "homepage.description=Unifi Controller"
+      - "homepage.icon=unifi.svg"
+      - "homepage.widget.type=unifi"
+      - "homepage.widget.url=https://${BASE_URL}:8443"
+      - "homepage.widget.username=${UNIFI_USERNAME}"
+      - "homepage.widget.password=${UNIFI_PASSWORD}"
     restart: unless-stopped
 
   adguard-home:
@@ -56,6 +68,14 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=network"
+      - "homepage.name=adguard-home"
+      - "homepage.description=Adguard Home"
+      - "homepage.icon=adguard-home.svg"
+      - "homepage.widget.type=adguard"
+      - "homepage.widget.url=http://${BASE_URL}:8000"
+      - "homepage.widget.username=${ADGUARD_HOME_USERNAME}"
+      - "homepage.widget.password=${ADGUARD_HOME_PASSWORD}"
     restart: unless-stopped
 
   wireguard-client:
@@ -79,6 +99,14 @@ services:
       - "8086:8086"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=network"
+      - "homepage.name=wireguard-client"
+      - "homepage.description=Wireguard Client"
+      - "homepage.icon=wireguard.svg"
     restart: unless-stopped
 
 #  cloudflare-ddns:
@@ -106,6 +134,14 @@ services:
       TZ: ${TIMEZONE}
     ports:
       - "8191:8191"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=network"
+      - "homepage.name=flaresolverr"
+      - "homepage.description=Auto Cloudflare"
+      - "homepage.icon=cloudflare.svg"
     restart: unless-stopped
 
   rclone-serve-webdav:
@@ -115,6 +151,8 @@ services:
       - /root/.config/rclone/:/root/.config/rclone/:ro
       - /opt/docker/rclone-serve-webdav:/opt
       - /gmediac:/gmediac:ro
+      - /server-storage/torrents/MAM/:/server-storage/torrents/MAM/
+      - /server-storage/torrents/ggn/:/server-storage/torrents/ggn/
     command:
       - "serve"
       - "webdav"
@@ -145,4 +183,8 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.group=network"
+      - "homepage.name=rclone-serve-webdav"
+      - "homepage.description=rclone mount - webdav"
+      - "homepage.icon=rclone.svg"
     restart: unless-stopped
