@@ -99,6 +99,55 @@ services:
     volumes:
       - /opt/docker/recyclarr:/config
 
+  tdarr:
+    image: ghcr.io/haveagitgat/tdarr
+    container_name: tdarr
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK_SET: ${DEFAULT_UMASK}
+      serverIP: 192.168.1.32
+      serverPort: 8266
+      webUIPort: 8265
+      internalNode: false
+      inContainer: true
+      ffmpegVersion: 6
+    volumes:
+      - /opt/docker/tdarr/server:/app/server
+      - /opt/docker/tdarr/configs:/app/configs
+      - /opt/docker/tdarr/logs:/app/logs
+      - /ocean/media:/media:ro
+      - /transcode/tdarr_cache:/temp
+    ports:
+      - "8265:8265"
+      - "8266:8266"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  tdarr-node:
+    image: ghcr.io/haveagitgat/tdarr_node
+    container_name: tdarr-node
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK_SET: ${DEFAULT_UMASK}
+      nodeName: main-node
+      serverIP: 192.168.1.32
+      serverPort: 8266
+      inContainer: true
+      ffmpegVersion: 6
+    volumes:
+      - /opt/docker/tdarr/configs:/app/configs
+      - /opt/docker/tdarr/logs:/app/logs
+      - /ocean/media:/media:ro
+      - /transcode/tdarr_cache:/temp
+    env_file:
+      - .env
+    restart: unless-stopped
+
   jackett:
     image: hotio/jackett
     container_name: jackett

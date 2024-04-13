@@ -112,3 +112,25 @@ services:
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     restart: unless-stopped
+
+  tdarr-node:
+    image: ghcr.io/haveagitgat/tdarr_node
+    container_name: tdarr-node
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK_SET: ${DEFAULT_UMASK}
+      nodeName: plex-node
+      serverIP: 192.168.1.32
+      serverPort: 8266
+      inContainer: true
+      ffmpegVersion: 6
+    volumes:
+      - /opt/docker/tdarr/configs:/app/configs
+      - /opt/docker/tdarr/logs:/app/logs
+      - /ocean/media:/media:ro
+      - /transcode/tdarr_cache:/temp
+    env_file:
+      - .env
+    restart: unless-stopped
