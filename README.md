@@ -33,8 +33,7 @@ My personal choice of directory for chucking external applications and runnables
 
 Assuming this repo is on a separate machine, move `docker-compose/` to server for direct use:
 ```
-scp -r vm/general/docker/ <user>@<server>:/opt/
-scp -r vm/plex/docker/ <user>@<server>:/opt/
+scp -r vm/plex-new/docker/ <user>@<server>:/opt/
 scp -r vm/main/docker/ <user>@<server>:/opt/
 ```
 
