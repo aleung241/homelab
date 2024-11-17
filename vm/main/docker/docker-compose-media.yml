@@ -184,6 +184,37 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
+  prowlarr:
+    image: ghcr.io/hotio/prowlarr
+    container_name: prowlarr
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      UMASK: ${DEFAULT_UMASK}
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker/prowlarr:/config
+    ports:
+      - "9696:9696"
+    env_file:
+      - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+      - "homepage.icon=prowlarr.svg"
+      - "homepage.weight=6"
+      - "homepage.group=media"
+      - "homepage.name=prowlarr"
+      - "homepage.description=Torrent index aggregator"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/prowlarr
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
   jackett:
     image: hotio/jackett
     container_name: jackett
