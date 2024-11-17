@@ -216,4 +216,30 @@ services:
       - "homepage.name=rclone-serve-webdav"
       - "homepage.description=rclone mount - webdav"
       - "homepage.icon=rclone.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/rclone-serve-webdav
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
+  speedtest:
+    image: lscr.io/linuxserver/librespeed:latest
+    container_name: speedtest
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      TZ: ${TIMEZONE}
+      PASSWORD: ${LIBRESPEED_PASSWORD}
+    volumes:
+      - /opt/docker/librespeed/config:/config
+    ports:
+      - "8130:80"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/librespeed
+        awslogs-create-group: "true"
     restart: unless-stopped
