@@ -107,4 +107,32 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/homepage
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
+  home-assistant:
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    container_name: home-assistant
+    ports:
+      - "8123:8123"
+    privileged: true
+    volumes:
+      - /opt/docker/home-assistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/home-assistant
+        awslogs-create-group: "true"
     restart: unless-stopped
