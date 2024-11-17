@@ -370,4 +370,33 @@ services:
       - "homepage.widget.type=overseerr"
       - "homepage.widget.url=http://${BASE_URL}:5055"
       - "homepage.widget.key=${OVERSEERR_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/overseerr
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: 1000:1000
+    environment:
+      ND_SCANSCHEDULE: "0"
+    volumes:
+      - /opt/docker/navidrome/data:/data
+      - /server-storage/music:/music:ro
+    ports:
+      - "4533:4533"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/navidrome
+        awslogs-create-group: "true"
     restart: unless-stopped
