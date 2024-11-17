@@ -27,6 +27,12 @@ services:
       - "homepage.widget.type=radarr"
       - "homepage.widget.url=http://${BASE_URL}:7878"
       - "homepage.widget.key=${RADARR_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/radarr
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   sonarr:
@@ -57,6 +63,12 @@ services:
       - "homepage.widget.type=sonarr"
       - "homepage.widget.url=http://${BASE_URL}:8989"
       - "homepage.widget.key=${SONARR_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/sonarr
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   sonarr-anime:
@@ -87,6 +99,12 @@ services:
       - "homepage.widget.type=sonarr"
       - "homepage.widget.url=http://${BASE_URL}:8990"
       - "homepage.widget.key=${SONARR_ANIME_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/sonarr-anime
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   recyclarr:
@@ -98,6 +116,12 @@ services:
       CRON_SCHEDULE: 59 23 28 10 1
     volumes:
       - /opt/docker/recyclarr:/config
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/recyclarr
+        awslogs-create-group: "true"
 
   tdarr:
     image: ghcr.io/haveagitgat/tdarr
@@ -124,6 +148,12 @@ services:
       - "8266:8266"
     env_file:
       - .env
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/tdarr
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   tdarr-node:
@@ -146,6 +176,12 @@ services:
       - /transcode/tdarr_cache:/temp
     env_file:
       - .env
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/tdarr-node
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   jackett:
@@ -171,6 +207,12 @@ services:
       - "homepage.group=media"
       - "homepage.name=jackett"
       - "homepage.description=Torrent index aggregator"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/jackett
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   nzbhydra2:
@@ -195,6 +237,12 @@ services:
       - "homepage.group=media"
       - "homepage.name=nzbhydra2"
       - "homepage.description=NZB index aggregator"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/nzbhydra2
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   sabnzbd:
@@ -225,6 +273,12 @@ services:
       - "homepage.widget.type=sabnzbd"
       - "homepage.widget.url=http://${BASE_URL}:8090"
       - "homepage.widget.key=${SABNZBD_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/sabnzbd
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   bazarr:
@@ -255,6 +309,12 @@ services:
       - "homepage.widget.type=bazarr"
       - "homepage.widget.url=http://${BASE_URL}:6767"
       - "homepage.widget.key=${BAZARR_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/bazarr
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   overseerr:

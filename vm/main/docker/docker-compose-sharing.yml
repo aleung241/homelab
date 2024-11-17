@@ -19,4 +19,10 @@ services:
       - "homepage.group=sharing"
       - "homepage.name=pairdrop"
       - "homepage.description=Cross platform web based file sharing"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/pairdrop
+        awslogs-create-group: "true"
     restart: unless-stopped

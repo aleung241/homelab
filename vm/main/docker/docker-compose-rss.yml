@@ -11,6 +11,12 @@ services:
       - "homepage.name=monitorss-redis"
       - "homepage.description=MonitoRSS - Redis instance"
       - "homepage.icon=redis.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-redis
+        awslogs-create-group: "true"
 
   monitorss-mongodb:
     container_name: monitorss-mongodb
@@ -27,6 +33,12 @@ services:
       - "homepage.name=monitorss-mongodb"
       - "homepage.description=MonitoRSS - MongoDB instance"
       - "homepage.icon=mongodb.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-mongodb
+        awslogs-create-group: "true"
 
   monitorss-bot:
     container_name: monitorss-bot
@@ -50,6 +62,12 @@ services:
       - "homepage.group=rss"
       - "homepage.name=monitorss-redis"
       - "homepage.description=MonitoRSS - Backend"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-bot
+        awslogs-create-group: "true"
 
   monitorss-web:
     container_name: monitorss-web
@@ -75,3 +93,9 @@ services:
       - "homepage.group=rss"
       - "homepage.name=monitorss-redis"
       - "homepage.description=MonitoRSS - Frontend"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-web
+        awslogs-create-group: "true"

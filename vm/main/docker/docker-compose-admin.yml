@@ -23,6 +23,12 @@ services:
       - "homepage.widget.url=https://${BASE_URL}:9443"
       - "homepage.widget.env=2"
       - "homepage.widget.key=${PORTAINER_API_KEY}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/portainer
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   bookstack:
@@ -50,6 +56,12 @@ services:
       - "homepage.name=bookstack"
       - "homepage.description=Documentation"
       - "homepage.icon=bookstack.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack
+        awslogs-create-group: "true"
     restart: unless-stopped
     depends_on:
       - bookstack_db
@@ -75,6 +87,12 @@ services:
       - "homepage.name=bookstack-db"
       - "homepage.description=Bookstack Database"
       - "homepage.icon=mariadb.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack_db
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   homepage:

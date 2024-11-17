@@ -20,6 +20,12 @@ services:
       - "homepage.name=nginx"
       - "homepage.description=Web server and reverse proxy"
       - "homepage.icon=nginx.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/nginx
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   unifi:
@@ -48,6 +54,12 @@ services:
       - "homepage.widget.url=https://${BASE_URL}:8443"
       - "homepage.widget.username=${UNIFI_USERNAME}"
       - "homepage.widget.password=${UNIFI_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/unifi-controller
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   adguard-home:
@@ -75,6 +87,12 @@ services:
       - "homepage.widget.url=http://${BASE_URL}:8000"
       - "homepage.widget.username=${ADGUARD_HOME_USERNAME}"
       - "homepage.widget.password=${ADGUARD_HOME_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/adguard-home
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   wireguard-client:
@@ -106,6 +124,12 @@ services:
       - "homepage.name=wireguard-client"
       - "homepage.description=Wireguard Client"
       - "homepage.icon=wireguard.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/wireguard-client
+        awslogs-create-group: "true"
     restart: unless-stopped
 
 #  cloudflare-ddns:
@@ -141,6 +165,12 @@ services:
       - "homepage.name=flaresolverr"
       - "homepage.description=Auto Cloudflare"
       - "homepage.icon=cloudflare.svg"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/flaresolverr
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   rclone-serve-webdav:

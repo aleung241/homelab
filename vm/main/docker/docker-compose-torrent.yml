@@ -29,6 +29,12 @@ services:
       - "homepage.widget.url=http://${BASE_URL}:8081"
       - "homepage.widget.username=${QBITTORRENT_USERNAME}"
       - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   qbittorrent-dlc:
@@ -59,6 +65,12 @@ services:
       - "homepage.widget.url=http://${BASE_URL}:8083"
       - "homepage.widget.username=${QBITTORRENT_USERNAME}"
       - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-dlc
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   qbittorrent-m:
@@ -91,6 +103,12 @@ services:
       - "homepage.widget.url=http://${BASE_URL}:8084"
       - "homepage.widget.username=${QBITTORRENT_USERNAME}"
       - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-m
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   qbittorrent-lts:
@@ -123,6 +141,12 @@ services:
       - "homepage.widget.url=http://${BASE_URL}:8085"
       - "homepage.widget.username=${QBITTORRENT_USERNAME}"
       - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-lts
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   qbittorrent-anime:
@@ -154,4 +178,10 @@ services:
       - "homepage.widget.url=http://${BASE_URL}:8086"
       - "homepage.widget.username=${QBITTORRENT_USERNAME}"
       - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-anime
+        awslogs-create-group: "true"
     restart: unless-stopped
