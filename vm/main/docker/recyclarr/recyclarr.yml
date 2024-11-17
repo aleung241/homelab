@@ -55,7 +55,7 @@ radarr:
           - c2863d2a50c9acad1fb50e53ece60817 # Streaming Services STAN
           - f1b0bae9bc222dab32c1b38b5a7a1088 # Streaming Services TVer
           - 279bda7434fd9075786de274e6c3c202 # Streaming Services U-NEXT
-        quality_profiles:
+        assign_scores_to:
           - name: Default
     quality_definition:
       type: movie
@@ -143,7 +143,7 @@ sonarr:
           - 58790d4e2fdcd9733aa7ae68ba2bb503 # HQ Source Groups WEB Tier 02
           - d84935abd3f8556dcd51d4f27e22d0a6 # HQ Source Groups WEB Tier 03
           - d0c516558625b04b363fa6c5c2c7cfd4 # HQ Source Groups WEB Scene
-        quality_profiles:
+        assign_scores_to:
           - name: Default
     quality_definition:
       type: series
@@ -218,16 +218,16 @@ sonarr:
           - d2d7b8a9d39413da5f44054080e028a3 # Unwanted v0
           - 9c14d194486c4014d422adc64092d794 # UnwantedDubs Only
           - 07a32f77690263bb9fda1842db7e273f # Unwanted VOSTFR
-        quality_profiles:
+        assign_scores_to:
           - name: default-anime
       - trash_ids:
           - 026d5aadd1a6b4e550b134cb6c72b3ca # Uncensored
-        quality_profiles:
+        assign_scores_to:
           - name: default-anime
             score: 101
       - trash_ids:
           - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
-        quality_profiles:
+        assign_scores_to:
           - name: default-anime
             score: -1000
     quality_definition:

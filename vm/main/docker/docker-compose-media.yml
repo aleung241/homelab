@@ -108,7 +108,7 @@ services:
     restart: unless-stopped
 
   recyclarr:
-    image: ghcr.io/recyclarr/recyclarr
+    image: recyclarr/recyclarr
     container_name: recyclarr
     user: ${DEFAULT_USER}:${DEFAULT_GROUP}
     environment:
