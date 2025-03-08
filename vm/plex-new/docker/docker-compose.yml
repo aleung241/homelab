@@ -12,15 +12,15 @@ services:
       - /gmediac:/gmediac:ro
       - /server-storage:/server-storage:ro
     ports:
-      - 33400:32400/tcp
-      - 4005:3005/tcp
-      - 9324:8324/tcp
-      - 33469:32469/tcp
-      - 2000:1900/udp
-      - 33410:32410/udp
-      - 33412:32412/udp
-      - 33413:32413/udp
-      - 33414:32414/udp
+      - "33400:32400/tcp"
+      - "4005:3005/tcp"
+      - "9324:8324/tcp"
+      - "33469:32469/tcp"
+      - "2000:1900/udp"
+      - "33410:32410/udp"
+      - "33412:32412/udp"
+      - "33413:32413/udp"
+      - "33414:32414/udp"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -93,7 +93,7 @@ services:
       - /opt/docker/jellyfin/config:/config
       - /gmediac:/media:ro
     ports:
-      - 8096:8096
+      - "8096:8096"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -117,7 +117,7 @@ services:
       - /opt/docker/tautulli:/config
       - /Plex/pms:/plex
     ports:
-      - 8182:8181
+      - "8182:8181"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -136,7 +136,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 9001:9001
+      - "9001:9001"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"

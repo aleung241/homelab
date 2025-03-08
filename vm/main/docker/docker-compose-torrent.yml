@@ -8,9 +8,9 @@ services:
       PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8081
     ports:
-      - 46882:46882/tcp
-      - 46882:46882/udp
-      - 8081:8081
+      - "21014:21014/tcp"
+      - "21014:21014/udp"
+      - "8081:8081"
     env_file:
       - .env
     volumes:
@@ -46,9 +46,9 @@ services:
       PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8083
     ports:
-      - 47882:47882/tcp
-      - 47882:47882/udp
-      - 8083:8083
+      - "47882:47882/tcp"
+      - "47882:47882/udp"
+      - "8083:8083"
     volumes:
       - /opt/docker/qbittorrent-dlc:/config
       - /server-storage:/data
@@ -82,9 +82,9 @@ services:
       PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8084
     ports:
-      - 46884:46884/tcp
-      - 46884:46884/udp
-      - 8084:8084
+      - "46884:46884/tcp"
+      - "46884:46884/udp"
+      - "8084:8084"
     volumes:
       - /opt/docker/qbittorrent-m:/config
       - /server-storage:/data
@@ -120,9 +120,9 @@ services:
       PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8085
     ports:
-      - 46885:46885/tcp
-      - 46885:46885/udp
-      - 8085:8085
+      - "32798:32798/tcp"
+      - "32798:32798/udp"
+      - "8085:8085"
     volumes:
       - /opt/docker/qbittorrent-lts:/config
       - /server-storage:/data
