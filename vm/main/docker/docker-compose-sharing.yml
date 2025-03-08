@@ -11,7 +11,7 @@ services:
       RTC_CONFIG: #optional
       DEBUG_MODE: false #optional
     ports:
-      - 3100:3000
+      - "3100:3000"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"

@@ -77,7 +77,7 @@ services:
       - monitorss-redis
       - monitorss-mongodb
     ports:
-      - 8281:8081
+      - "8281:8081"
     environment:
       DRSS_START: web
       DRSSWEB_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
