@@ -8,8 +8,6 @@ services:
     volumes:
       - /Plex/pms2:/config
       - /transcode/plex2:/transcode
-      - /gmedia:/gmedia:ro
-      - /gmediac:/gmediac:ro
       - /server-storage:/server-storage:ro
     ports:
       - "33400:32400/tcp"
@@ -45,7 +43,7 @@ services:
       UMASK: ${DEFAULT_UMASK}
     volumes:
       - /opt/docker/autoscan:/config
-      - /gmediac:/datac:ro
+      - /ocean:/datac:ro
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -91,7 +89,7 @@ services:
       PGID: ${DEFAULT_GROUP}
     volumes:
       - /opt/docker/jellyfin/config:/config
-      - /gmediac:/media:ro
+      - /ocean/media:/media:ro
     ports:
       - "8096:8096"
     labels:
