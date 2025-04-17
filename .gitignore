@@ -1,5 +1,5 @@
 **/.idea
-.env
+*.env
 secrets.sh
 docker-compose-special.yml
 **/authelia
