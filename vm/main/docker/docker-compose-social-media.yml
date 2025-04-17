@@ -1,0 +1,9 @@
+services:
+  thelounge:
+    image: thelounge/thelounge
+    container_name: thelounge
+    volumes:
+      - /opt/docker/thelounge:/var/opt/thelounge
+    ports:
+      - "9100:9000"
+    restart: always
