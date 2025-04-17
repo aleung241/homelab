@@ -16,10 +16,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=network"
-      - "homepage.name=nginx"
-      - "homepage.description=Web server and reverse proxy"
-      - "homepage.icon=nginx.svg"
     logging:
       driver: awslogs
       options:
@@ -46,14 +42,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=network"
-      - "homepage.name=unifi"
-      - "homepage.description=Unifi Controller"
-      - "homepage.icon=unifi.svg"
-      - "homepage.widget.type=unifi"
-      - "homepage.widget.url=https://${BASE_URL}:8443"
-      - "homepage.widget.username=${UNIFI_USERNAME}"
-      - "homepage.widget.password=${UNIFI_PASSWORD}"
     logging:
       driver: awslogs
       options:
@@ -79,14 +67,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=network"
-      - "homepage.name=adguard-home"
-      - "homepage.description=Adguard Home"
-      - "homepage.icon=adguard-home.svg"
-      - "homepage.widget.type=adguard"
-      - "homepage.widget.url=http://${BASE_URL}:8000"
-      - "homepage.widget.username=${ADGUARD_HOME_USERNAME}"
-      - "homepage.widget.password=${ADGUARD_HOME_PASSWORD}"
     logging:
       driver: awslogs
       options:
@@ -120,10 +100,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=network"
-      - "homepage.name=wireguard-client"
-      - "homepage.description=Wireguard Client"
-      - "homepage.icon=wireguard.svg"
     logging:
       driver: awslogs
       options:
@@ -161,10 +137,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=network"
-      - "homepage.name=flaresolverr"
-      - "homepage.description=Auto Cloudflare"
-      - "homepage.icon=cloudflare.svg"
     logging:
       driver: awslogs
       options:
@@ -212,10 +184,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=network"
-      - "homepage.name=rclone-serve-webdav"
-      - "homepage.description=rclone mount - webdav"
-      - "homepage.icon=rclone.svg"
     logging:
       driver: awslogs
       options:
