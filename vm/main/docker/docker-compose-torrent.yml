@@ -20,15 +20,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=torrent"
-      - "homepage.name=qbittorrent"
-      - "homepage.description=qBittorrent - main instance"
-      - "homepage.icon=qbittorrent.svg"
-      - "homepage.weight=1"
-      - "homepage.widget.type=qbittorrent"
-      - "homepage.widget.url=http://${BASE_URL}:8081"
-      - "homepage.widget.username=${QBITTORRENT_USERNAME}"
-      - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
     logging:
       driver: awslogs
       options:
@@ -56,15 +47,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=torrent"
-      - "homepage.name=qbittorrent-dlc"
-      - "homepage.description=qBittorrent - ggn instance"
-      - "homepage.icon=qbittorrent.svg"
-      - "homepage.weight=2"
-      - "homepage.widget.type=qbittorrent"
-      - "homepage.widget.url=http://${BASE_URL}:8083"
-      - "homepage.widget.username=${QBITTORRENT_USERNAME}"
-      - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
     logging:
       driver: awslogs
       options:
@@ -94,15 +76,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=torrent"
-      - "homepage.name=qbittorrent-m"
-      - "homepage.description=qBittorrent - MyAnonaMouse instance"
-      - "homepage.icon=qbittorrent.svg"
-      - "homepage.weight=2"
-      - "homepage.widget.type=qbittorrent"
-      - "homepage.widget.url=http://${BASE_URL}:8084"
-      - "homepage.widget.username=${QBITTORRENT_USERNAME}"
-      - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
     logging:
       driver: awslogs
       options:
@@ -132,15 +105,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=torrent"
-      - "homepage.name=qbittorrent-lts"
-      - "homepage.description=qBittorrent - archival instance"
-      - "homepage.icon=qbittorrent.svg"
-      - "homepage.weight=2"
-      - "homepage.widget.type=qbittorrent"
-      - "homepage.widget.url=http://${BASE_URL}:8085"
-      - "homepage.widget.username=${QBITTORRENT_USERNAME}"
-      - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
     logging:
       driver: awslogs
       options:
@@ -169,15 +133,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=torrent"
-      - "homepage.name=qbittorrent-anime"
-      - "homepage.description=qBittorrent - anime instance"
-      - "homepage.icon=qbittorrent.svg"
-      - "homepage.weight=0"
-      - "homepage.widget.type=qbittorrent"
-      - "homepage.widget.url=http://${BASE_URL}:8086"
-      - "homepage.widget.username=${QBITTORRENT_USERNAME}"
-      - "homepage.widget.password=${QBITTORRENT_PASSWORD}"
     logging:
       driver: awslogs
       options:

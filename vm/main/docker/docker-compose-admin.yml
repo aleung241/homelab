@@ -15,14 +15,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=admin"
-      - "homepage.name=portainer"
-      - "homepage.description=Docker monitoring"
-      - "homepage.icon=portainer.svg"
-      - "homepage.widget.type=portainer"
-      - "homepage.widget.url=https://${BASE_URL}:9443"
-      - "homepage.widget.env=2"
-      - "homepage.widget.key=${PORTAINER_API_KEY}"
     logging:
       driver: awslogs
       options:
@@ -52,10 +44,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=admin"
-      - "homepage.name=bookstack"
-      - "homepage.description=Documentation"
-      - "homepage.icon=bookstack.svg"
     logging:
       driver: awslogs
       options:
@@ -83,35 +71,11 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=admin"
-      - "homepage.name=bookstack-db"
-      - "homepage.description=Bookstack Database"
-      - "homepage.icon=mariadb.svg"
     logging:
       driver: awslogs
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack_db
-        awslogs-create-group: "true"
-    restart: unless-stopped
-
-  homepage:
-    image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
-    ports:
-      - "3200:3000"
-    volumes:
-      - /opt/docker/homepage:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/homepage
         awslogs-create-group: "true"
     restart: unless-stopped
 

@@ -16,9 +16,6 @@ services:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
       - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-      - "homepage.group=sharing"
-      - "homepage.name=pairdrop"
-      - "homepage.description=Cross platform web based file sharing"
     logging:
       driver: awslogs
       options:
