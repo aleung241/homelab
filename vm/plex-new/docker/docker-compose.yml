@@ -167,6 +167,10 @@ services:
       - /transcode/tdarr_cache:/temp
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:
