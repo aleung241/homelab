@@ -245,56 +245,24 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
-  manyfold:
-    image: ghcr.io/manyfold3d/manyfold:latest
-    container_name: manyfold
-    ports:
-      - "3214:3214"
-    environment:
-      DATABASE_ADAPTER: postgresql
-      DATABASE_HOST: manyfold-postgres
-      DATABASE_PORT: 5432
-      DATABASE_NAME: ${MANYFOLD_DB_NAME}
-      DATABASE_USER: ${MANYFOLD_DB_USER}
-      DATABASE_PASSWORD: ${MANYFOLD_DB_PASSWORD}
-      SECRET_KEY_BASE: ${MANYFOLD_SECRET_KEY_BASE}
-      REDIS_URL: redis://manyfold-redis:6379/1
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
-    volumes:
-      - /opt/docker/manyfold/libraries:/libraries
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - DAC_OVERRIDE
-      - SETUID
-      - SETGID
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/manyfold
-        awslogs-create-group: "true"
+  pricebuddy:
+    build:
+      context: .
+      dockerfile: docker/php.dockerfile
+    image: jez500/pricebuddy:latest
+    container_name: pricebuddy
     depends_on:
-      - manyfold-postgres
-      - manyfold-redis
-    restart: unless-stopped
-
-  manyfold-postgres:
-    image: postgres:15
-    container_name: manyfold-postgres
-    environment:
-      POSTGRES_USER: ${MANYFOLD_DB_USER}
-      POSTGRES_PASSWORD: ${MANYFOLD_DB_PASSWORD}
+      - pricebuddy-db
+    ports:
+      - 5052:80
     volumes:
-      - /opt/docker/manyfold-postgres/var/lib/postgresql/data:/var/lib/postgresql/data
+      - /opt/docker/pricebuddy/storage:/app/storage
+      - /opt/docker/pricebuddy/.env:/app/.env
+    environment:
+      DB_HOST: pricebuddy-db                                  # Name of the database service
+      DB_DATABASE: pricebuddy                                 # Should match the MYSQL_DATABASE in the database service
+      SCRAPER_BASE_URL: http://pricebuddy-scrapper:3000       # Url to Name of the scrapper service
+      AFFILIATE_ENABLED: true                                 # See https://pricebuddy.jez.me/support-project.html
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -303,13 +271,17 @@ services:
       driver: awslogs
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/manyfold-postgres
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy
         awslogs-create-group: "true"
-    restart: unless-stopped
+    restart: always
 
-  manyfold-redis:
-    image: redis:7
-    container_name: manyfold-redis
+  pricebuddy-db:
+    image: mysql:8.2
+    container_name: pricebuddy-db
+    environment:
+      MYSQL_DATABASE: pricebuddy
+    volumes:
+      - /opt/docker/pricebuddy/database:/var/lib/mysql
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -318,6 +290,23 @@ services:
       driver: awslogs
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/manyfold-redis
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-db
         awslogs-create-group: "true"
-    restart: unless-stopped
+    restart: always
+
+  pricebuddy-scrapper:
+    image: amerkurev/scrapper:latest
+    container_name: pricebuddy-scrapper
+    ports:
+      - 3030:3000 # Optional, if you want to access the scrapper api from the host machine
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-scrapper
+        awslogs-create-group: "true"
+    restart: always
