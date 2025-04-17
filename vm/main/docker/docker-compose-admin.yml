@@ -223,28 +223,6 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
-  wallos:
-    container_name: wallos
-    image: bellamy/wallos:latest
-    ports:
-      - "8282:80/tcp"
-    environment:
-      TZ: ${TIMEZONE}
-    volumes:
-      - /opt/docker/wallos/db:/var/www/html/db
-      - /opt/docker/wallos/logos:/var/www/html/images/uploads/logos
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/wallos
-        awslogs-create-group: "true"
-    restart: unless-stopped
-
   pricebuddy:
     build:
       context: .
