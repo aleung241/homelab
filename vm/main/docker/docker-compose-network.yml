@@ -204,6 +204,10 @@ services:
       - /opt/docker/librespeed/config:/config
     ports:
       - "8130:80"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:

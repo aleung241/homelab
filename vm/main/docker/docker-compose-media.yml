@@ -92,6 +92,10 @@ services:
       CRON_SCHEDULE: 59 23 28 10 1
     volumes:
       - /opt/docker/recyclarr:/config
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:
@@ -124,6 +128,10 @@ services:
       - "8266:8266"
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:
@@ -152,6 +160,10 @@ services:
       - /transcode/tdarr_cache:/temp
     env_file:
       - .env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:

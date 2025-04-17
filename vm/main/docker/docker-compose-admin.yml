@@ -168,6 +168,16 @@ services:
       INFERENCE_CONTEXT_LENGTH: 8192
       DATA_DIR: /data
       MAX_ASSET_SIZE_MB: 100
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/hoarder
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   hoarder-chrome:
@@ -180,6 +190,16 @@ services:
       - --remote-debugging-address=0.0.0.0
       - --remote-debugging-port=9222
       - --hide-scrollbars
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/hoarder-chrome
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   hoarder-meilisearch:
@@ -191,6 +211,16 @@ services:
       MEILI_NO_ANALYTICS: "true"
     volumes:
       - /opt/docker/hoarder-meilisearch:/meili_data
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/hoarder-meilisearch
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   wallos:
@@ -203,6 +233,16 @@ services:
     volumes:
       - /opt/docker/wallos/db:/var/www/html/db
       - /opt/docker/wallos/logos:/var/www/html/images/uploads/logos
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/wallos
+        awslogs-create-group: "true"
     restart: unless-stopped
 
   manyfold:
@@ -232,6 +272,10 @@ services:
       - DAC_OVERRIDE
       - SETUID
       - SETGID
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:
@@ -251,6 +295,10 @@ services:
       POSTGRES_PASSWORD: ${MANYFOLD_DB_PASSWORD}
     volumes:
       - /opt/docker/manyfold-postgres/var/lib/postgresql/data:/var/lib/postgresql/data
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
     logging:
       driver: awslogs
       options:
@@ -262,4 +310,14 @@ services:
   manyfold-redis:
     image: redis:7
     container_name: manyfold-redis
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/manyfold-redis
+        awslogs-create-group: "true"
     restart: unless-stopped
