@@ -151,20 +151,20 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
-  hoarder:
-    image: ghcr.io/hoarder-app/hoarder:release
-    container_name: hoarder
+  karakeep:
+    image: ghcr.io/karakeep-app/karakeep:release
+    container_name: karakeep
     volumes:
-      - /opt/docker/hoarder/data:/data
+      - /opt/docker/karakeep/data:/data
     ports:
       - "3300:3000"
     env_file:
       - .env
     environment:
-      MEILI_ADDR: http://hoarder-meilisearch:7700
-      BROWSER_WEB_URL: http://hoarder-chrome:9222
-      NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET}
-      OPENAI_API_KEY: ${HOARDER_OPENAI_API_KEY}
+      MEILI_ADDR: http://karakeep-meilisearch:7700
+      BROWSER_WEB_URL: http://karakeep-chrome:9222
+      NEXTAUTH_SECRET: ${KARAKEEP_NEXTAUTH_SECRET}
+      OPENAI_API_KEY: ${KARAKEEP_OPENAI_API_KEY}
       INFERENCE_CONTEXT_LENGTH: 8192
       DATA_DIR: /data
       MAX_ASSET_SIZE_MB: 100
@@ -176,13 +176,13 @@ services:
       driver: awslogs
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/hoarder
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep
         awslogs-create-group: "true"
     restart: unless-stopped
 
-  hoarder-chrome:
+  karakeep-chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
-    container_name: hoarder-chrome
+    container_name: karakeep-chrome
     command:
       - --no-sandbox
       - --disable-gpu
@@ -198,19 +198,19 @@ services:
       driver: awslogs
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/hoarder-chrome
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-chrome
         awslogs-create-group: "true"
     restart: unless-stopped
 
-  hoarder-meilisearch:
+  karakeep-meilisearch:
     image: getmeili/meilisearch:v1.11.1
-    container_name: hoarder-meilisearch
+    container_name: karakeep-meilisearch
     env_file:
       - .env
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - /opt/docker/hoarder-meilisearch:/meili_data
+      - /opt/docker/karakeep-meilisearch:/meili_data
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -219,7 +219,7 @@ services:
       driver: awslogs
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/hoarder-meilisearch
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-meilisearch
         awslogs-create-group: "true"
     restart: unless-stopped
 
