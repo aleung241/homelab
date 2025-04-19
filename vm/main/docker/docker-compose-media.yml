@@ -198,32 +198,6 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
-  jackett:
-    image: hotio/jackett
-    container_name: jackett
-    environment:
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
-      UMASK: ${DEFAULT_UMASK}
-      TZ: ${TIMEZONE}
-    volumes:
-      - /opt/docker/jackett:/config
-    ports:
-      - "9117:9117"
-    env_file:
-      - .env
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/jackett
-        awslogs-create-group: "true"
-    restart: unless-stopped
-
   nzbhydra2:
     image: hotio/nzbhydra2
     container_name: nzbhydra2
