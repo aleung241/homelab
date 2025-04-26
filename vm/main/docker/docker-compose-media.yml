@@ -15,6 +15,7 @@ services:
       - "7878:7878"
     env_file:
       - .env
+      - .arr.env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -43,6 +44,7 @@ services:
       - "8989:8989"
     env_file:
       - .env
+      - .arr.env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -71,6 +73,7 @@ services:
       - "8990:8989"
     env_file:
       - .env
+      - .arr.env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -111,7 +114,7 @@ services:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
       UMASK_SET: ${DEFAULT_UMASK}
-      serverIP: 192.168.1.32
+      serverIP: ${BASE_URL}
       serverPort: 8266
       webUIPort: 8265
       internalNode: false
@@ -126,8 +129,6 @@ services:
     ports:
       - "8265:8265"
       - "8266:8266"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -149,7 +150,7 @@ services:
       PGID: ${DEFAULT_GROUP}
       UMASK_SET: ${DEFAULT_UMASK}
       nodeName: main-node
-      serverIP: 192.168.1.32
+      serverIP: ${BASE_URL}
       serverPort: 8266
       inContainer: true
       ffmpegVersion: 6
@@ -158,8 +159,6 @@ services:
       - /opt/docker/tdarr/logs:/app/logs
       - /ocean/media:/media:ro
       - /transcode/tdarr_cache:/temp
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -184,8 +183,6 @@ services:
       - /opt/docker/prowlarr:/config
     ports:
       - "9696:9696"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -209,8 +206,6 @@ services:
       - /opt/docker/nzbhydra2:/config
     ports:
       - "5076:5076"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -237,8 +232,6 @@ services:
       - /server-storage:/data
     ports:
       - "8090:8080"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -265,8 +258,6 @@ services:
       - /ocean/media:/media
     ports:
       - "6767:6767"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"

@@ -27,6 +27,9 @@ services:
   unifi:
     image: linuxserver/unifi-controller
     container_name: unifi
+    env_file:
+      - .env
+      - .network.env
     environment:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
@@ -53,6 +56,9 @@ services:
   adguard-home:
     image: adguard/adguardhome
     container_name: adguard-home
+    env_file:
+      - .env
+      - .network.env
     ports:
       - "53:53/tcp"     # dns
       - "53:53/udp"     # dns
@@ -153,7 +159,6 @@ services:
       - /opt/docker/rclone-serve-webdav:/opt
       - /gmediac:/gmediac:ro
       - /server-storage/torrents/MAM/:/server-storage/torrents/MAM/
-      - /server-storage/torrents/ggn/:/server-storage/torrents/ggn/
     command:
       - "serve"
       - "webdav"
