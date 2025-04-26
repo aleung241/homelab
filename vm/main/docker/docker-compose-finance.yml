@@ -1,0 +1,80 @@
+services:
+  firefly-iii:
+    image: fireflyiii/core:latest
+    hostname: firefly-iii
+    container_name: firefly-iii-core
+    depends_on:
+      - firefly-iii-db
+    volumes:
+      - /opt/docker/firefly-iii/upload:/var/www/html/storage/upload
+    env_file: /opt/docker/firefly-iii/.env
+    ports:
+      - "8070:8080"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii
+        awslogs-create-group: "true"
+    restart: always
+
+  firefly-iii-db:
+    image: mariadb:lts
+    hostname: firefly-iii-db
+    container_name: firefly-iii-db
+    env_file:
+      - /opt/docker/firefly-iii/.db.env
+    volumes:
+      - /opt/docker/firefly-iii/db:/var/lib/mysql
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-db
+        awslogs-create-group: "true"
+    restart: always
+
+  firefly-iii-importer:
+    image: fireflyiii/data-importer:latest
+    hostname: firefly-iii-importer
+    restart: always
+    container_name: firefly-iii-importer
+    depends_on:
+      - firefly-iii
+    ports:
+      - "8071:8080"
+    env_file: /opt/docker/firefly-iii/.importer.env
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-importer
+        awslogs-create-group: "true"
+
+#  firefly-iii-cron:
+#    #
+#    # To make this work, set STATIC_CRON_TOKEN in your .env file or as an environment variable and replace REPLACEME below
+#    # The STATIC_CRON_TOKEN must be *exactly* 32 characters long
+#    #
+#    image: alpine
+#    container_name: firefly-iii-cron
+#    env_file: .env
+#    command: sh -c "
+#      apk add tzdata
+#      && ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
+#      | echo \"0 3 * * * wget -qO- http://firefly-iii:8080/api/v1/cron/REPLACEME;echo\"
+#      | crontab -
+#      && crond -f -L /dev/stdout"
+#    restart: always
