@@ -288,3 +288,87 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-scrapper
         awslogs-create-group: "true"
     restart: always
+
+  paperless-ngx-webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx-webserver
+    depends_on:
+      - paperless-ngx-db
+      - paperless-ngx-broker
+      - paperless-ngx-gotenberg
+      - paperless-ngx-tika
+    env_file:
+      - .env
+      - .paperless.env
+    ports:
+      - "3500:8000"
+    volumes:
+      - /opt/docker/paperless-ngx/data:/usr/src/paperless/data
+      - /opt/docker/paperless-ngx/media:/usr/src/paperless/media
+      - /opt/docker/paperless-ngx/export:/usr/src/paperless/export
+      - /opt/docker/paperless-ngx/consume:/usr/src/paperless/consume
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-webserver
+        awslogs-create-group: "true"
+    restart: always
+
+  paperless-ngx-broker:
+    image: docker.io/library/redis:7
+    container_name: paperless-ngx-broker
+    volumes:
+      - /opt/docker/paperless-ngx/redisdata:/data
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-broker
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
+  paperless-ngx-db:
+    image: docker.io/library/postgres:17
+    container_name: paperless-ngx-db
+    environment:
+      POSTGRES_DB: ${PAPERLESS_DB}
+      POSTGRES_USER: ${PAPERLESS_DB_USER}
+      POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
+    volumes:
+      - /opt/docker/paperless-ngx/pgdata:/var/lib/postgresql/data
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-db
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
+  paperless-ngx-gotenberg:
+    image: docker.io/gotenberg/gotenberg:8.19
+    container_name: paperless-ngx-gotenberg
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+  paperless-ngx-tika:
+    image: docker.io/apache/tika:latest
+    container_name: paperless-ngx-tika
+    restart: unless-stopped
