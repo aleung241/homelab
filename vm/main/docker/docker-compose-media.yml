@@ -1,6 +1,6 @@
 services:
   radarr:
-    image: hotio/radarr
+    image: ghcr.io/hotio/radarr
     container_name: radarr
     environment:
       PUID: ${DEFAULT_USER}
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: hotio/sonarr:latest
+    image: ghcr.io/hotio/sonarr:latest
     container_name: sonarr
     environment:
       PUID: ${DEFAULT_USER}
@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
 
   sonarr-anime:
-    image: hotio/sonarr:latest
+    image: ghcr.io/hotio/sonarr:latest
     container_name: sonarr-anime
     environment:
       PUID: ${DEFAULT_USER}
@@ -196,7 +196,7 @@ services:
     restart: unless-stopped
 
   nzbhydra2:
-    image: hotio/nzbhydra2
+    image: ghcr.io/hotio/nzbhydra2
     container_name: nzbhydra2
     environment:
       PUID: ${DEFAULT_USER}
@@ -219,7 +219,7 @@ services:
     restart: unless-stopped
 
   sabnzbd:
-    image: hotio/sabnzbd
+    image: ghcr.io/hotio/sabnzbd
     container_name: sabnzbd
     environment:
       PUID: ${DEFAULT_USER}
@@ -246,7 +246,7 @@ services:
 
   bazarr:
     container_name: bazarr
-    image: hotio/bazarr
+    image: ghcr.io/hotio/bazarr
     environment:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
