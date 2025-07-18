@@ -1,6 +1,6 @@
 services:
   qbittorrent:
-    image: hotio/qbittorrent:release-4.6.3
+    image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent
     environment:
       TZ: ${TIMEZONE}
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   qbittorrent-dlc:
-    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-dlc
     environment:
       TZ: ${TIMEZONE}
@@ -56,7 +56,7 @@ services:
     restart: unless-stopped
 
   qbittorrent-m:
-    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-m
     environment:
       TZ: ${TIMEZONE}
@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
 
   qbittorrent-lts:
-    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-lts
     environment:
       TZ: ${TIMEZONE}
@@ -114,7 +114,7 @@ services:
     restart: unless-stopped
 
   qbittorrent-anime:
-    image: hotio/qbittorrent:release-4.3.8.99-202110081405-7423-ac5c264e6
+    image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-anime
     depends_on:
       - wireguard-client
