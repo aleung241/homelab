@@ -15,7 +15,6 @@ services:
       - "7878:7878"
     env_file:
       - .env
-      - .arr.env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -44,7 +43,6 @@ services:
       - "8989:8989"
     env_file:
       - .env
-      - .arr.env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -73,7 +71,6 @@ services:
       - "8990:8989"
     env_file:
       - .env
-      - .arr.env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"

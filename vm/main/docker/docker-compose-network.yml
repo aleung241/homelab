@@ -58,7 +58,6 @@ services:
     container_name: adguard-home
     env_file:
       - .env
-      - .network.env
     ports:
       - "53:53/tcp"     # dns
       - "53:53/udp"     # dns
