@@ -372,3 +372,27 @@ services:
     image: docker.io/apache/tika:latest
     container_name: paperless-ngx-tika
     restart: unless-stopped
+
+  homebox:
+    image: ghcr.io/sysadminsmedia/homebox:latest
+    container_name: homebox
+    environment:
+      - HBOX_LOG_LEVEL=info
+      - HBOX_LOG_FORMAT=text
+      - HBOX_WEB_MAX_FILE_UPLOAD=10
+      - HBOX_OPTIONS_ALLOW_ANALYTICS=false
+    volumes:
+      - /opt/docker/homebox/data:/data/
+    ports:
+      - 3600:7745
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/homebox
+        awslogs-create-group: "true"
+    restart: unless-stopped
