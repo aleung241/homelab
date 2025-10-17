@@ -86,6 +86,17 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
+  huntarr:
+    image: huntarr/huntarr:latest
+    container_name: huntarr
+    environment:
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker/huntarr:/config
+    ports:
+      - "9705:9705"
+    restart: unless-stopped
+
   recyclarr:
     image: recyclarr/recyclarr
     container_name: recyclarr
