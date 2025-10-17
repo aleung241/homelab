@@ -3,7 +3,6 @@
 secrets.sh
 docker-compose-special.yml
 **/authelia
-**/homer
 **/autoscan
 **/monitorss
 *secrets*
