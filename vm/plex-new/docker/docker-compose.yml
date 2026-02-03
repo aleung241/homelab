@@ -31,6 +31,7 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
+# autoscan deprecated
   autoscan:
     container_name: autoscan
     image: ghcr.io/hotio/autoscan
@@ -53,6 +54,32 @@ services:
       options:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/autoscan
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
+  autopulse:
+    image: ghcr.io/dan-online/autopulse
+    container_name: autopulse
+    ports:
+      - "2875:2875"
+    environment:
+      TZ: ${TIMEZONE}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      AUTOPULSE__APP__DATABASE_URL: sqlite://data/autopulse.db
+    volumes:
+      - /opt/docker/autopulse/config.yml:/app/config.yml
+      - /opt/docker/autopulse/data:/app/data
+      - /ocean:/datac:ro
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/autopulse
         awslogs-create-group: "true"
     restart: unless-stopped
 
