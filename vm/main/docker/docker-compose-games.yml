@@ -1,0 +1,28 @@
+services:
+  gameyfin:
+    image: ghcr.io/gameyfin/gameyfin:2
+    container_name: gameyfin
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      APP_KEY: ${GAMEYFIN_APP_KEY}
+      APP_URL: ${GAMEYFIN_APP_URL}
+    volumes:
+      - /opt/docker/gameyfin/db:/opt/gameyfin/db
+      - /opt/docker/gameyfin/data:/opt/gameyfin/data
+      - /opt/docker/gameyfin/plugindata:/opt/gameyfin/plugindata
+      - /opt/docker/gameyfin/logs:/opt/gameyfin/logs
+      - /server-storage/games:/server-storage/games:ro
+    ports:
+      - "8380:8080"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/gameyfin
+        awslogs-create-group: "true"
+    restart: unless-stopped
