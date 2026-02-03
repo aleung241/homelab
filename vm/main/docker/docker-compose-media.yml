@@ -300,6 +300,28 @@ services:
         awslogs-create-group: "true"
     restart: unless-stopped
 
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:2
+    container_name: maintainerr
+    user: 1000:1000
+    environment:
+      TZ: ${TIMEZONE}
+    volumes:
+      - /opt/docker/maintainerr/data:/opt/data
+    ports:
+      - "6246:6246"
+    labels:
+      - "org.hotio.pullio.notify=true"
+      - "org.hotio.pullio.update=true"
+      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_DEFAULT_REGION}
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/maintainerr
+        awslogs-create-group: "true"
+    restart: unless-stopped
+
   navidrome:
     image: deluan/navidrome:latest
     container_name: navidrome
