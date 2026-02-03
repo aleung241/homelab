@@ -191,6 +191,7 @@ services:
       - /opt/docker/tdarr/configs:/app/configs
       - /opt/docker/tdarr/logs:/app/logs
       - /ocean/media:/media:ro
+      - /server-storage/new-folder:/new-folder:ro
       - /transcode/tdarr_cache:/temp
     env_file:
       - .env

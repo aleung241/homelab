@@ -133,6 +133,7 @@ services:
       - /opt/docker/tdarr/configs:/app/configs
       - /opt/docker/tdarr/logs:/app/logs
       - /ocean/media:/media:ro
+      - /server-storage/new-folder:/new-folder:ro
       - /transcode/tdarr_cache:/temp
     ports:
       - "8265:8265"
@@ -166,6 +167,7 @@ services:
       - /opt/docker/tdarr/configs:/app/configs
       - /opt/docker/tdarr/logs:/app/logs
       - /ocean/media:/media:ro
+      - /server-storage/new-folder:/new-folder:ro
       - /transcode/tdarr_cache:/temp
     labels:
       - "org.hotio.pullio.notify=true"
@@ -279,7 +281,7 @@ services:
     restart: unless-stopped
 
   overseerr:
-    image: sctx/overseerr
+    image: sctx/overseerr:latest
     container_name: overseerr
     environment:
       TZ: ${TIMEZONE}
