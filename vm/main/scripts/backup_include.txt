@@ -4,13 +4,15 @@
 + /etc/systemd/system/
 + /etc/systemd/system/rclone*
 + /etc/systemd/system/gmedia*
-+ /etc/systemd/system/plex_autoscan.service
 
 + /root/
 + /root/.bashrc
++ /root/.aws/
++ /root/.aws/**
++ /root/.ssh/
++ /root/.ssh/**
 + /root/.config/
-+ /root/.config/btop
-+ /root/.config/rclone
++ /root/.config/**
 + /root/scripts/
 + /root/scripts/**
 

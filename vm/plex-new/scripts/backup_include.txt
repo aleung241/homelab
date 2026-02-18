@@ -8,15 +8,18 @@
 
 + /root/
 + /root/.bashrc
++ /root/.aws/
++ /root/.aws/**
++ /root/.ssh/
++ /root/.ssh/**
 + /root/.config/
-+ /root/.config/btop
-+ /root/.config/rclone
-+ /root/scripts/
-+ /root/scripts/**
++ /root/.config/**
++ /root/DBRepair.sh
 
 + /opt/
 + /opt/**
 
 + /Plex/
 + /Plex/**
+
 - *
