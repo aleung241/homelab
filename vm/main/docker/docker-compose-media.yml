@@ -328,7 +328,7 @@ services:
   maintainerr:
     image: ghcr.io/maintainerr/maintainerr:2
     container_name: maintainerr
-    user: 1000:1000
+    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
     environment:
       TZ: ${TIMEZONE}
     volumes:
@@ -350,7 +350,7 @@ services:
   navidrome:
     image: deluan/navidrome:latest
     container_name: navidrome
-    user: 1000:1000
+    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
     environment:
       ND_SCANSCHEDULE: "0"
     volumes:

@@ -183,7 +183,7 @@ services:
       PGID: ${DEFAULT_GROUP}
       UMASK_SET: ${DEFAULT_UMASK}
       nodeName: plex-node
-      serverIP: 192.168.1.32
+      serverIP: ${MAIN_SERVER_IP}
       serverPort: 8266
       inContainer: true
       ffmpegVersion: 6
