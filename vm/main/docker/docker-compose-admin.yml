@@ -245,7 +245,7 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped
 
   pricebuddy-db:
     image: mysql:8.2
@@ -264,7 +264,7 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-db
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped
 
   pricebuddy-scrapper:
     image: amerkurev/scrapper:latest
@@ -281,7 +281,7 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-scrapper
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped
 
   paperless-ngx-webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -310,7 +310,7 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-webserver
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped
 
   paperless-ngx-broker:
     image: docker.io/library/redis:7

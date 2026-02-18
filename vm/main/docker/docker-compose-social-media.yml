@@ -16,4 +16,4 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/thelounge
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped

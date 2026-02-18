@@ -20,7 +20,7 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped
 
   firefly-iii-db:
     image: mariadb:lts
@@ -40,12 +40,11 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-db
         awslogs-create-group: "true"
-    restart: always
+    restart: unless-stopped
 
   firefly-iii-importer:
     image: fireflyiii/data-importer:latest
     hostname: firefly-iii-importer
-    restart: always
     container_name: firefly-iii-importer
     depends_on:
       - firefly-iii
@@ -62,6 +61,7 @@ services:
         awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-importer
         awslogs-create-group: "true"
+    restart: unless-stopped
 
 #  firefly-iii-cron:
 #    #
@@ -73,8 +73,8 @@ services:
 #    env_file: .env
 #    command: sh -c "
 #      apk add tzdata
-#      && ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
+#      && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime
 #      | echo \"0 3 * * * wget -qO- http://firefly-iii:8080/api/v1/cron/REPLACEME;echo\"
 #      | crontab -
 #      && crond -f -L /dev/stdout"
-#    restart: always
+#    restart: unless-stopped
