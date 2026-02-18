@@ -19,27 +19,6 @@ services:
       options:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/nginx
 
-#  unifi:
-#    image: linuxserver/unifi-controller
-#    container_name: unifi
-#    environment:
-#      PUID: ${DEFAULT_USER}
-#      PGID: ${DEFAULT_GROUP}
-#    volumes:
-#      - ${DOCKER_DIRECTORY_BASE_PATH}/unifi:/config
-#    ports:
-#      - "3478:3478/udp"
-#      - "10001:10001/udp"
-#      - "8080:8080"
-#      - "8443:8443"
-#      - "6789:6789"
-#    extends:
-#      file: common.yaml
-#      service: common
-#    logging:
-#      options:
-#        awslogs-group: /${DEFAULT_BASE_MACHINE}/unifi-controller
-
   unifi-network-application:
     image: lscr.io/linuxserver/unifi-network-application:latest
     container_name: unifi-network-application
@@ -135,19 +114,6 @@ services:
     logging:
       options:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/wireguard-client
-
-#  cloudflare-ddns:
-#    image: oznu/cloudflare-ddns
-#    container_name: cloudflare-ddns
-#    environment:
-#      TZ: ${TIMEZONE}
-#      PROXIED: 'true'
-#      API_KEY: ${CLOUDFLARE_APIKEY}
-#      ZONE: ${CLOUDFLARE_DOMAIN}
-#      SUBDOMAIN: ${CLOUDFLARE_SUBDOMAIN}
-#    extends:
-#      file: common.yaml
-#      service: common
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
