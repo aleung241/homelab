@@ -1,8 +1,8 @@
 services:
   monitorss-redis:
+    image: redis:alpine
     container_name: monitorss-redis
     restart: on-failure:5
-    image: redis:alpine
     extends:
       file: common.yaml
       service: common
@@ -11,14 +11,14 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-redis
 
   monitorss-mongodb:
+    image: mongo:6.0
     container_name: monitorss-mongodb
     restart: on-failure:5
     command: mongod --port 27017 --bind_ip_all
-    image: mongo:6.0
-    ports:
-      - "27018:27017"
     volumes:
       - /opt/docker/monitorss/db-data:/data/db
+    ports:
+      - "27018:27017"
     extends:
       file: common.yaml
       service: common
@@ -27,9 +27,9 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-mongodb
 
   monitorss-bot:
+    image: synzen/monitorss
     container_name: monitorss-bot
     restart: on-failure:3
-    image: synzen/monitorss
     depends_on:
       - monitorss-mongodb
     environment:
@@ -49,14 +49,12 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-bot
 
   monitorss-web:
-    container_name: monitorss-web
     image: synzen/monitorss
+    container_name: monitorss-web
     restart: on-failure:3
     depends_on:
       - monitorss-redis
       - monitorss-mongodb
-    ports:
-      - "8281:8081"
     environment:
       DRSS_START: web
       DRSSWEB_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
@@ -65,6 +63,8 @@ services:
       DRSSWEB_BOT_REDIRECTURI: ${DISCORD_WEB_REDIRECT_URI}
       DRSSWEB_BOT_CLIENTID: ${DISCORD_BOT_CLIENTID}
       DRSSWEB_BOT_CLIENTSECRET: ${DISCORD_BOT_CLIENTSECRET}
+    ports:
+      - "8281:8081"
     extends:
       file: common.yaml
       service: common

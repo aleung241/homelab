@@ -2,10 +2,10 @@ services:
   qui:
     image: ghcr.io/autobrr/qui:latest
     container_name: qui
-    ports:
-      - "7476:7476"
     volumes:
       - /opt/docker/qui:/config
+    ports:
+      - "7476:7476"
     extends:
       file: common.yaml
       service: common
@@ -18,13 +18,13 @@ services:
     container_name: qbittorrent
     environment:
       WEBUI_PORTS: 8081
+    volumes:
+      - /opt/docker/qbittorrent:/config
+      - /server-storage:/data
     ports:
       - "21014:21014/tcp"
       - "21014:21014/udp"
       - "8081:8081"
-    volumes:
-      - /opt/docker/qbittorrent:/config
-      - /server-storage:/data
     extends:
       file: common.yaml
       service: hotio
@@ -37,13 +37,13 @@ services:
     container_name: qbittorrent-dlc
     environment:
       WEBUI_PORTS: 8083
+    volumes:
+      - /opt/docker/qbittorrent-dlc:/config
+      - /server-storage:/data
     ports:
       - "47882:47882/tcp"
       - "47882:47882/udp"
       - "8083:8083"
-    volumes:
-      - /opt/docker/qbittorrent-dlc:/config
-      - /server-storage:/data
     extends:
       file: common.yaml
       service: hotio
@@ -56,13 +56,13 @@ services:
     container_name: qbittorrent-m
     environment:
       WEBUI_PORTS: 8084
+    volumes:
+      - /opt/docker/qbittorrent-m:/config
+      - /server-storage:/data
     ports:
       - "46884:46884/tcp"
       - "46884:46884/udp"
       - "8084:8084"
-    volumes:
-      - /opt/docker/qbittorrent-m:/config
-      - /server-storage:/data
     extends:
       file: common.yaml
       service: hotio
@@ -75,13 +75,13 @@ services:
     container_name: qbittorrent-lts
     environment:
       WEBUI_PORTS: 8085
+    volumes:
+      - /opt/docker/qbittorrent-lts:/config
+      - /server-storage:/data
     ports:
       - "32798:32798/tcp"
       - "32798:32798/udp"
       - "8085:8085"
-    volumes:
-      - /opt/docker/qbittorrent-lts:/config
-      - /server-storage:/data
     extends:
       file: common.yaml
       service: hotio
@@ -92,11 +92,11 @@ services:
   qbittorrent-anime:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-anime
+    network_mode: service:wireguard-client
     depends_on:
       - wireguard-client
     environment:
       WEBUI_PORTS: 8086
-    network_mode: service:wireguard-client
     volumes:
       - /opt/docker/qbittorrent-anime:/config
       - /server-storage:/data

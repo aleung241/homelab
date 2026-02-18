@@ -4,10 +4,10 @@ services:
     container_name: spoolman
     environment:
       TZ: ${TIMEZONE}
-    ports:
-      - "7912:8000"
     volumes:
       - /opt/docker/spoolman/data:/home/app/.local/share/spoolman
+    ports:
+      - "7912:8000"
     extends:
       file: common.yaml
       service: common

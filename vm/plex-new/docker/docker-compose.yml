@@ -28,13 +28,13 @@ services:
 
 # autoscan deprecated
   autoscan:
-    container_name: autoscan
     image: ghcr.io/hotio/autoscan
-    ports:
-      - "3030:3030"
+    container_name: autoscan
     volumes:
       - /opt/docker/autoscan:/config
       - /ocean:/datac:ro
+    ports:
+      - "3030:3030"
     extends:
       file: common.yaml
       service: hotio
@@ -45,8 +45,6 @@ services:
   autopulse:
     image: ghcr.io/dan-online/autopulse
     container_name: autopulse
-    ports:
-      - "2875:2875"
     environment:
       TZ: ${TIMEZONE}
       PUID: ${DEFAULT_USER}
@@ -56,6 +54,8 @@ services:
       - /opt/docker/autopulse/config.yml:/app/config.yml
       - /opt/docker/autopulse/data:/app/data
       - /ocean:/datac:ro
+    ports:
+      - "2875:2875"
     extends:
       file: common.yaml
       service: common

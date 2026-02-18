@@ -1,13 +1,13 @@
 services:
   firefly-iii:
     image: fireflyiii/core:latest
-    hostname: firefly-iii
     container_name: firefly-iii-core
+    hostname: firefly-iii
     depends_on:
       - firefly-iii-db
+    env_file: /opt/docker/firefly-iii/.env
     volumes:
       - /opt/docker/firefly-iii/upload:/var/www/html/storage/upload
-    env_file: /opt/docker/firefly-iii/.env
     ports:
       - "8070:8080"
     extends:
@@ -19,8 +19,8 @@ services:
 
   firefly-iii-db:
     image: mariadb:lts
-    hostname: firefly-iii-db
     container_name: firefly-iii-db
+    hostname: firefly-iii-db
     env_file:
       - /opt/docker/firefly-iii/.db.env
     volumes:
@@ -34,13 +34,13 @@ services:
 
   firefly-iii-importer:
     image: fireflyiii/data-importer:latest
-    hostname: firefly-iii-importer
     container_name: firefly-iii-importer
+    hostname: firefly-iii-importer
     depends_on:
       - firefly-iii
+    env_file: /opt/docker/firefly-iii/.importer.env
     ports:
       - "8071:8080"
-    env_file: /opt/docker/firefly-iii/.importer.env
     extends:
       file: common.yaml
       service: common

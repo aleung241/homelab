@@ -21,6 +21,8 @@ services:
   bookstack:
     image: lscr.io/linuxserver/bookstack
     container_name: bookstack
+    depends_on:
+      - bookstack_db
     environment:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
@@ -39,8 +41,6 @@ services:
     logging:
       options:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack
-    depends_on:
-      - bookstack_db
 
   bookstack_db:
     image: lscr.io/linuxserver/mariadb
@@ -65,13 +65,13 @@ services:
   home-assistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
     container_name: home-assistant
-    ports:
-      - "8123:8123"
     privileged: true
     volumes:
       - /opt/docker/home-assistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+    ports:
+      - "8123:8123"
     extends:
       file: common.yaml
       service: common
@@ -82,6 +82,9 @@ services:
   changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io:latest
     container_name: changedetection
+    depends_on:
+      sockpuppetbrowser:
+        condition: service_started
     environment:
       PLAYWRIGHT_DRIVER_URL: ws://sockpuppetbrowser:3000
       HIDE_REFERER: true
@@ -92,9 +95,6 @@ services:
       - /opt/docker/changedetection/datastore:/datastore
     ports:
       - "5001:5000"
-    depends_on:
-      sockpuppetbrowser:
-        condition: service_started
     extends:
       file: common.yaml
       service: common
@@ -105,13 +105,13 @@ services:
   sockpuppetbrowser:
     image: dgtlmoon/sockpuppetbrowser:latest
     container_name: sockpuppetbrowser
+    cap_add:
+      - SYS_ADMIN
     environment:
       - SCREEN_WIDTH=1920
       - SCREEN_HEIGHT=1024
       - SCREEN_DEPTH=16
       - MAX_CONCURRENT_CHROME_PROCESSES=10
-    cap_add:
-      - SYS_ADMIN
     extends:
       file: common.yaml
       service: common
@@ -122,10 +122,6 @@ services:
   karakeep:
     image: ghcr.io/karakeep-app/karakeep:release
     container_name: karakeep
-    volumes:
-      - /opt/docker/karakeep/data:/data
-    ports:
-      - "3300:3000"
     environment:
       MEILI_ADDR: http://karakeep-meilisearch:7700
       BROWSER_WEB_URL: http://karakeep-chrome:9222
@@ -134,6 +130,10 @@ services:
       INFERENCE_CONTEXT_LENGTH: 8192
       DATA_DIR: /data
       MAX_ASSET_SIZE_MB: 100
+    volumes:
+      - /opt/docker/karakeep/data:/data
+    ports:
+      - "3300:3000"
     extends:
       file: common.yaml
       service: common
@@ -180,16 +180,16 @@ services:
     container_name: pricebuddy
     depends_on:
       - pricebuddy-db
-    ports:
-      - 5052:80
-    volumes:
-      - /opt/docker/pricebuddy/storage:/app/storage
-      - /opt/docker/pricebuddy/.env:/app/.env
     environment:
       DB_HOST: pricebuddy-db                                  # Name of the database service
       DB_DATABASE: pricebuddy                                 # Should match the MYSQL_DATABASE in the database service
       SCRAPER_BASE_URL: http://pricebuddy-scrapper:3000       # Url to Name of the scrapper service
       AFFILIATE_ENABLED: true                                 # See https://pricebuddy.jez.me/support-project.html
+    volumes:
+      - /opt/docker/pricebuddy/storage:/app/storage
+      - /opt/docker/pricebuddy/.env:/app/.env
+    ports:
+      - 5052:80
     extends:
       file: common.yaml
       service: common
@@ -233,13 +233,13 @@ services:
       - paperless-ngx-tika
     env_file:
       - .paperless.env
-    ports:
-      - "3500:8000"
     volumes:
       - /opt/docker/paperless-ngx/data:/usr/src/paperless/data
       - /opt/docker/paperless-ngx/media:/usr/src/paperless/media
       - /opt/docker/paperless-ngx/export:/usr/src/paperless/export
       - /opt/docker/paperless-ngx/consume:/usr/src/paperless/consume
+    ports:
+      - "3500:8000"
     extends:
       file: common.yaml
       service: common
