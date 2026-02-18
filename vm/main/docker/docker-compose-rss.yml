@@ -3,16 +3,12 @@ services:
     container_name: monitorss-redis
     restart: on-failure:5
     image: redis:alpine
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-redis
-        awslogs-create-group: "true"
 
   monitorss-mongodb:
     container_name: monitorss-mongodb
@@ -23,16 +19,12 @@ services:
       - "27018:27017"
     volumes:
       - /opt/docker/monitorss/db-data:/data/db
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-mongodb
-        awslogs-create-group: "true"
 
   monitorss-bot:
     container_name: monitorss-bot
@@ -49,16 +41,12 @@ services:
       DRSS_LOG_LEVEL: info
     volumes:
       - /opt/docker/monitorss/settings/schedules.json:/app/settings/schedules.json
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-bot
-        awslogs-create-group: "true"
 
   monitorss-web:
     container_name: monitorss-web
@@ -77,13 +65,9 @@ services:
       DRSSWEB_BOT_REDIRECTURI: ${DISCORD_WEB_REDIRECT_URI}
       DRSSWEB_BOT_CLIENTID: ${DISCORD_BOT_CLIENTID}
       DRSSWEB_BOT_CLIENTSECRET: ${DISCORD_BOT_CLIENTSECRET}
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/monitorss-web
-        awslogs-create-group: "true"

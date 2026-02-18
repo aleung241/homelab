@@ -8,14 +8,9 @@ services:
       - "7912:8000"
     volumes:
       - /opt/docker/spoolman/data:/home/app/.local/share/spoolman
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/spoolman
-        awslogs-create-group: "true"
-    restart: unless-stopped

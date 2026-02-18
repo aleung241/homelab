@@ -12,14 +12,9 @@ services:
       DEBUG_MODE: false #optional
     ports:
       - "3100:3000"
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pairdrop
-        awslogs-create-group: "true"
-    restart: unless-stopped

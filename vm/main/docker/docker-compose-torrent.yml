@@ -6,25 +6,17 @@ services:
       - "7476:7476"
     volumes:
       - /opt/docker/qui:/config
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/qui
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   qbittorrent:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent
     environment:
-      TZ: ${TIMEZONE}
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8081
     ports:
       - "21014:21014/tcp"
@@ -33,25 +25,17 @@ services:
     volumes:
       - /opt/docker/qbittorrent:/config
       - /server-storage:/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: hotio
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   qbittorrent-dlc:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-dlc
     environment:
-      TZ: ${TIMEZONE}
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8083
     ports:
       - "47882:47882/tcp"
@@ -60,25 +44,17 @@ services:
     volumes:
       - /opt/docker/qbittorrent-dlc:/config
       - /server-storage:/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: hotio
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-dlc
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   qbittorrent-m:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-m
     environment:
-      TZ: ${TIMEZONE}
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8084
     ports:
       - "46884:46884/tcp"
@@ -87,25 +63,17 @@ services:
     volumes:
       - /opt/docker/qbittorrent-m:/config
       - /server-storage:/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: hotio
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-m
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   qbittorrent-lts:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
     container_name: qbittorrent-lts
     environment:
-      TZ: ${TIMEZONE}
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8085
     ports:
       - "32798:32798/tcp"
@@ -114,17 +82,12 @@ services:
     volumes:
       - /opt/docker/qbittorrent-lts:/config
       - /server-storage:/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: hotio
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-lts
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   qbittorrent-anime:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
@@ -132,22 +95,14 @@ services:
     depends_on:
       - wireguard-client
     environment:
-      TZ: ${TIMEZONE}
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
       WEBUI_PORTS: 8086
     network_mode: service:wireguard-client
     volumes:
       - /opt/docker/qbittorrent-anime:/config
       - /server-storage:/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: hotio
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-anime
-        awslogs-create-group: "true"
-    restart: unless-stopped

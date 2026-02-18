@@ -10,17 +10,12 @@ services:
     env_file: /opt/docker/firefly-iii/.env
     ports:
       - "8070:8080"
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   firefly-iii-db:
     image: mariadb:lts
@@ -30,17 +25,12 @@ services:
       - /opt/docker/firefly-iii/.db.env
     volumes:
       - /opt/docker/firefly-iii/db:/var/lib/mysql
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-db
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   firefly-iii-importer:
     image: fireflyiii/data-importer:latest
@@ -51,17 +41,12 @@ services:
     ports:
       - "8071:8080"
     env_file: /opt/docker/firefly-iii/.importer.env
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-importer
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
 #  firefly-iii-cron:
 #    #

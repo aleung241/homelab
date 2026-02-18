@@ -11,17 +11,12 @@ services:
       - "8100:8000"
       - "9000:9000"
       - "9443:9443"
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/portainer
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   bookstack:
     image: lscr.io/linuxserver/bookstack
@@ -38,17 +33,12 @@ services:
       - /opt/docker/bookstack:/config
     ports:
       - "7000:80"
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack
-        awslogs-create-group: "true"
-    restart: unless-stopped
     depends_on:
       - bookstack_db
 
@@ -65,17 +55,12 @@ services:
       MYSQL_PASSWORD: ${BOOKSTACK_DB_PASS}
     volumes:
       - /opt/docker/bookstack-db:/config
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack_db
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   home-assistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
@@ -87,17 +72,12 @@ services:
       - /opt/docker/home-assistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/home-assistant
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io:latest
@@ -115,17 +95,12 @@ services:
     depends_on:
       sockpuppetbrowser:
         condition: service_started
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-group: /main/changedetection
-        awslogs-create-group: "true"
-    restart: unless-stopped
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/changedetection
 
   sockpuppetbrowser:
     image: dgtlmoon/sockpuppetbrowser:latest
@@ -137,17 +112,12 @@ services:
       - MAX_CONCURRENT_CHROME_PROCESSES=10
     cap_add:
       - SYS_ADMIN
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/sockpuppetbrowser
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   karakeep:
     image: ghcr.io/karakeep-app/karakeep:release
@@ -164,17 +134,12 @@ services:
       INFERENCE_CONTEXT_LENGTH: 8192
       DATA_DIR: /data
       MAX_ASSET_SIZE_MB: 100
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   karakeep-chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
@@ -186,17 +151,12 @@ services:
       - --remote-debugging-address=0.0.0.0
       - --remote-debugging-port=9222
       - --hide-scrollbars
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-chrome
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   karakeep-meilisearch:
     image: getmeili/meilisearch:v1.11.1
@@ -205,17 +165,12 @@ services:
       MEILI_NO_ANALYTICS: "true"
     volumes:
       - /opt/docker/karakeep-meilisearch:/meili_data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-meilisearch
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   pricebuddy:
     build:
@@ -235,17 +190,12 @@ services:
       DB_DATABASE: pricebuddy                                 # Should match the MYSQL_DATABASE in the database service
       SCRAPER_BASE_URL: http://pricebuddy-scrapper:3000       # Url to Name of the scrapper service
       AFFILIATE_ENABLED: true                                 # See https://pricebuddy.jez.me/support-project.html
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   pricebuddy-db:
     image: mysql:8.2
@@ -254,34 +204,24 @@ services:
       MYSQL_DATABASE: pricebuddy
     volumes:
       - /opt/docker/pricebuddy/database:/var/lib/mysql
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-db
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   pricebuddy-scrapper:
     image: amerkurev/scrapper:latest
     container_name: pricebuddy-scrapper
     ports:
       - 3030:3000 # Optional, if you want to access the scrapper api from the host machine
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-scrapper
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   paperless-ngx-webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -300,34 +240,24 @@ services:
       - /opt/docker/paperless-ngx/media:/usr/src/paperless/media
       - /opt/docker/paperless-ngx/export:/usr/src/paperless/export
       - /opt/docker/paperless-ngx/consume:/usr/src/paperless/consume
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-webserver
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   paperless-ngx-broker:
     image: docker.io/library/redis:7
     container_name: paperless-ngx-broker
     volumes:
       - /opt/docker/paperless-ngx/redisdata:/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-broker
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   paperless-ngx-db:
     image: docker.io/library/postgres:17
@@ -338,33 +268,38 @@ services:
       POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
     volumes:
       - /opt/docker/paperless-ngx/pgdata:/var/lib/postgresql/data
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-db
-        awslogs-create-group: "true"
-    restart: unless-stopped
 
   paperless-ngx-gotenberg:
     image: docker.io/gotenberg/gotenberg:8.19
     container_name: paperless-ngx-gotenberg
-    restart: unless-stopped
     # The gotenberg chromium route is used to convert .eml files. We do not
     # want to allow external content like tracking pixels or even javascript.
     command:
       - "gotenberg"
       - "--chromium-disable-javascript=true"
       - "--chromium-allow-list=file:///tmp/.*"
+    extends:
+      file: common.yaml
+      service: common
+    logging:
+      options:
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-gotenberg
 
   paperless-ngx-tika:
     image: docker.io/apache/tika:latest
     container_name: paperless-ngx-tika
-    restart: unless-stopped
+    extends:
+      file: common.yaml
+      service: common
+    logging:
+      options:
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-tika
 
   homebox:
     image: ghcr.io/sysadminsmedia/homebox:latest
@@ -378,14 +313,9 @@ services:
       - /opt/docker/homebox/data:/data/
     ports:
       - 3600:7745
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/homebox
-        awslogs-create-group: "true"
-    restart: unless-stopped

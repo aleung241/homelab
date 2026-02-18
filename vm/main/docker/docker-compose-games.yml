@@ -15,14 +15,9 @@ services:
       - /server-storage/games:/server-storage/games:ro
     ports:
       - "8380:8080"
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=true"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+    extends:
+      file: common.yaml
+      service: common
     logging:
-      driver: awslogs
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
         awslogs-group: /${DEFAULT_BASE_MACHINE}/gameyfin
-        awslogs-create-group: "true"
-    restart: unless-stopped
