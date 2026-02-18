@@ -27,8 +27,6 @@ services:
 #  unifi:
 #    image: linuxserver/unifi-controller
 #    container_name: unifi
-#    env_file:
-#      - .env
 #    environment:
 #      PUID: ${DEFAULT_USER}
 #      PGID: ${DEFAULT_GROUP}
@@ -113,8 +111,6 @@ services:
   adguard-home:
     image: adguard/adguardhome
     container_name: adguard-home
-    env_file:
-      - .env
     ports:
       - "53:53/tcp"     # dns
       - "53:53/udp"     # dns

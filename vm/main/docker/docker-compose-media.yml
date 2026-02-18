@@ -13,8 +13,6 @@ services:
       - /ocean/media:/media
     ports:
       - "7878:7878"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -41,8 +39,6 @@ services:
       - /ocean/media:/media
     ports:
       - "8989:8989"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
@@ -69,8 +65,6 @@ services:
       - /ocean/media:/media
     ports:
       - "8990:8989"
-    env_file:
-      - .env
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"

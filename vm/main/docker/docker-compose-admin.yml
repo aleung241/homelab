@@ -26,8 +26,6 @@ services:
   bookstack:
     image: lscr.io/linuxserver/bookstack
     container_name: bookstack
-    env_file:
-      - .env
     environment:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
@@ -158,8 +156,6 @@ services:
       - /opt/docker/karakeep/data:/data
     ports:
       - "3300:3000"
-    env_file:
-      - .env
     environment:
       MEILI_ADDR: http://karakeep-meilisearch:7700
       BROWSER_WEB_URL: http://karakeep-chrome:9222
@@ -205,8 +201,6 @@ services:
   karakeep-meilisearch:
     image: getmeili/meilisearch:v1.11.1
     container_name: karakeep-meilisearch
-    env_file:
-      - .env
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
@@ -298,7 +292,6 @@ services:
       - paperless-ngx-gotenberg
       - paperless-ngx-tika
     env_file:
-      - .env
       - .paperless.env
     ports:
       - "3500:8000"
