@@ -13,8 +13,6 @@
 + /root/.ssh/**
 + /root/.config/
 + /root/.config/**
-+ /root/scripts/
-+ /root/scripts/**
 
 + /opt/
 + /opt/**
