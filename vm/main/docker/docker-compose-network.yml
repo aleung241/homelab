@@ -200,7 +200,7 @@ services:
       - /root/.config/rclone/:/root/.config/rclone/:ro
       - ${DOCKER_DIRECTORY_BASE_PATH}/rclone-serve-webdav:/opt
       - /gmediac:/gmediac:ro
-      - ${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:${SERVER_STORAGE_BASE_PATH}/torrents/MAM/
+      - ${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:ro
     extends:
       file: common.yaml
       service: common
