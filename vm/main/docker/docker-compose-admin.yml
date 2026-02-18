@@ -6,7 +6,7 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/docker/portainer:/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/portainer:/data
     ports:
       - "8100:8000"
       - "9000:9000"
@@ -32,7 +32,7 @@ services:
       DB_PASS: ${BOOKSTACK_DB_PASS}
       DB_DATABASE: ${BOOKSTACK_DB_DATABASE}
     volumes:
-      - /opt/docker/bookstack:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/bookstack:/config
     ports:
       - "7000:80"
     extends:
@@ -54,7 +54,7 @@ services:
       MYSQL_USER: ${BOOKSTACK_DB_USER}
       MYSQL_PASSWORD: ${BOOKSTACK_DB_PASS}
     volumes:
-      - /opt/docker/bookstack-db:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/bookstack-db:/config
     extends:
       file: common.yaml
       service: common
@@ -67,7 +67,7 @@ services:
     container_name: home-assistant
     privileged: true
     volumes:
-      - /opt/docker/home-assistant/config:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/home-assistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     ports:
@@ -92,7 +92,7 @@ services:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
     volumes:
-      - /opt/docker/changedetection/datastore:/datastore
+      - ${DOCKER_DIRECTORY_BASE_PATH}/changedetection/datastore:/datastore
     ports:
       - "5001:5000"
     extends:
@@ -131,7 +131,7 @@ services:
       DATA_DIR: /data
       MAX_ASSET_SIZE_MB: 100
     volumes:
-      - /opt/docker/karakeep/data:/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/karakeep/data:/data
     ports:
       - "3300:3000"
     extends:
@@ -164,7 +164,7 @@ services:
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - /opt/docker/karakeep-meilisearch:/meili_data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/karakeep-meilisearch:/meili_data
     extends:
       file: common.yaml
       service: common
@@ -186,8 +186,8 @@ services:
       SCRAPER_BASE_URL: http://pricebuddy-scrapper:3000       # Url to Name of the scrapper service
       AFFILIATE_ENABLED: true                                 # See https://pricebuddy.jez.me/support-project.html
     volumes:
-      - /opt/docker/pricebuddy/storage:/app/storage
-      - /opt/docker/pricebuddy/.env:/app/.env
+      - ${DOCKER_DIRECTORY_BASE_PATH}/pricebuddy/storage:/app/storage
+      - ${DOCKER_DIRECTORY_BASE_PATH}/pricebuddy/.env:/app/.env
     ports:
       - 5052:80
     extends:
@@ -203,7 +203,7 @@ services:
     environment:
       MYSQL_DATABASE: pricebuddy
     volumes:
-      - /opt/docker/pricebuddy/database:/var/lib/mysql
+      - ${DOCKER_DIRECTORY_BASE_PATH}/pricebuddy/database:/var/lib/mysql
     extends:
       file: common.yaml
       service: common
@@ -234,10 +234,10 @@ services:
     env_file:
       - .paperless.env
     volumes:
-      - /opt/docker/paperless-ngx/data:/usr/src/paperless/data
-      - /opt/docker/paperless-ngx/media:/usr/src/paperless/media
-      - /opt/docker/paperless-ngx/export:/usr/src/paperless/export
-      - /opt/docker/paperless-ngx/consume:/usr/src/paperless/consume
+      - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/data:/usr/src/paperless/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/media:/usr/src/paperless/media
+      - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/export:/usr/src/paperless/export
+      - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/consume:/usr/src/paperless/consume
     ports:
       - "3500:8000"
     extends:
@@ -251,7 +251,7 @@ services:
     image: docker.io/library/redis:7
     container_name: paperless-ngx-broker
     volumes:
-      - /opt/docker/paperless-ngx/redisdata:/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/redisdata:/data
     extends:
       file: common.yaml
       service: common
@@ -267,7 +267,7 @@ services:
       POSTGRES_USER: ${PAPERLESS_DB_USER}
       POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
     volumes:
-      - /opt/docker/paperless-ngx/pgdata:/var/lib/postgresql/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/pgdata:/var/lib/postgresql/data
     extends:
       file: common.yaml
       service: common
@@ -310,7 +310,7 @@ services:
       - HBOX_WEB_MAX_FILE_UPLOAD=10
       - HBOX_OPTIONS_ALLOW_ANALYTICS=false
     volumes:
-      - /opt/docker/homebox/data:/data/
+      - ${DOCKER_DIRECTORY_BASE_PATH}/homebox/data:/data/
     ports:
       - 3600:7745
     extends:

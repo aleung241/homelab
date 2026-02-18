@@ -12,9 +12,9 @@ services:
       DB_PASSWORD: ${IMMICH_DB_PASSWORD}
       REDIS_HOSTNAME: immich-redis
     volumes:
-      - /opt/docker/immich/data:/data
-      - /server-storage/immich:/data/library
-      - /transcode/immich/upload:/data/upload
+      - ${DOCKER_DIRECTORY_BASE_PATH}/immich/data:/data
+      - ${SERVER_STORAGE_BASE_PATH}/immich:/data/library
+      - ${TRANSCODE_BASE_PATH}/immich/upload:/data/upload
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "2283:2283"
@@ -36,7 +36,7 @@ services:
     #   file: hwaccel.ml.yml
     #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
     volumes:
-      - /transcode/immich-machine-learning/model-cache:/cache
+      - ${TRANSCODE_BASE_PATH}/immich-machine-learning/model-cache:/cache
     healthcheck:
       disable: false
     extends:
@@ -67,7 +67,7 @@ services:
       POSTGRES_DB: ${IMMICH_DB_DATABASE_NAME}
       POSTGRES_INITDB_ARGS: '--data-checksums'
     volumes:
-      - /opt/docker/immich/postgres:/var/lib/postgresql/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/immich/postgres:/var/lib/postgresql/data
     healthcheck:
       disable: false
     shm_size: 128mb

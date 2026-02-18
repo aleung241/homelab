@@ -16,7 +16,7 @@ services:
     restart: on-failure:5
     command: mongod --port 27017 --bind_ip_all
     volumes:
-      - /opt/docker/monitorss/db-data:/data/db
+      - ${DOCKER_DIRECTORY_BASE_PATH}/monitorss/db-data:/data/db
     ports:
       - "27018:27017"
     extends:
@@ -40,7 +40,7 @@ services:
       DRSS_FEEDS_TIMEZONE: ${TIMEZONE}
       DRSS_LOG_LEVEL: info
     volumes:
-      - /opt/docker/monitorss/settings/schedules.json:/app/settings/schedules.json
+      - ${DOCKER_DIRECTORY_BASE_PATH}/monitorss/settings/schedules.json:/app/settings/schedules.json
     extends:
       file: common.yaml
       service: common

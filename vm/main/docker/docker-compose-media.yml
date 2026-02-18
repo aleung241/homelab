@@ -3,9 +3,9 @@ services:
     image: ghcr.io/hotio/radarr
     container_name: radarr
     volumes:
-      - /opt/docker/radarr:/config
-      - /server-storage:/server-storage
-      - /ocean/media:/media
+      - ${DOCKER_DIRECTORY_BASE_PATH}/radarr:/config
+      - ${SERVER_STORAGE_BASE_PATH}:${SERVER_STORAGE_BASE_PATH}
+      - ${OCEAN_BASE_PATH}/media:/media
     ports:
       - "7878:7878"
     extends:
@@ -19,9 +19,9 @@ services:
     image: ghcr.io/hotio/sonarr:latest
     container_name: sonarr
     volumes:
-      - /opt/docker/sonarr:/config
-      - /server-storage:/server-storage
-      - /ocean/media:/media
+      - ${DOCKER_DIRECTORY_BASE_PATH}/sonarr:/config
+      - ${SERVER_STORAGE_BASE_PATH}:${SERVER_STORAGE_BASE_PATH}
+      - ${OCEAN_BASE_PATH}/media:/media
     ports:
       - "8989:8989"
     extends:
@@ -35,9 +35,9 @@ services:
     image: ghcr.io/hotio/sonarr:latest
     container_name: sonarr-anime
     volumes:
-      - /opt/docker/sonarr-anime:/config
-      - /server-storage:/server-storage
-      - /ocean/media:/media
+      - ${DOCKER_DIRECTORY_BASE_PATH}/sonarr-anime:/config
+      - ${SERVER_STORAGE_BASE_PATH}:${SERVER_STORAGE_BASE_PATH}
+      - ${OCEAN_BASE_PATH}/media:/media
     ports:
       - "8990:8989"
     extends:
@@ -53,7 +53,7 @@ services:
     environment:
       TZ: ${TIMEZONE}
     volumes:
-      - /opt/docker/huntarr:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/huntarr:/config
     ports:
       - "9705:9705"
     extends:
@@ -71,7 +71,7 @@ services:
       TZ: ${TIMEZONE}
       CRON_SCHEDULE: 59 23 28 10 1
     volumes:
-      - /opt/docker/recyclarr:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/recyclarr:/config
     extends:
       file: common.yaml
       service: common
@@ -94,12 +94,12 @@ services:
       inContainer: true
       ffmpegVersion: 6
     volumes:
-      - /opt/docker/tdarr/server:/app/server
-      - /opt/docker/tdarr/configs:/app/configs
-      - /opt/docker/tdarr/logs:/app/logs
-      - /ocean/media:/media:ro
-      - /server-storage/new-folder:/new-folder:ro
-      - /transcode/tdarr_cache:/temp
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/server:/app/server
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/configs:/app/configs
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/logs:/app/logs
+      - ${OCEAN_BASE_PATH}/media:/media:ro
+      - ${SERVER_STORAGE_BASE_PATH}/new-folder:/new-folder:ro
+      - ${TRANSCODE_BASE_PATH}/tdarr_cache:/temp
     ports:
       - "8265:8265"
       - "8266:8266"
@@ -124,11 +124,11 @@ services:
       inContainer: true
       ffmpegVersion: 6
     volumes:
-      - /opt/docker/tdarr/configs:/app/configs
-      - /opt/docker/tdarr/logs:/app/logs
-      - /ocean/media:/media:ro
-      - /server-storage/new-folder:/new-folder:ro
-      - /transcode/tdarr_cache:/temp
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/configs:/app/configs
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/logs:/app/logs
+      - ${OCEAN_BASE_PATH}/media:/media:ro
+      - ${SERVER_STORAGE_BASE_PATH}/new-folder:/new-folder:ro
+      - ${TRANSCODE_BASE_PATH}/tdarr_cache:/temp
     extends:
       file: common.yaml
       service: common
@@ -140,7 +140,7 @@ services:
     image: ghcr.io/hotio/prowlarr
     container_name: prowlarr
     volumes:
-      - /opt/docker/prowlarr:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/prowlarr:/config
     ports:
       - "9696:9696"
     extends:
@@ -154,7 +154,7 @@ services:
     image: ghcr.io/hotio/nzbhydra2
     container_name: nzbhydra2
     volumes:
-      - /opt/docker/nzbhydra2:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/nzbhydra2:/config
     ports:
       - "5076:5076"
     extends:
@@ -168,9 +168,9 @@ services:
     image: ghcr.io/hotio/sabnzbd
     container_name: sabnzbd
     volumes:
-      - /opt/docker/sabnzbd:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/sabnzbd:/config
       - /nvme/sabnzbd:/downloads
-      - /server-storage:/data
+      - ${SERVER_STORAGE_BASE_PATH}:/data
     ports:
       - "8090:8080"
     extends:
@@ -184,9 +184,9 @@ services:
     image: ghcr.io/hotio/bazarr
     container_name: bazarr
     volumes:
-      - /opt/docker/bazarr:/config
-      - /server-storage:/server-storage
-      - /ocean/media:/media
+      - ${DOCKER_DIRECTORY_BASE_PATH}/bazarr:/config
+      - ${SERVER_STORAGE_BASE_PATH}:${SERVER_STORAGE_BASE_PATH}
+      - ${OCEAN_BASE_PATH}/media:/media
     ports:
       - "6767:6767"
     extends:
@@ -203,7 +203,7 @@ services:
       TZ: ${TIMEZONE}
       LOG_LEVEL: info
     volumes:
-      - /opt/docker/overseerr:/app/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/overseerr:/app/config
     ports:
       - "5055:5055"
     extends:
@@ -221,7 +221,7 @@ services:
       TZ: ${TIMEZONE}
       LOG_LEVEL: info
     volumes:
-      - /opt/docker/seerr:/app/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/seerr:/app/config
     ports:
       - "5056:5055"
     healthcheck:
@@ -244,7 +244,7 @@ services:
     environment:
       TZ: ${TIMEZONE}
     volumes:
-      - /opt/docker/maintainerr/data:/opt/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/maintainerr/data:/opt/data
     ports:
       - "6246:6246"
     extends:
@@ -261,8 +261,8 @@ services:
     environment:
       ND_SCANSCHEDULE: "0"
     volumes:
-      - /opt/docker/navidrome/data:/data
-      - /server-storage/music:/music:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/navidrome/data:/data
+      - ${SERVER_STORAGE_BASE_PATH}/music:/music:ro
     ports:
       - "4533:4533"
     extends:

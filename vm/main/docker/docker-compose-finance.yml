@@ -5,9 +5,9 @@ services:
     hostname: firefly-iii
     depends_on:
       - firefly-iii-db
-    env_file: /opt/docker/firefly-iii/.env
+    env_file: ${DOCKER_DIRECTORY_BASE_PATH}/firefly-iii/.env
     volumes:
-      - /opt/docker/firefly-iii/upload:/var/www/html/storage/upload
+      - ${DOCKER_DIRECTORY_BASE_PATH}/firefly-iii/upload:/var/www/html/storage/upload
     ports:
       - "8070:8080"
     extends:
@@ -22,9 +22,9 @@ services:
     container_name: firefly-iii-db
     hostname: firefly-iii-db
     env_file:
-      - /opt/docker/firefly-iii/.db.env
+      - ${DOCKER_DIRECTORY_BASE_PATH}/firefly-iii/.db.env
     volumes:
-      - /opt/docker/firefly-iii/db:/var/lib/mysql
+      - ${DOCKER_DIRECTORY_BASE_PATH}/firefly-iii/db:/var/lib/mysql
     extends:
       file: common.yaml
       service: common
@@ -38,7 +38,7 @@ services:
     hostname: firefly-iii-importer
     depends_on:
       - firefly-iii
-    env_file: /opt/docker/firefly-iii/.importer.env
+    env_file: ${DOCKER_DIRECTORY_BASE_PATH}/firefly-iii/.importer.env
     ports:
       - "8071:8080"
     extends:

@@ -6,9 +6,9 @@ services:
       TZ: ${TIMEZONE}
       PLEX_CLAIM:
     volumes:
-      - /Plex/pms2:/config
-      - /transcode/plex2:/transcode
-      - /server-storage:/server-storage:ro
+      - ${PLEX_DIRECTORY_BASE_PATH}/pms2:/config
+      - ${TRANSCODE_BASE_PATH}/plex2:/transcode
+      - ${SERVER_STORAGE_BASE_PATH}:${SERVER_STORAGE_BASE_PATH}:ro
     ports:
       - "33400:32400/tcp"
       - "4005:3005/tcp"
@@ -31,8 +31,8 @@ services:
     image: ghcr.io/hotio/autoscan
     container_name: autoscan
     volumes:
-      - /opt/docker/autoscan:/config
-      - /ocean:/datac:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/autoscan:/config
+      - ${OCEAN_BASE_PATH}:/datac:ro
     ports:
       - "3030:3030"
     extends:
@@ -51,9 +51,9 @@ services:
       PGID: ${DEFAULT_GROUP}
       AUTOPULSE__APP__DATABASE_URL: sqlite://data/autopulse.db
     volumes:
-      - /opt/docker/autopulse/config.yml:/app/config.yml
-      - /opt/docker/autopulse/data:/app/data
-      - /ocean:/datac:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/autopulse/config.yml:/app/config.yml
+      - ${DOCKER_DIRECTORY_BASE_PATH}/autopulse/data:/app/data
+      - ${OCEAN_BASE_PATH}:/datac:ro
     ports:
       - "2875:2875"
     extends:
@@ -73,8 +73,8 @@ services:
       USE_PLEX_SQLITE_BINARY_FOR_WRITE_ACCESS: "true"
       UNLOCK_FOR_NEW_TV_AGENT: 2;17
     volumes:
-      - /Plex/pms:/plexdata
-      - /opt/docker/imdbupdatetool:/config
+      - ${PLEX_DIRECTORY_BASE_PATH}/pms:/plexdata
+      - ${DOCKER_DIRECTORY_BASE_PATH}/imdbupdatetool:/config
     extends:
       file: common.yaml
       service: common
@@ -86,8 +86,8 @@ services:
     image: ghcr.io/hotio/jellyfin
     container_name: jellyfin
     volumes:
-      - /opt/docker/jellyfin/config:/config
-      - /ocean/media:/media:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/jellyfin/config:/config
+      - ${OCEAN_BASE_PATH}/media:/media:ro
     ports:
       - "8096:8096"
     extends:
@@ -105,8 +105,8 @@ services:
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
     volumes:
-      - /opt/docker/tautulli:/config
-      - /Plex/pms:/plex
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tautulli:/config
+      - ${PLEX_DIRECTORY_BASE_PATH}/pms:/plex
     ports:
       - "8182:8181"
     extends:
@@ -144,11 +144,11 @@ services:
       inContainer: true
       ffmpegVersion: 6
     volumes:
-      - /opt/docker/tdarr/configs:/app/configs
-      - /opt/docker/tdarr/logs:/app/logs
-      - /ocean/media:/media:ro
-      - /server-storage/new-folder:/new-folder:ro
-      - /transcode/tdarr_cache:/temp
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/configs:/app/configs
+      - ${DOCKER_DIRECTORY_BASE_PATH}/tdarr/logs:/app/logs
+      - ${OCEAN_BASE_PATH}/media:/media:ro
+      - ${SERVER_STORAGE_BASE_PATH}/new-folder:/new-folder:ro
+      - ${TRANSCODE_BASE_PATH}/tdarr_cache:/temp
     extends:
       file: common.yaml
       service: common

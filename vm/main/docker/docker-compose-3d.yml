@@ -5,7 +5,7 @@ services:
     environment:
       TZ: ${TIMEZONE}
     volumes:
-      - /opt/docker/spoolman/data:/home/app/.local/share/spoolman
+      - ${DOCKER_DIRECTORY_BASE_PATH}/spoolman/data:/home/app/.local/share/spoolman
     ports:
       - "7912:8000"
     extends:

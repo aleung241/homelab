@@ -3,10 +3,10 @@ services:
     image: nginx
     container_name: nginx
     volumes:
-      - /opt/docker/nginx/etc/nginx:/etc/nginx
-      - /opt/docker/nginx/etc/nginx-index:/opt/index
-      - /opt/docker/nginx/etc/nginx-access:/etc/apache2
-      - /opt/docker/letsencrypt/etc/letsencrypt:/letsencrypt
+      - ${DOCKER_DIRECTORY_BASE_PATH}/nginx/etc/nginx:/etc/nginx
+      - ${DOCKER_DIRECTORY_BASE_PATH}/nginx/etc/nginx-index:/opt/index
+      - ${DOCKER_DIRECTORY_BASE_PATH}/nginx/etc/nginx-access:/etc/apache2
+      - ${DOCKER_DIRECTORY_BASE_PATH}/letsencrypt/etc/letsencrypt:/letsencrypt
     ports:
       - "87:80"
       - "447:443"
@@ -26,7 +26,7 @@ services:
 #      PUID: ${DEFAULT_USER}
 #      PGID: ${DEFAULT_GROUP}
 #    volumes:
-#      - /opt/docker/unifi:/config
+#      - ${DOCKER_DIRECTORY_BASE_PATH}/unifi:/config
 #    ports:
 #      - "3478:3478/udp"
 #      - "10001:10001/udp"
@@ -54,7 +54,7 @@ services:
       MONGO_DBNAME: unifi
       MONGO_AUTHSOURCE: admin
     volumes:
-      - /opt/docker/unifi-network-application/data:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/unifi-network-application/data:/config
     ports:
       - "3478:3478/udp"
       - "10001:10001/udp"
@@ -79,8 +79,8 @@ services:
       MONGO_DBNAME: unifi
       MONGO_AUTHSOURCE: admin
     volumes:
-      - /opt/docker/unifi-network-application/mongo/data:/data/db
-      - /opt/docker/unifi-network-application/mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/unifi-network-application/mongo/data:/data/db
+      - ${DOCKER_DIRECTORY_BASE_PATH}/unifi-network-application/mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
     extends:
       file: common.yaml
       service: common
@@ -92,8 +92,8 @@ services:
     image: adguard/adguardhome
     container_name: adguard-home
     volumes:
-      - /opt/docker/adguardhome/work:/opt/adguardhome/work
-      - /opt/docker/adguardhome/conf:/opt/adguardhome/conf
+      - ${DOCKER_DIRECTORY_BASE_PATH}/adguardhome/work:/opt/adguardhome/work
+      - ${DOCKER_DIRECTORY_BASE_PATH}/adguardhome/conf:/opt/adguardhome/conf
     ports:
       - "53:53/tcp"     # dns
       - "53:53/udp"     # dns
@@ -120,7 +120,7 @@ services:
       TZ: ${TIMEZONE}
       LOG_CONFS: true #optional
     volumes:
-      - /opt/docker/wireguard/config:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/wireguard/config:/config
       - /lib/modules:/lib/modules #optional
     ports:
       - "51820:51820"
@@ -198,9 +198,9 @@ services:
       - "/opt/index.html"
     volumes:
       - /root/.config/rclone/:/root/.config/rclone/:ro
-      - /opt/docker/rclone-serve-webdav:/opt
+      - ${DOCKER_DIRECTORY_BASE_PATH}/rclone-serve-webdav:/opt
       - /gmediac:/gmediac:ro
-      - /server-storage/torrents/MAM/:/server-storage/torrents/MAM/
+      - ${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:${SERVER_STORAGE_BASE_PATH}/torrents/MAM/
     extends:
       file: common.yaml
       service: common
@@ -217,7 +217,7 @@ services:
       TZ: ${TIMEZONE}
       PASSWORD: ${LIBRESPEED_PASSWORD}
     volumes:
-      - /opt/docker/librespeed/config:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/librespeed/config:/config
     ports:
       - "8130:80"
     extends:

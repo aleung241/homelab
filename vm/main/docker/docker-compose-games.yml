@@ -8,11 +8,11 @@ services:
       APP_KEY: ${GAMEYFIN_APP_KEY}
       APP_URL: ${GAMEYFIN_APP_URL}
     volumes:
-      - /opt/docker/gameyfin/db:/opt/gameyfin/db
-      - /opt/docker/gameyfin/data:/opt/gameyfin/data
-      - /opt/docker/gameyfin/plugindata:/opt/gameyfin/plugindata
-      - /opt/docker/gameyfin/logs:/opt/gameyfin/logs
-      - /server-storage/games:/server-storage/games:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/db:/opt/gameyfin/db
+      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/data:/opt/gameyfin/data
+      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/plugindata:/opt/gameyfin/plugindata
+      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/logs:/opt/gameyfin/logs
+      - ${SERVER_STORAGE_BASE_PATH}/games:${SERVER_STORAGE_BASE_PATH}/games:ro
     ports:
       - "8380:8080"
     extends:
