@@ -1,68 +1,116 @@
 # homelab
 
-Personal setup on the various VMs in my homelab, migrating back to docker-compose from k8s as it was far too overkill for a home setup.
+## Structure
 
-Makes use of local-only `.env` files in the same directory as the docker-compose yml files, pulled in automatically. I'm using them for sensitive information, as an alternative to docker secrets. Therefore, these `.env` files must never be pushed to the repo and is in `.gitignore`.
-
-The current setup makes use of multiple compose files. In my case, `docker-compose-*.yml`.  
-The docker-compose will merge these if used with the `-f` argument:  
 ```
-docker-compose -f docker-compose.yml -f docker-compose-2.yml...
-```
-
-One way to build the multiple arguments without manually typing them, replacing `/opt/docker-compose` with the location of your files:
-```
-find /opt/docker-compose -maxdepth 1 -type f -name '*.yml' -printf "-f /opt/docker-compose/%f "
+vm/
+  main/           # Main server - runs most services
+    docker/       # Compose files, common.yaml, .env
+    scripts/      # Backup, todrive, start-all-docker
+  plex-new/       # Plex server - media playback and transcoding
+    docker/       # Compose files, common.yaml, .env
+    scripts/      # Backup, start-all-docker
 ```
 
-## docker-compose file variable substitution usage via `.env` file:
+## Docker compose
+
+The setup uses multiple compose files per VM (`docker-compose-*.yml`), merged with the `-f` argument:
+
+```bash
+docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') up -d
 ```
-> cat .env
+
+A shared `common.yaml` defines base service templates, referenced via `extends`:
+
+```yaml
+extends:
+  file: common.yaml
+  service: common   # or hotio for hotio images. hotio service template also extends base.
+```
+
+This provides restart policy, logging config, and pullio labels to all services without repetition. The `common.yaml` file uses a `.yaml` extension so it isn't picked up by the `find *.yml` glob.
+
+## Environment variables
+
+Sensitive values are stored in local-only `.env` files in the same directory as the compose files.  
+These are pulled in automatically by docker compose for variable substitution and must never be pushed to the repo (included in `.gitignore`).
+
+```yaml
+# .env
 SECRET_KEY=secret_value
 
-> cat docker-compose.yml
-...
+# docker-compose-*.yml
 environment:
   SOME_SECRET: ${SECRET_KEY}
-...
 ```
 
+Some services use dedicated env files (e.g. `.paperless.env`, firefly-iii's `.env`/`.db.env`/`.importer.env`) via `env_file:` attribute for isolation.
+
+## Deployment
+
+Copy docker and script directories to the respective servers.  
+My personal choice of directory for chucking external applications, runnables and docker stuff is in the `/opt` directory.
+
+```bash
+scp -r vm/main/docker/ <user>@<main-server>:/opt/
+scp -r vm/main/scripts/ <user>@<main-server>:/opt/
+
+scp -r vm/plex-new/docker/ <user>@<plex-server>:/opt/
+scp -r vm/plex-new/scripts/ <user>@<plex-server>:/opt/
+```
+
+## Common commands
+
+For the purpose of simplicity, I use aliases for the `docker compose` command with multiple files:
+```bash
+# ~/.bashrc
+alias dcom="docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ')"
+```
+Then reload .bashrc:
+```bash
+source ~/.bashrc
+```
+This can replace all `docker compose $(find ...)` commands below like this:
+```bash
+dcom pull
+dcom up -d
+dcom start <container>
+```
 ---
-
-My personal choice of directory for chucking external applications and runnables in is the `/opt` directory.
-
-Assuming this repo is on a separate machine, move `docker-compose/` to server for direct use:
-```
-scp -r vm/plex-new/docker/ <user>@<server>:/opt/
-scp -r vm/main/docker/ <user>@<server>:/opt/
+Start all containers in detached mode:
+```bash
+docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') up -d
 ```
 
-Start all containers in detached mode (running in background)
-```
-docker-compose $(find /opt/docker-compose -maxdepth 1 -type f -name '*.yml' -printf "-f /opt/docker-compose/%f ") up -d
-```
-
-Manually pull all docker images in all docker-compose files
-```
-docker-compose $(find /opt/docker-compose -maxdepth 1 -type f -name '*.yml' -printf "-f /opt/docker-compose/%f ") pull
+Pull all images:
+```bash
+docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') pull
 ```
 
-Manually start/stop a specific existing container
-```
-docker-compose start <container>
-docker-compose stop <container>
-```
-
-Show all docker containers
-```
-docker ps -a
+Start/stop a specific container:
+```bash
+docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') start <container>
+docker compose $(find /opt/docker -maxdepth 1 -type f -name '*.yml' -printf '-f /opt/docker/%f ') stop <container>
 ```
 
-Cleanup all the things
-```
+Cleanup unused images and containers:
+```bash
 docker system prune -a
-docker image prune -a
 ```
 
-Automatically pull docker images and updating the containers:  
-https://hotio.dev/pullio/
+## Auto-updates
+
+Docker images are automatically pulled and containers updated via [pullio](https://hotio.dev/pullio/).  
+`pullio` is activated on docker services by labels:
+```yaml
+labels:
+  - "org.hotio.pullio.notify=true"
+  - "org.hotio.pullio.update=true"
+  - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
+```
+These labels are conveniently placed in the common service template in `common.yaml`, which are used in almost all docker services in this repo.
+
+Usage:
+```bash
+pullio --parallel 12
+```
