@@ -248,7 +248,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-webserver
 
   paperless-ngx-broker:
-    image: docker.io/library/redis:7
+    image: docker.io/library/redis:8
     container_name: paperless-ngx-broker
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/redisdata:/data
@@ -276,7 +276,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-db
 
   paperless-ngx-gotenberg:
-    image: docker.io/gotenberg/gotenberg:8.19
+    image: docker.io/gotenberg/gotenberg:8.25
     container_name: paperless-ngx-gotenberg
     # The gotenberg chromium route is used to convert .eml files. We do not
     # want to allow external content like tracking pixels or even javascript.
