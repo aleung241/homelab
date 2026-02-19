@@ -120,7 +120,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/sockpuppetbrowser
 
   karakeep:
-    image: ghcr.io/karakeep-app/karakeep:release
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     container_name: karakeep
     environment:
       MEILI_ADDR: http://karakeep-meilisearch:7700
@@ -142,7 +142,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep
 
   karakeep-chrome:
-    image: gcr.io/zenika-hub/alpine-chrome:123
+    image: gcr.io/zenika-hub/alpine-chrome:124
     container_name: karakeep-chrome
     command:
       - --no-sandbox
@@ -159,7 +159,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-chrome
 
   karakeep-meilisearch:
-    image: getmeili/meilisearch:v1.11.1
+    image: getmeili/meilisearch:v1.13.3
     container_name: karakeep-meilisearch
     environment:
       MEILI_NO_ANALYTICS: "true"
