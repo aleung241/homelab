@@ -26,22 +26,6 @@ services:
       options:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/plex-secondary
 
-# autoscan deprecated
-  autoscan:
-    image: ghcr.io/hotio/autoscan
-    container_name: autoscan
-    volumes:
-      - ${DOCKER_DIRECTORY_BASE_PATH}/autoscan:/config
-      - ${OCEAN_BASE_PATH}:/datac:ro
-    ports:
-      - "3030:3030"
-    extends:
-      file: common.yaml
-      service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/autoscan
-
   autopulse:
     image: ghcr.io/dan-online/autopulse
     container_name: autopulse
