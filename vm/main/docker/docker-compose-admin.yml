@@ -212,7 +212,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-db
 
   pricebuddy-scrapper:
-    image: amerkurev/scrapper:latest
+    image: jez500/seleniumbase-scrapper:latest
     container_name: pricebuddy-scrapper
     ports:
       - 3030:3000 # Optional, if you want to access the scrapper api from the host machine
