@@ -11,7 +11,7 @@ nas_backup_destination="/server-storage/backups/server-vm/plex-new"
 scripts_dir="/opt/scripts"
 
 log() {
-    echo "[$(date '+%d/%m/%Y %T')] [$1] $2" >> "$LOG_FILE"
+    echo -e "[$(date '+%d/%m/%Y %T')] [$1] $2" >> "$LOG_FILE"
 }
 
 INFO()  { log "INFO"  "$*"; }
@@ -101,6 +101,8 @@ upload_to_gdrive() {
 }
 
 start_backup() {
+    INFO "==================================="
+    INFO "Backup Script version: 27 Feb 2026"
     INFO "==================================="
     INFO "Starting backup process"
 
