@@ -47,21 +47,21 @@ services:
       options:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/sonarr-anime
 
-  huntarr:
-    image: huntarr/huntarr:latest
-    container_name: huntarr
-    environment:
-      TZ: ${TIMEZONE}
-    volumes:
-      - ${DOCKER_DIRECTORY_BASE_PATH}/huntarr:/config
-    ports:
-      - "9705:9705"
-    extends:
-      file: common.yaml
-      service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/huntarr
+#  huntarr:
+#    image: huntarr/huntarr:latest
+#    container_name: huntarr
+#    environment:
+#      TZ: ${TIMEZONE}
+#    volumes:
+#      - ${DOCKER_DIRECTORY_BASE_PATH}/huntarr:/config
+#    ports:
+#      - "9705:9705"
+#    extends:
+#      file: common.yaml
+#      service: common
+#    logging:
+#      options:
+#        awslogs-group: /${DEFAULT_BASE_MACHINE}/huntarr
 
   recyclarr:
     image: recyclarr/recyclarr
