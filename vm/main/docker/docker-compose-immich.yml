@@ -1,6 +1,6 @@
 services:
   immich-server:
-    image: ghcr.io/immich-app/immich-server:v2.5.3
+    image: ghcr.io/immich-app/immich-server:v2.5.6
     container_name: immich-server
     user: "1000:1000"
     depends_on:
@@ -28,7 +28,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/immich-server
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v2.5.3
+    image: ghcr.io/immich-app/immich-machine-learning:v2.5.6
     container_name: immich-machine-learning
     # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
     # Example tag: ${IMMICH_VERSION:-release}-cuda
@@ -47,7 +47,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/immich-machine-learning
 
   immich-redis:
-    image: docker.io/valkey/valkey:9@sha256:546304417feac0874c3dd576e0952c6bb8f06bb4093ea0c9ca303c73cf458f63
+    image: docker.io/valkey/valkey:9@sha256:2bce660b767cb62c8c0ea020e94a230093be63dbd6af4f21b044960517a5842d
     container_name: immich-redis
     healthcheck:
       test: redis-cli ping || exit 1
