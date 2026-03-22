@@ -67,7 +67,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/imdbupdatetool
 
   jellyfin:
-    image: ghcr.io/hotio/jellyfin
+    image: ghcr.io/hotio/jellyfin:release
     container_name: jellyfin
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/jellyfin/config:/config

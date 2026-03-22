@@ -12,3 +12,24 @@ services:
     logging:
       options:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/thelounge
+
+  apprise:
+    image: caronc/apprise:latest
+    container_name: apprise
+    environment:
+      APPRISE_STATEFUL_MODE: simple
+      APPRISE_WORKER_COUNT: "1"
+      APPRISE_ADMIN: "yes"
+      IPV4_ONLY: "yes"
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/apprise/config:/config
+      - ${DOCKER_DIRECTORY_BASE_PATH}/apprise/plugin:/plugin
+      - ${DOCKER_DIRECTORY_BASE_PATH}/apprise/attach:/attach
+    ports:
+      - "8051:8000"
+    extends:
+      file: common.yaml
+      service: common
+    logging:
+      options:
+        awslogs-group: /${DEFAULT_BASE_MACHINE}/ntfy

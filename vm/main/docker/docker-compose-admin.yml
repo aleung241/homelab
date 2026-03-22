@@ -91,6 +91,7 @@ services:
       FETCH_WORKERS: 10
       PUID: ${DEFAULT_USER}
       PGID: ${DEFAULT_GROUP}
+      ALLOW_IANA_RESTRICTED_ADDRESSES: true
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/changedetection/datastore:/datastore
     ports:
