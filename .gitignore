@@ -5,5 +5,4 @@ docker-compose-special.yml
 **/authelia
 **/autoscan
 **/autopulse
-**/monitorss
 *secrets*
