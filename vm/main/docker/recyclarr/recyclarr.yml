@@ -3,7 +3,6 @@ radarr:
     base_url: http://radarr:7878
     api_key: !secret radarr_apikey
     delete_old_custom_formats: true
-    replace_existing_custom_formats: false
     custom_formats:
       - trash_ids:
           - ed27ebfef2f323e964fb1f61391bcb35 # HQ Release Groups HD Bluray Tier 01
@@ -98,7 +97,6 @@ sonarr:
     base_url: http://sonarr:8989
     api_key: !secret sonarr_apikey
     delete_old_custom_formats: true
-    replace_existing_custom_formats: false
     custom_formats:
       - trash_ids:
           - 85c61753df5da1fb2aab6f2a47426b09 # Unwanted BR-DISK
@@ -187,7 +185,6 @@ sonarr:
     base_url: http://sonarr-anime:8989
     api_key: !secret sonarr_anime_apikey
     delete_old_custom_formats: true
-    replace_existing_custom_formats: false
     custom_formats:
       - trash_ids:
           - 949c16fe0a8147f50ba82cc2df9411c9 # Anime BD Tier 01 (Top SeaDex Muxers)
@@ -240,6 +237,7 @@ sonarr:
           enabled: true
           except:
             - "Language: Not Original"
+            - "VARYG Dual/Multi"
         score_set: default
         upgrade:
           allowed: true
