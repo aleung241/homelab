@@ -160,7 +160,7 @@ services:
         awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-chrome
 
   karakeep-meilisearch:
-    image: getmeili/meilisearch:v1.13.3
+    image: getmeili/meilisearch:v1.41.0
     container_name: karakeep-meilisearch
     environment:
       MEILI_NO_ANALYTICS: "true"
