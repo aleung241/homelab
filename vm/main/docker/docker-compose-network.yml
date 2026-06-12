@@ -15,9 +15,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/nginx
 
   unifi-network-application:
     image: lscr.io/linuxserver/unifi-network-application:latest
@@ -43,9 +40,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/unifi-network-application
 
   unifi-db:
     image: docker.io/mongo:8.0.12
@@ -63,9 +57,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/unifi-db
 
   adguard-home:
     image: adguard/adguardhome
@@ -83,9 +74,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/adguard-home
 
   wireguard-client:
     image: lscr.io/linuxserver/wireguard:latest
@@ -111,9 +99,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/wireguard-client
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -129,9 +114,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/flaresolverr
 
   rclone-serve-webdav:
     image: rclone/rclone
@@ -170,9 +152,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/rclone-serve-webdav
 
   speedtest:
     image: lscr.io/linuxserver/librespeed:latest
@@ -189,6 +168,3 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/librespeed

@@ -9,9 +9,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/qui
 
   qbittorrent:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
@@ -28,9 +25,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent
 
   qbittorrent-dlc:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
@@ -47,9 +41,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-dlc
 
   qbittorrent-m:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
@@ -66,9 +57,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-m
 
   qbittorrent-lts:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
@@ -85,9 +73,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-lts
 
   qbittorrent-anime:
     image: ghcr.io/hotio/qbittorrent:release-4.6.3
@@ -103,6 +88,3 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/qbittorrent-anime

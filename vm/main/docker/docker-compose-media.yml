@@ -11,9 +11,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/radarr
 
   sonarr:
     image: ghcr.io/hotio/sonarr:latest
@@ -27,9 +24,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/sonarr
 
   sonarr-anime:
     image: ghcr.io/hotio/sonarr:latest
@@ -43,9 +37,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/sonarr-anime
 
 #  huntarr:
 #    image: huntarr/huntarr:latest
@@ -59,9 +50,6 @@ services:
 #    extends:
 #      file: common.yaml
 #      service: common
-#    logging:
-#      options:
-#        awslogs-group: /${DEFAULT_BASE_MACHINE}/huntarr
 
   recyclarr:
     image: recyclarr/recyclarr
@@ -75,9 +63,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/recyclarr
 
   tdarr:
     image: ghcr.io/haveagitgat/tdarr
@@ -106,9 +91,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/tdarr
 
   tdarr-node:
     image: ghcr.io/haveagitgat/tdarr_node
@@ -132,9 +114,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/tdarr-node
 
   prowlarr:
     image: ghcr.io/hotio/prowlarr
@@ -146,9 +125,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/prowlarr
 
   nzbhydra2:
     image: ghcr.io/hotio/nzbhydra2
@@ -160,9 +136,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/nzbhydra2
 
   sabnzbd:
     image: ghcr.io/hotio/sabnzbd
@@ -176,9 +149,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/sabnzbd
 
   bazarr:
     image: ghcr.io/hotio/bazarr
@@ -192,9 +162,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/bazarr
 
   seerr:
     image: ghcr.io/seerr-team/seerr:latest
@@ -216,9 +183,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/seerr
 
   maintainerr:
     image: ghcr.io/maintainerr/maintainerr:2
@@ -233,9 +197,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/maintainerr
 
   navidrome:
     image: deluan/navidrome:latest
@@ -251,6 +212,3 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/navidrome

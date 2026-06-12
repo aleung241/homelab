@@ -11,6 +11,3 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/spoolman

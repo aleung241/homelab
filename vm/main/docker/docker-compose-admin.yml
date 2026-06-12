@@ -14,9 +14,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/portainer
 
   bookstack:
     image: lscr.io/linuxserver/bookstack
@@ -38,9 +35,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack
 
   bookstack_db:
     image: lscr.io/linuxserver/mariadb
@@ -58,9 +52,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/bookstack_db
 
   home-assistant:
     image: "ghcr.io/home-assistant/home-assistant:stable"
@@ -75,9 +66,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/home-assistant
 
   changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io:latest
@@ -99,9 +87,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/changedetection
 
   sockpuppetbrowser:
     image: dgtlmoon/sockpuppetbrowser:latest
@@ -116,9 +101,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/sockpuppetbrowser
 
   karakeep:
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
@@ -138,9 +120,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep
 
   karakeep-chrome:
     image: gcr.io/zenika-hub/alpine-chrome:124
@@ -155,9 +134,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-chrome
 
   karakeep-meilisearch:
     image: getmeili/meilisearch:v1.41.0
@@ -169,9 +145,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/karakeep-meilisearch
 
   pricebuddy:
     build:
@@ -194,9 +167,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy
 
   pricebuddy-db:
     image: mysql:8.2
@@ -208,9 +178,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-db
 
   pricebuddy-scrapper:
     image: jez500/seleniumbase-scrapper:latest
@@ -220,9 +187,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/pricebuddy-scrapper
 
   paperless-ngx-webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -244,9 +208,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-webserver
 
   paperless-ngx-broker:
     image: docker.io/library/redis:8
@@ -256,9 +217,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-broker
 
   paperless-ngx-db:
     image: docker.io/library/postgres:17
@@ -272,9 +230,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-db
 
   paperless-ngx-gotenberg:
     image: docker.io/gotenberg/gotenberg:8.25
@@ -288,9 +243,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-gotenberg
 
   paperless-ngx-tika:
     image: docker.io/apache/tika:latest
@@ -298,9 +250,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/paperless-ngx-tika
 
   homebox:
     image: ghcr.io/sysadminsmedia/homebox:latest
@@ -317,6 +266,3 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/homebox

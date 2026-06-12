@@ -22,9 +22,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/plex-secondary
 
   autopulse:
     image: ghcr.io/dan-online/autopulse
@@ -43,9 +40,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/autopulse
 
   imdbupdatetool:
     image: mynttt/updatetool
@@ -62,9 +56,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/imdbupdatetool
 
   jellyfin:
     image: ghcr.io/hotio/jellyfin:release
@@ -77,9 +68,6 @@ services:
     extends:
       file: common.yaml
       service: hotio
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/jellyfin
 
   tautulli:
     image: tautulli/tautulli
@@ -96,9 +84,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/tautulli
 
   portainer_agent:
     image: portainer/agent:latest
@@ -110,9 +95,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/portainer-agent
 
   tdarr-node:
     image: ghcr.io/haveagitgat/tdarr_node
@@ -136,6 +118,3 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/tdarr-node

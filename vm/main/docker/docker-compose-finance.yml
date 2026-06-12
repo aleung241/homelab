@@ -13,9 +13,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii
 
   firefly-iii-db:
     image: mariadb:lts
@@ -28,9 +25,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-db
 
   firefly-iii-importer:
     image: fireflyiii/data-importer:latest
@@ -44,9 +38,6 @@ services:
     extends:
       file: common.yaml
       service: common
-    logging:
-      options:
-        awslogs-group: /${DEFAULT_BASE_MACHINE}/firefly-iii-importer
 
 #  firefly-iii-cron:
 #    #

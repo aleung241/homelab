@@ -2,10 +2,11 @@ services:
   common:
     restart: unless-stopped
     logging:
-      driver: awslogs
+      driver: json-file
       options:
-        awslogs-region: ${AWS_DEFAULT_REGION}
-        awslogs-create-group: "true"
+        max-size: "50m"
+        max-file: "3"
+        tag: "{{.Name}}"
     labels:
       - "org.hotio.pullio.notify=true"
       - "org.hotio.pullio.update=true"
