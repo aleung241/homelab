@@ -2,9 +2,7 @@
 + /etc/fstab
 + /etc/systemd/
 + /etc/systemd/system/
-+ /etc/systemd/system/rclone*
-+ /etc/systemd/system/gmedia*
-+ /etc/systemd/system/plex_autoscan*.service
++ /etc/systemd/system/newrelic*
 
 + /root/
 + /root/.bashrc
@@ -21,5 +19,9 @@
 
 + /Plex/
 + /Plex/**
+
++ /transcode/
++ /transcode/jellyfin/
++ /transcode/jellyfin/**
 
 - *
