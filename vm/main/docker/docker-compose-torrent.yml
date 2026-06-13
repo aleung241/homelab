@@ -11,7 +11,7 @@ services:
       service: common
 
   qbittorrent:
-    image: ghcr.io/hotio/qbittorrent:release-4.6.3
+    image: ghcr.io/hotio/qbittorrent:release-5.1.4
     container_name: qbittorrent
     environment:
       WEBUI_PORTS: 8081
@@ -27,7 +27,7 @@ services:
       service: hotio
 
   qbittorrent-dlc:
-    image: ghcr.io/hotio/qbittorrent:release-4.6.3
+    image: ghcr.io/hotio/qbittorrent:release-5.1.4
     container_name: qbittorrent-dlc
     environment:
       WEBUI_PORTS: 8083
@@ -43,7 +43,7 @@ services:
       service: hotio
 
   qbittorrent-m:
-    image: ghcr.io/hotio/qbittorrent:release-4.6.3
+    image: ghcr.io/hotio/qbittorrent:release-5.1.4
     container_name: qbittorrent-m
     environment:
       WEBUI_PORTS: 8084
@@ -59,7 +59,7 @@ services:
       service: hotio
 
   qbittorrent-lts:
-    image: ghcr.io/hotio/qbittorrent:release-4.6.3
+    image: ghcr.io/hotio/qbittorrent:release-5.1.4
     container_name: qbittorrent-lts
     environment:
       WEBUI_PORTS: 8085
@@ -75,7 +75,7 @@ services:
       service: hotio
 
   qbittorrent-anime:
-    image: ghcr.io/hotio/qbittorrent:release-4.6.3
+    image: ghcr.io/hotio/qbittorrent:release-5.1.4
     container_name: qbittorrent-anime
     network_mode: service:wireguard-client
     depends_on:
