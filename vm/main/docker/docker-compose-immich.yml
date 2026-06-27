@@ -2,7 +2,7 @@ services:
   immich-server:
     image: ghcr.io/immich-app/immich-server:v2.7.5
     container_name: immich-server
-    user: "1000:1000"
+    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
     depends_on:
       - immich-redis
       - immich-database
