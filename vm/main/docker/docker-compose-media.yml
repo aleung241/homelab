@@ -95,6 +95,8 @@ services:
   tdarr-node:
     image: ghcr.io/haveagitgat/tdarr_node
     container_name: tdarr-node
+    depends_on:
+      - tdarr
     environment:
       TZ: ${TIMEZONE}
       PUID: ${DEFAULT_USER}
