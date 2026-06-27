@@ -105,6 +105,9 @@ services:
   karakeep:
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     container_name: karakeep
+    depends_on:
+      - karakeep-meilisearch
+      - karakeep-chrome
     environment:
       MEILI_ADDR: http://karakeep-meilisearch:7700
       BROWSER_WEB_URL: http://karakeep-chrome:9222
