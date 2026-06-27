@@ -255,10 +255,11 @@ services:
     image: ghcr.io/sysadminsmedia/homebox:latest
     container_name: homebox
     environment:
-      - HBOX_LOG_LEVEL=info
-      - HBOX_LOG_FORMAT=text
-      - HBOX_WEB_MAX_FILE_UPLOAD=10
-      - HBOX_OPTIONS_ALLOW_ANALYTICS=false
+      HBOX_LOG_LEVEL: info
+      HBOX_LOG_FORMAT: text
+      HBOX_WEB_MAX_FILE_UPLOAD: 10
+      HBOX_OPTIONS_ALLOW_ANALYTICS: false
+      HBOX_AUTH_API_KEY_PEPPER: ${HBOX_AUTH_API_KEY_PEPPER}
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/homebox/data:/data/
     ports:
