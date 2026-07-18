@@ -1,0 +1,16 @@
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:latest
+    container_name: suwayomi
+    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
+    environment:
+      TZ: ${TIMEZONE}
+      FLARESOLVERR_ENABLED: true
+      FLARESOLVERR_URL: http://flaresolverr:8191
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    ports:
+      - "4567:4567"
+    extends:
+      file: common.yaml
+      service: common
