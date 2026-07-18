@@ -1,6 +1,6 @@
 services:
   gameyfin:
-    image: ghcr.io/gameyfin/gameyfin:2
+    image: ghcr.io/gameyfin/gameyfin:2.4.0
     container_name: gameyfin
     environment:
       PUID: ${DEFAULT_USER}
