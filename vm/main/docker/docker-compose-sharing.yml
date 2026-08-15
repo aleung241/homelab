@@ -15,3 +15,43 @@ services:
     extends:
       file: common.yaml
       service: common
+
+  rclone-serve-webdav:
+    image: rclone/rclone
+    container_name: rclone-serve-webdav
+    command:
+      - "serve"
+      - "webdav"
+      - "/gmediac"
+      - "--config"
+      - "/root/.config/rclone/rclone.conf"
+      - "--verbose"
+      - "--buffer-size"
+      - "64M"
+      - "--no-modtime"
+      - "--vfs-read-chunk-size"
+      - "64M"
+      - "--vfs-read-chunk-size-limit"
+      - "1024M"
+      - "--dir-cache-time"
+      - "5m"
+      - "--umask"
+      - "002"
+      - "--addr"
+      - "0.0.0.0:8087"
+      - "--read-only"
+      - "--copy-links"
+      - "--include-from"
+      - "/opt/include-from.txt"
+      - "--template"
+      - "/opt/index.html"
+    volumes:
+      - /root/.config/rclone/:/root/.config/rclone/:ro
+      - ${DOCKER_DIRECTORY_BASE_PATH}/rclone-serve-webdav:/opt
+      - /gmediac:/gmediac:ro
+      - ${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:ro
+    ports:
+      - "8087:8087"
+    extends:
+      file: common.yaml
+      service: common
