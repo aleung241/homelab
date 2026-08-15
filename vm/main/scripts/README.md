@@ -13,7 +13,7 @@ chmod u+x /opt/scripts/*.sh
 |---|---|---|
 | `backup.sh` | Rsyncs key directories to a local backup folder, creates zstd-compressed tarballs on the NAS, then uploads to Google Drive via rclone | Cron |
 | `todrive.sh` | Interactive rclone upload to Google Drive. Prompts for folder selection and transfer count | Manual |
-| `start-all-docker.sh` | Pulls all images and starts all containers | Manual |
+| `start-all-docker.sh` | Pulls all images and starts all containers via `docker compose` | Manual |
 
 ## Backup details
 
