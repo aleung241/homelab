@@ -54,10 +54,12 @@ services:
   recyclarr:
     image: recyclarr/recyclarr
     container_name: recyclarr
+    profiles: ["manual"]        # excluded from a plain `dcom up -d`; only starts when targeted
+    restart: "no"               # one-shot, don't loop (overrides unless-stopped from common.yaml)
+    command: ["--help"]         # safe no-op default (prints help, no sync); real work: dcom run --rm recyclarr sync
     user: ${DEFAULT_USER}:${DEFAULT_GROUP}
     environment:
       TZ: ${TIMEZONE}
-      CRON_SCHEDULE: 59 23 28 10 1
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/recyclarr:/config
     extends:
