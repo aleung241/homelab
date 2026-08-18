@@ -75,6 +75,33 @@ services:
       file: common.yaml
       service: common
 
+  wireguard-server:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard-server
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      TZ: ${TIMEZONE}
+      SERVERURL: ${WG_SERVER_SERVERURL}
+      SERVERPORT: ${WG_SERVER_SERVERPORT}
+      PEERS: ${WG_SERVER_PEERS}
+      PEERDNS: ${WG_SERVER_PEERDNS}
+      ALLOWEDIPS: ${WG_SERVER_ALLOWEDIPS}
+      INTERNAL_SUBNET: ${WG_SERVER_INTERNAL_SUBNET}
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/wireguard-server/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - "41519:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    extends:
+      file: common.yaml
+      service: common
+
   wireguard-client:
     image: lscr.io/linuxserver/wireguard:latest
     container_name: wireguard-client
