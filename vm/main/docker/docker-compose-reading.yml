@@ -1,0 +1,97 @@
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:latest
+    container_name: suwayomi
+    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
+    environment:
+      TZ: ${TIMEZONE}
+      FLARESOLVERR_ENABLED: true
+      FLARESOLVERR_URL: http://flaresolverr:8191
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    ports:
+      - "4567:4567"
+    extends:
+      file: common.yaml
+      service: common
+
+  bookorbit:
+    image: ghcr.io/bookorbit/bookorbit:latest
+    container_name: bookorbit
+    init: true
+    depends_on:
+      bookorbit-db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: ${BOOKORBIT_DATABASE_URL}
+      POSTGRES_HOST: ${BOOKORBIT_POSTGRES_HOST}
+      POSTGRES_PORT: ${BOOKORBIT_POSTGRES_PORT}
+      POSTGRES_USER: ${BOOKORBIT_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${BOOKORBIT_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${BOOKORBIT_POSTGRES_DB}
+      JWT_SECRET: ${BOOKORBIT_JWT_SECRET}
+      SETUP_BOOTSTRAP_TOKEN: ${BOOKORBIT_SETUP_BOOTSTRAP_TOKEN}
+      APP_URL: ${BOOKORBIT_APP_URL}
+      CLIENT_URL: ${BOOKORBIT_CLIENT_URL}
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      NODE_MAX_OLD_SPACE_SIZE: ${BOOKORBIT_NODE_MAX_OLD_SPACE_SIZE}
+      BOOK_DOCK_PATH: ${BOOKORBIT_BOOK_DOCK_PATH}
+      LIBRARY_BROWSE_ROOT: ${BOOKORBIT_LIBRARY_BROWSE_ROOT}
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/bookorbit/books:/books
+      - ${DOCKER_DIRECTORY_BASE_PATH}/bookorbit/data:/data
+    ports:
+      - "3200:3000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "const p=process.env.PORT||3000;fetch('http://127.0.0.1:'+p+'/api/v1/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    extends:
+      file: common.yaml
+      service: common
+
+  bookorbit-db:
+    image: pgvector/pgvector:pg18
+    container_name: bookorbit-db
+    environment:
+      POSTGRES_USER: ${BOOKORBIT_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${BOOKORBIT_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${BOOKORBIT_POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/bookorbit/postgresql/data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [ "CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"' ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    extends:
+      file: common.yaml
+      service: common
