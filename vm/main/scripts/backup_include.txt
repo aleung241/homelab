@@ -4,6 +4,7 @@
 + /etc/systemd/system/
 + /etc/systemd/system/rclone*
 + /etc/systemd/system/gmedia*
++ /etc/systemd/system/sharefs*
 
 + /root/
 + /root/.bashrc

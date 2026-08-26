@@ -22,7 +22,7 @@ services:
     command:
       - "serve"
       - "webdav"
-      - "/gmediac"
+      - "/sharefs"
       - "--config"
       - "/root/.config/rclone/rclone.conf"
       - "--verbose"
@@ -48,7 +48,7 @@ services:
     volumes:
       - /root/.config/rclone/:/root/.config/rclone/:ro
       - ${DOCKER_DIRECTORY_BASE_PATH}/rclone-serve-webdav:/opt
-      - /gmediac:/gmediac:ro
+      - /sharefs:/sharefs:ro
       - ${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:${SERVER_STORAGE_BASE_PATH}/torrents/MAM/:ro
     ports:
       - "8087:8087"
