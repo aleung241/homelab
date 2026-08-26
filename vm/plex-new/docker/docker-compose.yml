@@ -34,7 +34,6 @@ services:
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/autopulse/config.yml:/app/config.yml
       - ${DOCKER_DIRECTORY_BASE_PATH}/autopulse/data:/app/data
-      - ${OCEAN_BASE_PATH}:/datac:ro
     ports:
       - "2875:2875"
     extends:
