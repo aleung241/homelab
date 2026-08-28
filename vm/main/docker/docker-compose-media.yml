@@ -52,7 +52,7 @@ services:
 #      service: common
 
   recyclarr:
-    image: recyclarr/recyclarr
+    image: recyclarr/recyclarr:8
     container_name: recyclarr
     profiles: ["manual"]        # excluded from a plain `dcom up -d`; only starts when targeted
     restart: "no"               # one-shot, don't loop (overrides unless-stopped from common.yaml)
