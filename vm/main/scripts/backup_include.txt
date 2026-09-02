@@ -18,4 +18,10 @@
 + /opt/
 + /opt/**
 
++ /var/
++ /var/lib/
++ /var/lib/homelab-digest/
++ /var/lib/homelab-digest/state.json
++ /var/lib/homelab-digest/usage.log
+
 - *
