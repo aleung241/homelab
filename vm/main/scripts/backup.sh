@@ -43,7 +43,7 @@ copy_to_backup_folder() {
 
 create_new_tarballs() {
     INFO "[02] Creating $vm_tarball"
-    tar -cf - "$backup_destination/etc" "$backup_destination/root" | zstd -T0 -o "$nas_backup_destination/$vm_tarball.tmp" \
+    tar -cf - "$backup_destination/etc" "$backup_destination/root" "$backup_destination/var" | zstd -T0 -o "$nas_backup_destination/$vm_tarball.tmp" \
         || fail "Failed to create $vm_tarball"
     mv "$nas_backup_destination/$vm_tarball.tmp" "$nas_backup_destination/$vm_tarball"
     DEBUG "$vm_tarball created"
