@@ -20,8 +20,4 @@
 + /Plex/
 + /Plex/**
 
-+ /transcode/
-+ /transcode/jellyfin/
-+ /transcode/jellyfin/**
-
 - *
