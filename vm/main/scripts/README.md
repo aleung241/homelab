@@ -17,6 +17,6 @@ chmod u+x /opt/scripts/*.sh
 
 ## Backup details
 
-- **What's backed up**: Defined in `backup_include.txt` (`/etc/fstab`, systemd units, `/root/` dotfiles and scripts, `/opt/`)
-- **Tarballs**: `main-vm.tar.zst` (etc + root), `main-opt.tar.zst` (opt)
+- **What's backed up**: Defined in `backup_include.txt` (`/etc/fstab`, systemd units, `/root/` dotfiles and scripts, `/opt/`, `/var/lib/homelab-digest`)
+- **Tarballs**: `main-vm.tar.zst` (etc + root + var), `main-opt.tar.zst` (opt)
 - **Logs**: `/var/log/backup.log`
