@@ -56,7 +56,8 @@ start_plex_services() {
 restart_plex_services() {
     start_plex_services || true
 }
-trap restart_plex_services EXIT INT TERM
+trap restart_plex_services EXIT
+trap 'restart_plex_services; exit 130' INT TERM
 
 copy_to_backup_folder() {
     stop_plex_services
