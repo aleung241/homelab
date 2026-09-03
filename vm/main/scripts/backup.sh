@@ -69,9 +69,12 @@ retain_backups() {
         while IFS= read -r file; do
             basename_file="$(basename "$file")"
             remote_file="remote-aleung:${nas_backup_destination}/${basename_file}"
-            rclone deletefile "$remote_file" || WARN "Failed to delete $remote_file from Google Drive"
-            rm "$file" || WARN "Failed to delete $file locally"
-            DEBUG "Pruned and removed remote copy of $basename_file"
+            if rclone deletefile "$remote_file"; then
+                rm "$file" || WARN "Failed to delete $file locally"
+                DEBUG "Pruned and removed remote copy of $basename_file"
+            else
+                WARN "Failed to delete $remote_file from Google Drive — local file kept for retry"
+            fi
         done <<< "$pruned_files"
     else
         DEBUG "No tarballs to prune"
