@@ -133,6 +133,7 @@ services:
   nzbhydra2:
     image: ghcr.io/hotio/nzbhydra2
     container_name: nzbhydra2
+    stop_grace_period: 120s # Hydra compacts its H2 database on shutdown
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/nzbhydra2:/config
     ports:
