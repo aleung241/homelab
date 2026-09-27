@@ -27,6 +27,7 @@ radarr:
           - bfd8eb01832d646a0a89c4deb46f8564 # Unwanted Upscaled
           - c465ccc73923871b3eb1802042331306 # Unwanted Line/Mic Dubbed
           - d6e9318c875905d6cfb5bee961afcea9 # Unwanted Language Not Original
+          - cc444569854e9de0b084ab2b8b1532b2 # Unwanted Black and White Editions
           - b3b3a6ac74ecbd56bcdbefa4799fb9df # Streaming Services AMZN
           - df13ed57843877b21ad969184ab6888f # Streaming Services ATV
           - 40e9380490e748672c2522eaaeb692f7 # Streaming Services ATVP
@@ -134,13 +135,14 @@ sonarr:
           - e6e299075e22ac8f541f722254c8350a # Streaming Services AUBC
           - defb0b4c8b3f6a15927c0f14c6e69c94 # Streaming Services CBC
           - 77a7b25585c18af08f60b1547bb9b4fb # Streaming Services CC
+          - 543b0fb529e6b102837b8a9facdd82fb # Streaming Services CNLP
           - d17ea3d84c15299474b76fe85aa02a26 # Streaming Services CPNG
           - 4e9a630db98d5391aec1368a0256e2fe # Streaming Services CRAV
           - 36b72f59f4ea20aad9316f475f2d9fbb # Streaming Services DCU
           - 940e98773ac068f2088688f95a88ea66 # Streaming Services DMM-TV
           - dc5f2bb0e0262155b5fedd0f6c5d2b55 # Streaming Services DSCP
           - 89358767a60cc28783cdc3d0be9388a4 # Streaming Services DSNP
-          - 1f233ed024e7c35cf50fbd739a82de4b # Streaming Services FAND
+          - 1f233ed024e7c35cf50fbd739a82de4b # Streaming Services FAD
           - 7be9c0572d8cd4f81785dacf7e85985e # Streaming Services FOD
           - e261d9c9c2d177c9664f24f81da8135a # Streaming Services friDay
           - b61e27491a46c1e23bfb2f2497870495 # Streaming Services Hami
@@ -170,6 +172,7 @@ sonarr:
           - da393fd4e2c0cce7c9dc2669c43e0593 # Streaming Services ROKU
           - ae58039e1319178e6be73caab5c42166 # Streaming Services SHO
           - 1efe8da11bfd74fbbcd4d8117ddb9213 # Streaming Services STAN
+          - fe4062eac43d4ea75955f8ae48adcf1e # Streaming Services STRP
           - 9623c5c9cac8e939c1b9aedd32f640bf # Streaming Services SYFY
           - 86f8d3b8761de651aa355d46d5d8db3e # Streaming Services TVING
           - d100ea972d1af2150b65b1cffb80f6b5 # Streaming Services TVer
@@ -186,6 +189,7 @@ sonarr:
           - d0c516558625b04b363fa6c5c2c7cfd4 # HQ Release Groups WEB Scene
           - a69163b534969846c60b6b294e8ed7b3 # Asian Tier 01
           - 4712302767772003bfeb01d1f5f0a6fd # Asian Tier 02
+          - 0183b666f79529efb85df21b7a2cf913 # Asian Tier 03
         assign_scores_to:
           - name: Default
     quality_definition:
@@ -262,6 +266,14 @@ sonarr:
           - 9c14d194486c4014d422adc64092d794 # Unwanted Anime Dubs Only
           - 07a32f77690263bb9fda1842db7e273f # Unwanted VOSTFR
           - ea0bb4b6ba388992fad1092703b5ff7b # Unwanted FastSUB
+          - 3e0b26604165f463f3e8e192261e7284 # Anime Streaming CR
+          - 44a8ee6403071dd7b8a3a8dd3fe8cb20 # Anime Streaming VRV
+          - 1284d18e693de8efe0fe7d6b3e0b9170 # Anime Streaming FUNi
+          - a370d974bc7b80374de1d9ba7519760b # Anime Streaming ABEMA
+          - 7dd31f3dee6d2ef8eeaa156e23c3857e # Anime Streaming B-Global
+          - 4c67ff059210182b59cdd41697b8cb08 # Anime Streaming Bilibili
+          - 570b03b3145a25011bf073274a407259 # Anime Streaming HIDIVE
+          - e5e6405d439dcd1af90962538acd4fe0 # Anime Streaming WKN
         assign_scores_to:
           - name: default-anime
       - trash_ids:
@@ -274,6 +286,26 @@ sonarr:
         assign_scores_to:
           - name: default-anime
             score: -1000
+      - trash_ids:
+          - d54cd2bf1326287275b56bccedb72ee2 # Anime Streaming ADN
+        assign_scores_to:
+          - name: default-anime
+            score: 1
+      - trash_ids:
+          - 89358767a60cc28783cdc3d0be9388a4 # Streaming Services DSNP
+        assign_scores_to:
+          - name: default-anime
+            score: 5
+      - trash_ids:
+          - d34870697c9db575f17700212167be23 # Streaming Services NF
+        assign_scores_to:
+          - name: default-anime
+            score: 4
+      - trash_ids:
+          - d660701077794679fd59e8bdf4ce3a29 # Streaming Services AMZN
+        assign_scores_to:
+          - name: default-anime
+            score: 3
     quality_definition:
       type: anime
     quality_profiles:
