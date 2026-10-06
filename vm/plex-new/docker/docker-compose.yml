@@ -50,7 +50,7 @@ services:
       USE_PLEX_SQLITE_BINARY_FOR_WRITE_ACCESS: "true"
       UNLOCK_FOR_NEW_TV_AGENT: 2;17
     volumes:
-      - ${PLEX_DIRECTORY_BASE_PATH}/pms:/plexdata
+      - "${PLEX_DIRECTORY_BASE_PATH}/Plex Media Server:/plexdata"
       - ${DOCKER_DIRECTORY_BASE_PATH}/imdbupdatetool:/config
     extends:
       file: common.yaml
@@ -77,7 +77,7 @@ services:
       PGID: ${DEFAULT_GROUP}
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/tautulli:/config
-      - ${PLEX_DIRECTORY_BASE_PATH}/pms:/plex
+      - "${PLEX_DIRECTORY_BASE_PATH}/Plex Media Server:/plex"
     ports:
       - "8182:8181"
     extends:

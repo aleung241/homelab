@@ -3,6 +3,8 @@
 + /etc/systemd/
 + /etc/systemd/system/
 + /etc/systemd/system/newrelic*
++ /etc/systemd/system/plexmediaserver.service.d/
++ /etc/systemd/system/plexmediaserver.service.d/**
 
 + /root/
 + /root/.bashrc
