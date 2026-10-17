@@ -70,7 +70,7 @@ services:
       - "8000:80"       # http
       - "8001:443/tcp"  # dns-over-https
       - "8001:443/udp"  # dns-over-https
-      - "8002:3000"     # web
+      - "8002:3000"     # initial web setup
     extends:
       file: common.yaml
       service: common
