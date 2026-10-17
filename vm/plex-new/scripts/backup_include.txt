@@ -5,6 +5,8 @@
 + /etc/systemd/system/newrelic*
 + /etc/systemd/system/plexmediaserver.service.d/
 + /etc/systemd/system/plexmediaserver.service.d/**
++ /etc/systemd/system/docker.service.d/
++ /etc/systemd/system/docker.service.d/**
 
 + /root/
 + /root/.bashrc

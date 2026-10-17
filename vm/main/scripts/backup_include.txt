@@ -4,6 +4,8 @@
 + /etc/systemd/system/
 + /etc/systemd/system/rclone*
 + /etc/systemd/system/sharefs*
++ /etc/systemd/system/docker.service.d/
++ /etc/systemd/system/docker.service.d/**
 
 + /root/
 + /root/.bashrc
