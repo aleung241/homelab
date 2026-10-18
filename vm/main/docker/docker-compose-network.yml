@@ -127,21 +127,6 @@ services:
       file: common.yaml
       service: common
 
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: flaresolverr
-    environment:
-      LOG_LEVEL: info
-      LOG_HTML: false
-      CAPTCHA_SOLVER: none
-      TZ: ${TIMEZONE}
-      HOST: 0.0.0.0
-    ports:
-      - "8191:8191"
-    extends:
-      file: common.yaml
-      service: common
-
   speedtest:
     image: lscr.io/linuxserver/librespeed:latest
     container_name: speedtest
