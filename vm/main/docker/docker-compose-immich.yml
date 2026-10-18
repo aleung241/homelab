@@ -11,6 +11,7 @@ services:
       DB_USERNAME: ${IMMICH_DB_USERNAME}
       DB_PASSWORD: ${IMMICH_DB_PASSWORD}
       REDIS_HOSTNAME: immich-redis
+      IMMICH_MACHINE_LEARNING_URL: ${IMMICH_MACHINE_LEARNING_URL}
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/immich/data:/data
       - ${SERVER_STORAGE_BASE_PATH}/immich:/data/library
@@ -18,22 +19,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "2283:2283"
-    healthcheck:
-      disable: false
-    extends:
-      file: common.yaml
-      service: common
-
-  immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v3.3.3
-    container_name: immich-machine-learning
-    # For hardware acceleration, add one of -[armnn, cuda, rocm, openvino, rknn] to the image tag.
-    # Example tag: ${IMMICH_VERSION:-release}-cuda
-    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
-    #   file: hwaccel.ml.yml
-    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
-    volumes:
-      - ${TRANSCODE_BASE_PATH}/immich-machine-learning/model-cache:/cache
     healthcheck:
       disable: false
     extends:
