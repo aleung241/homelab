@@ -84,17 +84,6 @@ services:
       file: common.yaml
       service: common
 
-  portainer_agent:
-    image: portainer/agent:latest
-    container_name: portainer_agent
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "9001:9001"
-    extends:
-      file: common.yaml
-      service: common
-
   tdarr-node:
     image: ghcr.io/haveagitgat/tdarr_node
     container_name: tdarr-node
