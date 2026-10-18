@@ -1,20 +1,20 @@
-services:
-  gameyfin:
-    image: ghcr.io/gameyfin/gameyfin:2.4.0
-    container_name: gameyfin
-    environment:
-      PUID: ${DEFAULT_USER}
-      PGID: ${DEFAULT_GROUP}
-      APP_KEY: ${GAMEYFIN_APP_KEY}
-      APP_URL: ${GAMEYFIN_APP_URL}
-    volumes:
-      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/db:/opt/gameyfin/db
-      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/data:/opt/gameyfin/data
-      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/plugindata:/opt/gameyfin/plugindata
-      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/logs:/opt/gameyfin/logs
-      - ${SERVER_STORAGE_BASE_PATH}/games:${SERVER_STORAGE_BASE_PATH}/games:ro
-    ports:
-      - "8380:8080"
-    extends:
-      file: common.yaml
-      service: common
+#services:
+#  gameyfin:
+#    image: ghcr.io/gameyfin/gameyfin:2.4.0
+#    container_name: gameyfin
+#    environment:
+#      PUID: ${DEFAULT_USER}
+#      PGID: ${DEFAULT_GROUP}
+#      APP_KEY: ${GAMEYFIN_APP_KEY}
+#      APP_URL: ${GAMEYFIN_APP_URL}
+#    volumes:
+#      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/db:/opt/gameyfin/db
+#      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/data:/opt/gameyfin/data
+#      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/plugindata:/opt/gameyfin/plugindata
+#      - ${DOCKER_DIRECTORY_BASE_PATH}/gameyfin/logs:/opt/gameyfin/logs
+#      - ${SERVER_STORAGE_BASE_PATH}/games:${SERVER_STORAGE_BASE_PATH}/games:ro
+#    ports:
+#      - "8380:8080"
+#    extends:
+#      file: common.yaml
+#      service: common
