@@ -103,7 +103,7 @@ services:
       service: common
 
   karakeep:
-    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-0.34.0}
+    image: ghcr.io/karakeep-app/karakeep:0.34.0
     container_name: karakeep
     depends_on:
       - karakeep-meilisearch
