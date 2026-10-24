@@ -1,6 +1,6 @@
 services:
   radarr:
-    image: ghcr.io/hotio/radarr
+    image: ghcr.io/hotio/radarr:release-6.4.4.10685
     container_name: radarr
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/radarr:/config
@@ -13,7 +13,7 @@ services:
       service: hotio
 
   sonarr:
-    image: ghcr.io/hotio/sonarr:latest
+    image: ghcr.io/hotio/sonarr:release-4.0.20.3014
     container_name: sonarr
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/sonarr:/config
@@ -26,7 +26,7 @@ services:
       service: hotio
 
   sonarr-anime:
-    image: ghcr.io/hotio/sonarr:latest
+    image: ghcr.io/hotio/sonarr:release-4.0.20.3014
     container_name: sonarr-anime
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/sonarr-anime:/config
@@ -52,7 +52,7 @@ services:
 #      service: common
 
   recyclarr:
-    image: recyclarr/recyclarr:8
+    image: recyclarr/recyclarr:8.3.2
     container_name: recyclarr
     profiles: ["manual"]        # excluded from a plain `dcom up -d`; only starts when targeted
     restart: "no"               # one-shot, don't loop (overrides unless-stopped from common.yaml)
@@ -67,7 +67,7 @@ services:
       service: common
 
   tdarr:
-    image: ghcr.io/haveagitgat/tdarr
+    image: ghcr.io/haveagitgat/tdarr:3.01.00
     container_name: tdarr
     environment:
       TZ: ${TIMEZONE}
@@ -95,7 +95,7 @@ services:
       service: common
 
   tdarr-node:
-    image: ghcr.io/haveagitgat/tdarr_node
+    image: ghcr.io/haveagitgat/tdarr_node:3.01.00
     container_name: tdarr-node
     depends_on:
       - tdarr
@@ -120,7 +120,7 @@ services:
       service: common
 
   prowlarr:
-    image: ghcr.io/hotio/prowlarr
+    image: ghcr.io/hotio/prowlarr:release-2.6.5.5623
     container_name: prowlarr
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/prowlarr:/config
@@ -131,7 +131,7 @@ services:
       service: hotio
 
   nzbhydra2:
-    image: ghcr.io/hotio/nzbhydra2
+    image: ghcr.io/hotio/nzbhydra2:release-a36674e  # 9.1.1
     container_name: nzbhydra2
     stop_grace_period: 120s # Hydra compacts its H2 database on shutdown
     volumes:
@@ -143,7 +143,7 @@ services:
       service: hotio
 
   sabnzbd:
-    image: ghcr.io/hotio/sabnzbd
+    image: ghcr.io/hotio/sabnzbd:release-5.1.3
     container_name: sabnzbd
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/sabnzbd:/config
@@ -156,7 +156,7 @@ services:
       service: hotio
 
   bazarr:
-    image: ghcr.io/hotio/bazarr
+    image: ghcr.io/hotio/bazarr:release-1.6.2
     container_name: bazarr
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/bazarr:/config
@@ -169,7 +169,7 @@ services:
       service: hotio
 
   seerr:
-    image: ghcr.io/seerr-team/seerr:latest
+    image: ghcr.io/seerr-team/seerr:v3.5.1
     container_name: seerr
     init: true
     environment:
@@ -204,7 +204,7 @@ services:
       service: common
 
   navidrome:
-    image: deluan/navidrome:latest
+    image: deluan/navidrome:0.64.2
     container_name: navidrome
     user: ${DEFAULT_USER}:${DEFAULT_GROUP}
     environment:

@@ -1,6 +1,6 @@
 services:
   pairdrop:
-    image: lscr.io/linuxserver/pairdrop:latest
+    image: lscr.io/linuxserver/pairdrop:v1.11.2-ls147
     container_name: pairdrop
     environment:
       PUID: ${DEFAULT_USER}
@@ -17,7 +17,7 @@ services:
       service: common
 
   rclone-serve-webdav:
-    image: rclone/rclone
+    image: rclone/rclone:1.75.2
     container_name: rclone-serve-webdav
     command:
       - "serve"

@@ -1,6 +1,6 @@
 services:
   spoolman:
-    image: ghcr.io/donkie/spoolman:latest
+    image: ghcr.io/donkie/spoolman:0.27.0
     container_name: spoolman
     environment:
       TZ: ${TIMEZONE}

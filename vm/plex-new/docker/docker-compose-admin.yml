@@ -1,6 +1,6 @@
 services:
   portainer_agent:
-    image: portainer/agent:latest
+    image: portainer/agent:2.45.2
     container_name: portainer_agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

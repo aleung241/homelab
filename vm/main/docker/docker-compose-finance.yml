@@ -1,6 +1,6 @@
 services:
   firefly-iii:
-    image: fireflyiii/core:latest
+    image: fireflyiii/core:version-6.7.9
     container_name: firefly-iii-core
     hostname: firefly-iii
     depends_on:
@@ -15,7 +15,7 @@ services:
       service: common
 
   firefly-iii-db:
-    image: mariadb:lts
+    image: mariadb:12.3.3
     container_name: firefly-iii-db
     hostname: firefly-iii-db
     env_file:
@@ -27,7 +27,7 @@ services:
       service: common
 
   firefly-iii-importer:
-    image: fireflyiii/data-importer:latest
+    image: fireflyiii/data-importer:version-2.3.5
     container_name: firefly-iii-importer
     hostname: firefly-iii-importer
     depends_on:

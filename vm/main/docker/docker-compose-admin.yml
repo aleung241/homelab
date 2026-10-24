@@ -1,6 +1,6 @@
 services:
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:2.45.2
     container_name: portainer
     environment:
       TZ: ${TIMEZONE}
@@ -16,7 +16,7 @@ services:
       service: common
 
   bookstack:
-    image: lscr.io/linuxserver/bookstack
+    image: lscr.io/linuxserver/bookstack:v26.09.2-ls292
     container_name: bookstack
     depends_on:
       - bookstack_db
@@ -37,7 +37,7 @@ services:
       service: common
 
   bookstack_db:
-    image: lscr.io/linuxserver/mariadb
+    image: lscr.io/linuxserver/mariadb:11.8.9-r0-ls237
     container_name: bookstack_db
     environment:
       PUID: ${DEFAULT_USER}
@@ -54,7 +54,7 @@ services:
       service: common
 
   home-assistant:
-    image: "ghcr.io/home-assistant/home-assistant:stable"
+    image: ghcr.io/home-assistant/home-assistant:2026.10.2
     container_name: home-assistant
     privileged: true
     volumes:
@@ -68,7 +68,7 @@ services:
       service: common
 
   changedetection:
-    image: ghcr.io/dgtlmoon/changedetection.io:latest
+    image: ghcr.io/dgtlmoon/changedetection.io:0.60.9
     container_name: changedetection
     depends_on:
       sockpuppetbrowser:
@@ -89,7 +89,7 @@ services:
       service: common
 
   sockpuppetbrowser:
-    image: dgtlmoon/sockpuppetbrowser:latest
+    image: dgtlmoon/sockpuppetbrowser@sha256:1d8f72d2ce2085faed4232e5ae1e65c02efe5b831a18e127829b267c260b4fb2
     container_name: sockpuppetbrowser
     cap_add:
       - SYS_ADMIN
@@ -103,7 +103,7 @@ services:
       service: common
 
   karakeep:
-    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-0.34.0}
     container_name: karakeep
     depends_on:
       - karakeep-meilisearch
@@ -134,7 +134,7 @@ services:
       service: common
 
   karakeep-chrome:
-    image: ghcr.io/karakeep-app/karakeep-chrome:release
+    image: ghcr.io/karakeep-app/karakeep-chrome:154.0.8037.57-r1
     container_name: karakeep-chrome
     init: true
     command:
@@ -162,7 +162,7 @@ services:
     build:
       context: .
       dockerfile: docker/php.dockerfile
-    image: jez500/pricebuddy:latest
+    image: jez500/pricebuddy:v1.0.55
     container_name: pricebuddy
     depends_on:
       - pricebuddy-db
@@ -192,7 +192,7 @@ services:
       service: common
 
   pricebuddy-scrapper:
-    image: jez500/seleniumbase-scrapper:latest
+    image: jez500/seleniumbase-scrapper:v1.0.1
     container_name: pricebuddy-scrapper
     ports:
       - 3030:3000 # Optional, if you want to access the scrapper api from the host machine
@@ -201,7 +201,7 @@ services:
       service: common
 
   paperless-ngx-webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.3.3
     container_name: paperless-ngx-webserver
     depends_on:
       - paperless-ngx-db
@@ -222,7 +222,7 @@ services:
       service: common
 
   paperless-ngx-broker:
-    image: docker.io/library/redis:8
+    image: docker.io/library/redis:8.10.2
     container_name: paperless-ngx-broker
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/paperless-ngx/redisdata:/data
@@ -231,7 +231,7 @@ services:
       service: common
 
   paperless-ngx-db:
-    image: docker.io/library/postgres:17
+    image: docker.io/library/postgres:17.11
     container_name: paperless-ngx-db
     environment:
       POSTGRES_DB: ${PAPERLESS_DB}
@@ -244,7 +244,7 @@ services:
       service: common
 
   paperless-ngx-gotenberg:
-    image: docker.io/gotenberg/gotenberg:8.34
+    image: docker.io/gotenberg/gotenberg:8.34.0
     container_name: paperless-ngx-gotenberg
     # The gotenberg chromium route is used to convert .eml files. We do not
     # want to allow external content like tracking pixels or even javascript.
@@ -257,14 +257,14 @@ services:
       service: common
 
   paperless-ngx-tika:
-    image: docker.io/apache/tika:latest
+    image: docker.io/apache/tika:4.1.0
     container_name: paperless-ngx-tika
     extends:
       file: common.yaml
       service: common
 
   homebox:
-    image: ghcr.io/sysadminsmedia/homebox:latest
+    image: ghcr.io/sysadminsmedia/homebox:0.27.0
     container_name: homebox
     environment:
       HBOX_LOG_LEVEL: info

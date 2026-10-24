@@ -1,6 +1,6 @@
 services:
   bookorbit:
-    image: ghcr.io/bookorbit/bookorbit:latest
+    image: ghcr.io/bookorbit/bookorbit:3.5.0
     container_name: bookorbit
     init: true
     depends_on:
@@ -60,7 +60,7 @@ services:
       service: common
 
   bookorbit-db:
-    image: pgvector/pgvector:pg18
+    image: pgvector/pgvector:0.8.7-pg18
     container_name: bookorbit-db
     environment:
       POSTGRES_USER: ${BOOKORBIT_POSTGRES_USER}

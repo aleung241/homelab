@@ -1,6 +1,6 @@
 services:
   plex:
-    image: plexinc/pms-docker
+    image: plexinc/pms-docker:1.43.5.11029-6bf8af3f0
     container_name: plex
     environment:
       TZ: ${TIMEZONE}
@@ -24,7 +24,7 @@ services:
       service: common
 
   autopulse:
-    image: ghcr.io/dan-online/autopulse
+    image: ghcr.io/dan-online/autopulse@sha256:f57d1e68f9aa638b251d5bbd7e7193b58b5c28178916ce7a3e1b99ca9b93c997
     container_name: autopulse
     environment:
       TZ: ${TIMEZONE}
@@ -41,7 +41,7 @@ services:
       service: common
 
   imdbupdatetool:
-    image: mynttt/updatetool
+    image: mynttt/updatetool:2.0.0
     container_name: imdbupdatetool
     environment:
       RUN_EVERY_N_HOURS: 168
@@ -57,7 +57,7 @@ services:
       service: common
 
   jellyfin:
-    image: ghcr.io/hotio/jellyfin:release
+    image: ghcr.io/hotio/jellyfin:release-c3d4f6a  # 12.2
     container_name: jellyfin
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/jellyfin/config:/config
@@ -69,7 +69,7 @@ services:
       service: hotio
 
   tautulli:
-    image: tautulli/tautulli
+    image: tautulli/tautulli:v2.18.2
     container_name: tautulli
     environment:
       TZ: ${TIMEZONE}
@@ -85,7 +85,7 @@ services:
       service: common
 
   tdarr-node:
-    image: ghcr.io/haveagitgat/tdarr_node
+    image: ghcr.io/haveagitgat/tdarr_node:3.01.00
     container_name: tdarr-node
     environment:
       TZ: ${TIMEZONE}

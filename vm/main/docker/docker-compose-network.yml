@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx
+    image: nginx:1.31.8
     container_name: nginx
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/nginx/etc/nginx:/etc/nginx
@@ -17,7 +17,7 @@ services:
       service: common
 
   unifi-network-application:
-    image: lscr.io/linuxserver/unifi-network-application:latest
+    image: lscr.io/linuxserver/unifi-network-application:10.6.106-ls151
     container_name: unifi-network-application
     environment:
       PUID: ${DEFAULT_USER}
@@ -59,7 +59,7 @@ services:
       service: common
 
   adguard-home:
-    image: adguard/adguardhome
+    image: adguard/adguardhome:v0.107.79
     container_name: adguard-home
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/adguardhome/work:/opt/adguardhome/work
@@ -76,7 +76,7 @@ services:
       service: common
 
   wireguard-server:
-    image: lscr.io/linuxserver/wireguard:latest
+    image: lscr.io/linuxserver/wireguard:1.0.20260223-r0-ls126
     container_name: wireguard-server
     cap_add:
       - NET_ADMIN
@@ -103,7 +103,7 @@ services:
       service: common
 
   wireguard-client:
-    image: lscr.io/linuxserver/wireguard:latest
+    image: lscr.io/linuxserver/wireguard:1.0.20260223-r0-ls126
     container_name: wireguard-client
     cap_add:
       - NET_ADMIN
@@ -128,7 +128,7 @@ services:
       service: common
 
   speedtest:
-    image: lscr.io/linuxserver/librespeed:latest
+    image: lscr.io/linuxserver/librespeed:v6.3.1-ls297
     container_name: speedtest
     environment:
       PUID: ${DEFAULT_USER}
