@@ -7,10 +7,6 @@ services:
         max-size: "50m"
         max-file: "3"
         tag: "{{.Name}}"
-    labels:
-      - "org.hotio.pullio.notify=true"
-      - "org.hotio.pullio.update=false"
-      - "org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}"
 
   hotio:
     extends:
