@@ -189,20 +189,6 @@ services:
       file: common.yaml
       service: common
 
-  maintainerr:
-    image: ghcr.io/maintainerr/maintainerr:2
-    container_name: maintainerr
-    user: ${DEFAULT_USER}:${DEFAULT_GROUP}
-    environment:
-      TZ: ${TIMEZONE}
-    volumes:
-      - ${DOCKER_DIRECTORY_BASE_PATH}/maintainerr/data:/opt/data
-    ports:
-      - "6246:6246"
-    extends:
-      file: common.yaml
-      service: common
-
   navidrome:
     image: deluan/navidrome:0.64.2
     container_name: navidrome
