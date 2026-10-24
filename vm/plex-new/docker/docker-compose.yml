@@ -57,7 +57,7 @@ services:
       service: common
 
   jellyfin:
-    image: ghcr.io/hotio/jellyfin:release-c3d4f6a  # 12.2
+    image: ghcr.io/hotio/jellyfin:release-12.3
     container_name: jellyfin
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/jellyfin/config:/config

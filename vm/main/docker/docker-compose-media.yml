@@ -131,7 +131,7 @@ services:
       service: hotio
 
   nzbhydra2:
-    image: ghcr.io/hotio/nzbhydra2:release-a36674e  # 9.1.1
+    image: ghcr.io/hotio/nzbhydra2:release-9.1.1
     container_name: nzbhydra2
     stop_grace_period: 120s # Hydra compacts its H2 database on shutdown
     volumes:
