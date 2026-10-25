@@ -15,6 +15,72 @@ services:
       file: common.yaml
       service: common
 
+  drydock:
+    image: codeswhat/drydock:1.7.0
+    container_name: drydock
+    environment:
+      TZ: ${TIMEZONE}
+      DD_SERVER_NAME: ${DEFAULT_BASE_MACHINE}
+      DD_SESSION_SECRET: ${DRYDOCK_SESSION_SECRET}
+      DD_AUTH_BASIC_ADMIN_USER: ${DRYDOCK_ADMIN_USER}
+      DD_AUTH_BASIC_ADMIN_HASH: ${DRYDOCK_ADMIN_HASH}
+      # the 2 machines
+      DD_WATCHER_MAIN_HOST: drydock-socket-proxy
+      DD_WATCHER_MAIN_PORT: "2375"
+      DD_WATCHER_MAIN_CRON: "0 1 * * *"
+      DD_WATCHER_MAIN_MATURITY_MODE: mature
+      DD_WATCHER_MAIN_MATURITY_MIN_AGE_DAYS: "7"
+      DD_AGENT_PLEXNEW_HOST: ${PLEX_BASE_URL}
+      DD_AGENT_PLEXNEW_PORT: "3000"
+      DD_AGENT_PLEXNEW_SECRET: ${DRYDOCK_AGENT_SECRET}
+      DD_AGENT_ALLOW_INSECURE_SECRET: "true"
+      # notifications
+      DD_NOTIFICATION_APPRISE_MAIN_URL: http://apprise:8000
+      DD_NOTIFICATION_APPRISE_MAIN_CONFIG: drydock
+      DD_NOTIFICATION_APPRISE_MAIN_MODE: batch+digest
+      DD_NOTIFICATION_APPRISE_MAIN_DIGESTCRON: "0 8 * * *"
+      DD_NOTIFICATION_APPRISE_MAIN_RESOLVENOTIFICATIONS: "true"
+      # All things docker registries
+      DD_REGISTRY_HUB_PUBLIC_LOGIN: ${DRYDOCK_HUB_LOGIN}
+      DD_REGISTRY_HUB_PUBLIC_TOKEN: ${DRYDOCK_HUB_TOKEN}
+      DD_REGISTRY_GHCR_PUBLIC_USERNAME: ${DRYDOCK_GITHUB_USER}
+      DD_REGISTRY_GHCR_PUBLIC_TOKEN: ${DRYDOCK_GITHUB_TOKEN}
+      DD_REGISTRY_LSCR_PUBLIC_USERNAME: ${DRYDOCK_GITHUB_USER}
+      DD_REGISTRY_LSCR_PUBLIC_TOKEN: ${DRYDOCK_GITHUB_TOKEN}
+      DD_RELEASE_NOTES_GITHUB_TOKEN: ${DRYDOCK_GITHUB_TOKEN}
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/drydock/store:/store
+      - ${DOCKER_DIRECTORY_BASE_PATH}:/opt/docker:ro
+    ports:
+      - "8900:3000"
+    depends_on:
+      drydock-socket-proxy:
+        condition: service_healthy
+    extends:
+      file: common.yaml
+      service: common
+
+  drydock-socket-proxy:
+    image: tecnativa/docker-socket-proxy:v0.5.0
+    container_name: drydock-socket-proxy
+    environment:
+      CONTAINERS: "1"
+      IMAGES: "1"
+      EVENTS: "1"
+      SERVICES: "1"
+      INFO: "1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: wget --spider http://localhost:2375/version || exit 1
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    extends:
+      file: common.yaml
+      service: common
+
   home-assistant:
     image: ghcr.io/home-assistant/home-assistant:2026.10.2
     container_name: home-assistant
