@@ -96,9 +96,6 @@ services:
       service: common
 
   pricebuddy:
-    build:
-      context: .
-      dockerfile: docker/php.dockerfile
     image: jez500/pricebuddy:v1.0.55
     container_name: pricebuddy
     depends_on:
