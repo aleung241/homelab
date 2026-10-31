@@ -96,7 +96,7 @@ services:
       service: common
 
   pricebuddy:
-    image: jez500/pricebuddy:v1.0.55
+    image: jez500/pricebuddy:v1.0.57
     container_name: pricebuddy
     depends_on:
       - pricebuddy-db
