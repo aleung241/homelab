@@ -128,7 +128,7 @@ services:
       service: common
 
   speedtest:
-    image: lscr.io/linuxserver/librespeed:v6.3.1-ls297
+    image: lscr.io/linuxserver/librespeed:v6.3.1-ls298
     container_name: speedtest
     environment:
       PUID: ${DEFAULT_USER}
