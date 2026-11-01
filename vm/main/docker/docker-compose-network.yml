@@ -76,7 +76,7 @@ services:
       service: common
 
   wireguard-server:
-    image: lscr.io/linuxserver/wireguard:1.0.20260223-r0-ls126
+    image: lscr.io/linuxserver/wireguard:1.0.20260223-r0-ls128
     container_name: wireguard-server
     cap_add:
       - NET_ADMIN
@@ -103,7 +103,7 @@ services:
       service: common
 
   wireguard-client:
-    image: lscr.io/linuxserver/wireguard:1.0.20260223-r0-ls126
+    image: lscr.io/linuxserver/wireguard:1.0.20260223-r0-ls128
     container_name: wireguard-client
     cap_add:
       - NET_ADMIN
