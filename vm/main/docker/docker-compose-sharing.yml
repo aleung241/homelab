@@ -1,6 +1,6 @@
 services:
   pairdrop:
-    image: lscr.io/linuxserver/pairdrop:v1.11.2-ls147
+    image: lscr.io/linuxserver/pairdrop:v1.11.2-ls148
     container_name: pairdrop
     environment:
       PUID: ${DEFAULT_USER}
