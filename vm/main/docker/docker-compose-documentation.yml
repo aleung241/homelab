@@ -1,6 +1,6 @@
 services:
   bookstack:
-    image: lscr.io/linuxserver/bookstack:v26.09.2-ls292
+    image: lscr.io/linuxserver/bookstack:v26.09.2-ls294
     container_name: bookstack
     depends_on:
       - bookstack_db
@@ -21,7 +21,7 @@ services:
       service: common
 
   bookstack_db:
-    image: lscr.io/linuxserver/mariadb:11.8.9-r0-ls237
+    image: lscr.io/linuxserver/mariadb:11.8.9-r0-ls238
     container_name: bookstack_db
     environment:
       PUID: ${DEFAULT_USER}
