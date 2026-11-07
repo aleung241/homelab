@@ -213,7 +213,22 @@ services:
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/homebox/data:/data/
     ports:
-      - 3600:7745
+      - "3600:7745"
+    extends:
+      file: common.yaml
+      service: common
+
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v3.30.0
+    container_name: mealie
+    environment:
+      PUID: ${DEFAULT_USER}
+      PGID: ${DEFAULT_GROUP}
+      TZ: ${TIMEZONE}
+    volumes:
+      - ${DOCKER_DIRECTORY_BASE_PATH}/mealie:/app/data
+    ports:
+      - "9500:9000"
     extends:
       file: common.yaml
       service: common
