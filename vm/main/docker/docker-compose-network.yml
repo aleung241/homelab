@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx:1.31.8
+    image: nginx:1.31.9
     container_name: nginx
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/nginx/etc/nginx:/etc/nginx
