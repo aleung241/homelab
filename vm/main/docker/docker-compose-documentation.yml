@@ -1,6 +1,6 @@
 services:
   bookstack:
-    image: lscr.io/linuxserver/bookstack:v26.09.2-ls294
+    image: lscr.io/linuxserver/bookstack:v26.09.3-ls299
     container_name: bookstack
     depends_on:
       - bookstack_db
