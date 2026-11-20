@@ -28,7 +28,6 @@ services:
       - "--verbose"
       - "--buffer-size"
       - "64M"
-      - "--no-modtime"
       - "--vfs-read-chunk-size"
       - "64M"
       - "--vfs-read-chunk-size-limit"
