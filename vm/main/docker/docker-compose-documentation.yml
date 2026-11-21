@@ -89,7 +89,6 @@ services:
       - "dd.watch=false" # version dictated by karakeep upstream
     environment:
       MEILI_NO_ANALYTICS: "true"
-      MEILI_UPGRADE_DB: "true"
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/karakeep-meilisearch:/meili_data
     extends:
