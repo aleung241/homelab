@@ -59,7 +59,7 @@ services:
       service: common
 
   adguard-home:
-    image: adguard/adguardhome:v0.107.79
+    image: adguard/adguardhome:v1.0.0
     container_name: adguard-home
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/adguardhome/work:/opt/adguardhome/work
