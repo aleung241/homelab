@@ -11,7 +11,7 @@ services:
       service: common
 
   drydock-agent:
-    image: codeswhat/drydock:1.7.0
+    image: codeswhat/drydock:1.7.1
     container_name: drydock-agent
     command: --agent
     environment:
