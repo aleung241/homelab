@@ -1,6 +1,6 @@
 services:
   qui:
-    image: ghcr.io/autobrr/qui:v1.34.0
+    image: ghcr.io/autobrr/qui:v1.35.0
     container_name: qui
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/qui:/config
