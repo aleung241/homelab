@@ -17,7 +17,7 @@ services:
       service: common
 
   unifi-network-application:
-    image: lscr.io/linuxserver/unifi-network-application:10.6.109-ls152
+    image: lscr.io/linuxserver/unifi-network-application:10.6.109-ls155
     container_name: unifi-network-application
     environment:
       PUID: ${DEFAULT_USER}
