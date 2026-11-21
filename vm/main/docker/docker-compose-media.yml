@@ -120,7 +120,7 @@ services:
       service: common
 
   prowlarr:
-    image: ghcr.io/hotio/prowlarr:release-2.6.5.5623
+    image: ghcr.io/hotio/prowlarr:release-3.0.2.5780
     container_name: prowlarr
     volumes:
       - ${DOCKER_DIRECTORY_BASE_PATH}/prowlarr:/config
