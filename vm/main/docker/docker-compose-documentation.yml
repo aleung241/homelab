@@ -219,7 +219,7 @@ services:
       service: common
 
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v3.30.0
+    image: ghcr.io/mealie-recipes/mealie:v3.31.0
     container_name: mealie
     environment:
       PUID: ${DEFAULT_USER}
