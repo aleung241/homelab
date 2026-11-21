@@ -1,6 +1,6 @@
 services:
   bookorbit:
-    image: ghcr.io/bookorbit/bookorbit:3.6.0
+    image: ghcr.io/bookorbit/bookorbit:3.9.0
     container_name: bookorbit
     init: true
     depends_on:
