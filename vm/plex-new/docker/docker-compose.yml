@@ -85,7 +85,7 @@ services:
       service: common
 
   tdarr-node:
-    image: ghcr.io/haveagitgat/tdarr_node:3.04.00
+    image: ghcr.io/haveagitgat/tdarr_node:3.08.00
     container_name: tdarr-node
     environment:
       TZ: ${TIMEZONE}
